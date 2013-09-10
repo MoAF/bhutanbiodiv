@@ -209,7 +209,7 @@ speciesPortal {
     app.logo = "logo/IBP.png"
     app.favicon = "logo/favicon.png"
    
-    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "sravanthi@strandls.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com"]
+    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com"]
 
 	species {
 		speciesDownloadDir = "${download.rootDir}/species"
@@ -221,7 +221,7 @@ speciesPortal {
 		images {
 			defaultType = "jpg"
 			thumbnail {
-				suffix = "_th"+".${defaultType}"
+				suffix = "_th1"+".${defaultType}"
 				width = 200
 				height = 200
 			}
@@ -425,8 +425,13 @@ speciesPortal {
 		CORRIDOR = "corridor"
 		DESCRIPTION = "description"
 		TYPE = "type"
-        TOPOLOGY = "topology"
-        SCORE = "score"
+        	TOPOLOGY = "topology"
+        	SCORE = "score"
+
+		EMAIL = "email"
+		USERNAME = "username"
+		ABOUT_ME = "about_me"
+		LAST_LOGIN = "lastlogindate"
 	}
 
 	nameSearchFields {
@@ -484,8 +489,8 @@ environments {
 		
 		grails {
 			mail {
-				 host = "127.0.0.1"
-				 port = 25
+			 host = "127.0.0.1"
+			 port = 25
 			}
 		}
 
@@ -1107,6 +1112,7 @@ We will appreciate any feedback you may have to offer.<br/><br/>
 '''
 
 grails.plugins.springsecurity.ui.downloadRequest.emailSubject = 'Download request'
+grails.plugins.springsecurity.ui.downloadRequest.message = "Your data download request has been processed. The download link will be visible once you log in to your profile."
 grails.plugins.springsecurity.ui.downloadRequest.emailBody = '''\
 Hi $username,<br/>
 <br/>

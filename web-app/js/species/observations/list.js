@@ -306,16 +306,15 @@ $(document).ready(function(){
                 var url = a.url();
                 var params = url.param();
                 delete params["append"]
-                    delete params["loadMore"]
-                    params['max'] = parseInt(params['offset'])+parseInt(params['max']);
+                delete params["loadMore"]
+                params['max'] = parseInt(params['offset'])+parseInt(params['max']);
                 params['offset'] = 0
-                    var History = window.History;
+                var History = window.History;
                 History.pushState({state:1}, "Species Portal", '?'+decodeURIComponent($.param(params))); 
                 updateRelativeTime();
                 last_actions();
                 eatCookies();
                 $('.observations_list_wrapper').trigger('updatedGallery');
-
             }
         });
 
@@ -326,6 +325,37 @@ $(document).ready(function(){
     //	last_actions();
     eatCookies();
     $('.observations_list_wrapper').trigger('updatedGallery');
+
+    $('#distinctRecoTableAction').click(function(){
+        var $me = $(this);
+        var target = window.location.pathname + window.location.search;
+        var a = $('<a href="'+target+'"></a>');
+        var url = a.url();
+        var href = url.attr('path');
+        var params = getFilterParameters(url);
+        params['max'] = $(this).data('max');
+        params['offset'] = $(this).data('offset');
+        var $distinctRecoTable = $('#distinctRecoTable');
+        $.ajax({
+            url:window.params.observation.distinctRecoListUrl,
+            dataType: "json",
+            data:params,
+            success: function(data) {
+                if(data.status === 'success') {
+                    $.each(data.distinctRecoList, function(index, item) {
+                        if(item[1])
+                            $distinctRecoTable.append('<tr><td><i>'+item[0]+'</i></td><td>'+item[2]+'</td></tr>');  
+                        else
+                            $distinctRecoTable.append('<tr><td>'+item[0]+'</td><td>'+item[2]+'</td></tr>');  
+                        $me.data('offset', data.next);
+                    });
+                } else {
+                    $me.hide();
+                }
+            }
+        });
+    });
+    $('#distinctRecoTableAction').click();
 });
 
 if (typeof String.prototype.startsWith != 'function') {
@@ -620,6 +650,18 @@ function updateListPage(activeTag) {
         $('.observations_list').replaceWith(data.obvListHtml);
         $('#info-message').replaceWith(data.obvFilterMsgHtml);
         $('#tags_section').replaceWith(data.tagsHtml);
+        if(data.chartModel) {
+            visualization_data = new google.visualization.DataTable();
+            $.each(data.chartModel.columns, function(index, item) {
+                visualization_data.addColumn( item[0], item[1]);
+            });
+
+            $.each(data.chartModel.data, function(index, item) {
+                visualization_data.addRow(item);
+            });
+            visualization.draw(visualization_data, {legend: 'bottom'});
+        }
+        $('#distinctRecoList').html(data.distinctRecoListHtml);
         //$('.observation_location_wrapper').replaceWith(data.mapViewHtml);
         setActiveTag(activeTag);
         updateDownloadBox(data.instanceTotal);
@@ -897,5 +939,9 @@ function updateDownloadBox(instanceTotal){
 //})/
 
 $(document).ready(function(){
+    $(".snippet.tablet .figure").hover(function() {
+        $(this).children('.mouseover').toggle('slow')
+    });
+
 });
     
