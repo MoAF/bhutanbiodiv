@@ -194,9 +194,8 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 					</div>
 				</div>
 
-                                <div class="span4">
-
-					<div class="sidebar_section">
+              	<div class="span4">
+                    <div class="sidebar_section">
 						<obv:showLocation
 							model="['observationInstance':observationInstance]" />
 					</div>
@@ -275,7 +274,8 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 		
 		$('#gallery1').galleria({
 			height : 400,
-			preload : 1,
+            preload : 1,
+            lightbox: false,
 			carousel : false,
 			transition : 'pulse',
 			image_pan_smoothness : 5,
@@ -307,17 +307,17 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 			extend : function(options) {
                             this.bind('image', function(e) {
                                 $(e.imageTarget).click(this.proxy(function() {
-                                        this.openLightbox();
+                                    window.open(Galleria.get(0).getData()._biodiv_url);
+                                    //this.openLightbox();
                                 }));
                             });
                             
                             this.bind('loadfinish', function(e){
                                 galleryImageLoadFinish();
-                                //console.log("here in loadfinish");
                             });
 
                             this.bind('lightbox_image', function(e){
-                                $(".galleria-lightbox-title").append('<a target="_blank" href="'+Galleria.get(0).getData()._biodiv_url+'">View Full Image</a>');
+                            	//$(".galleria-lightbox-title").append('<a target="_blank" href="'+Galleria.get(0).getData()._biodiv_url+'">View Full Image</a>');
                             })
 
                         }
