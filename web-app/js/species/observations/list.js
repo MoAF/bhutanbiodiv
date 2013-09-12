@@ -341,16 +341,20 @@ $(document).ready(function(){
             dataType: "json",
             data:params,
             success: function(data) {
+            	$('#distinctRecoList .distinctRecoHeading').html(data.totalRecoCount?(' (' + data.totalRecoCount + ')'):'');
                 if(data.status === 'success') {
-                    $.each(data.distinctRecoList, function(index, item) {
+                	$.each(data.distinctRecoList, function(index, item) {
                         if(item[1])
                             $distinctRecoTable.append('<tr><td><i>'+item[0]+'</i></td><td>'+item[2]+'</td></tr>');  
                         else
-                            $distinctRecoTable.append('<tr><td>'+item[0]+'</td><td>'+item[2]+'</td></tr>');  
-                        $me.data('offset', data.next);
+                            $distinctRecoTable.append('<tr><td>'+item[0]+'</td><td>'+item[2]+'</td></tr>');
                     });
+                	$me.data('offset', data.next);
+                    if(data.totalRecoCount <= data.next){
+                    	$me.hide();
+                    }
                 } else {
-                    $me.hide();
+                	$me.hide();
                 }
             }
         });
@@ -661,8 +665,8 @@ function updateListPage(activeTag) {
             });
             visualization.draw(visualization_data, {legend: 'bottom'});
         }
-        $('#distinctRecoList').html(data.distinctRecoListHtml);
         //$('.observation_location_wrapper').replaceWith(data.mapViewHtml);
+        updateDistinctRecoTable();
         setActiveTag(activeTag);
         updateDownloadBox(data.instanceTotal);
         updateRelativeTime();
@@ -672,7 +676,7 @@ function updateListPage(activeTag) {
     }
 }
 
-function updateGallery(target, limit, offset, removeUser, isGalleryUpdate, removeObv, removeSort, isRegularSearch, removeParam) {
+function getUpdateGalleryParams(target, limit, offset, removeUser, isGalleryUpdate, removeObv, removeSort, isRegularSearch, removeParam) {
     if(target === undefined) {
         target = window.location.pathname + window.location.search;
     }
@@ -681,10 +685,19 @@ function updateGallery(target, limit, offset, removeUser, isGalleryUpdate, remov
     var url = a.url();
     var href = url.attr('path');
     var params = getFilterParameters(url, limit, offset, removeUser, removeObv, removeSort, isRegularSearch, removeParam);
-    // alert(" tag in params " + params['tag'] );
+    params['href'] = href;
+    return params;
+}
+
+function updateGallery(target, limit, offset, removeUser, isGalleryUpdate, removeObv, removeSort, isRegularSearch, removeParam) {
+    
+    var params = getUpdateGalleryParams(target, limit, offset, removeUser, isGalleryUpdate, removeObv, removeSort, isRegularSearch, removeParam);
+
     isGalleryUpdate = (isGalleryUpdate == undefined)?true:isGalleryUpdate
     if(isGalleryUpdate)
     	params["isGalleryUpdate"] = isGalleryUpdate;
+    var href = params.href
+    delete params["href"]
     var recursiveDecoded = decodeURIComponent($.param(params));
     
     var doc_url = href+'?'+recursiveDecoded;
@@ -765,7 +778,7 @@ function refreshMapBounds() {
 }
 
 function showMapView() {
-    updateGallery(undefined, undefined, 0, undefined, window.params.isGalleryUpdate);
+    updateMapView(getUpdateGalleryParams(undefined, undefined, 0, undefined, window.params.isGalleryUpdate));
 }
 
  
@@ -837,6 +850,14 @@ function mapViewSlideToggleHandler() {
         $("#isMapView").val("true");
         showMapView();
     }
+}
+
+function updateDistinctRecoTable(){
+	$('#distinctRecoTable tbody').empty();
+	var me = $('#distinctRecoTableAction');
+	$(me).show();
+	$(me).data('offset', 0);
+	$(me).click();
 }
 
 /*                        function getRandomNumber(){

@@ -2,11 +2,15 @@ grails.mail.default.from="notification@biodiversity.bt"
 emailConfirmation.from="notification@biodiversity.bt"
 
 speciesPortal {
-	app.siteName = "Bhutan Biodiversity Portal"
-        app.logo = "logo/IBP.png"
-	app.favicon = "logo/favicon.ico"
+	app.siteName = "Bhutan Biodiversity Portal BETA"
+        app.logo = "images/demo.png"
+	app.favicon = "images/favicon.ico"
 	app.siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the      biodiversity of Bhutan."
 	app.notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com"]
+	
+	observations {
+		filePicker.key = 'ASme8oTdcTSqSi3cTFIWkz'
+	}
 }
 
 speciesPortal.validCrossDomainOrigins = [
@@ -75,7 +79,7 @@ environments {
 	production {
 		grails.serverURL = "http://biodiversity.bt/${appName}"
 		speciesPortal {
-			search.serverURL = "http://localhost:8090/solr"
+			search.serverURL = "http://localhost:8080/solr"
 			names.parser.serverURL = "127.0.0.1"
 			ibp {
 				facebook {
@@ -109,8 +113,9 @@ environments {
 		jpegOptimProg = '/usr/sbin/jpegoptim'
 		
 		speciesPortal {
-			app.rootDir = "/data/species"
+			app.rootDir = "/data/bbp/species"
 			data.rootDir = "${app.rootDir}/data"
+			search.serverURL = "http://localhost:8080/solr"
 			names.parser.serverURL = "172.0.0.1"
 			
 			resources {
@@ -161,7 +166,7 @@ environments {
                 ckeditor {
                     upload {
                     baseurl = "/newsletters"
-                    basedir = "/data/species/newsletters/"
+                    basedir = "/data/bbp/species/newsletters/"
                     image.browser = true
                     image.upload = true    
                     image.allowed = ['jpg', 'gif', 'jpeg', 'png']
