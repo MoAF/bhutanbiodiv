@@ -113,8 +113,8 @@ environments {
 		jpegOptimProg = '/usr/sbin/jpegoptim'
 		
 		speciesPortal {
-			app.rootDir = "/data/bbp/species"
-			data.rootDir = "${app.rootDir}/data"
+			//app.rootDir = "/data/bbp/species"
+			//data.rootDir = "${app.rootDir}/data"
 			search.serverURL = "http://localhost:8080/solr"
 			names.parser.serverURL = "172.0.0.1"
 			
