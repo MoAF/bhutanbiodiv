@@ -15,7 +15,7 @@ import species.participation.Follow;
 import groovy.sql.Sql;
 import grails.util.GrailsNameUtils;
 import org.grails.rateable.*
-
+ 
 class Species implements Rateable {
 
 	String title; 

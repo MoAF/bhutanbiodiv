@@ -319,4 +319,3 @@ def getContributorContributions(contributor) {
 	}
 }
 updateLicense();
->>>>>>> biodiv_usergroups

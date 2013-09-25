@@ -140,7 +140,7 @@ class ImageUtils {
 			cropped = scaled.getSubimage(x, y, rect_width, rect_height);
 		}
 		ImageIO.write(cropped, ext, outImg);
-        jpegOptimize(outImg);
+        	jpegOptimize(outImg);
 
 		//		} catch(Exception e){
 		//
@@ -174,6 +174,12 @@ class ImageUtils {
 		log.debug "stderr: ${proc.err.text}"
 		log.debug "stdout: ${proc.in.text}" // *out* from the external program is *in* for groovy
 
+		try {
+			file.setReadable(true,false);
+		}
+		catch (Exception e) {
+			log.error "Couldn't change permision on " + file + "\n" + e.printStackTrace();
+		}
 		return (proc.exitValue() == 0)
 	}
 

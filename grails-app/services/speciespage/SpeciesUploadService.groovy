@@ -462,7 +462,7 @@ class SpeciesUploadService {
 		int noOfMultimedia = s.resources?.size()?:0;
 		//int diffSources =
 		//TODO: int reviewedFields =
-		int richness = s.fields?.size()?:0 + s.globalDistributionEntities?.size()?:0 + s.globalEndemicityEntities?.size()?:0 + s.indianDistributionEntities?.size()?:0 + s.indianEndemicityEntities?.size()?:0;
+		int richness = (s.fields?.size()?:0) + (s.globalDistributionEntities?.size()?:0) + (s.globalEndemicityEntities?.size()?:0) + (s.indianDistributionEntities?.size()?:0) + (s.indianEndemicityEntities?.size()?:0);
 		richness += noOfMultimedia;
 		//richness += textSize;
 		return richness;
