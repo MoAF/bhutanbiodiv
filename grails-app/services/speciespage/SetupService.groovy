@@ -32,6 +32,7 @@ class SetupService {
 	def setupDefs() {
 		uploadFields(grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/templates/Definitions.xlsx");
 		uploadLanguages(grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/templates/Language_iso639-2.csv");
+		println "Language file: " + grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/templates/Language_iso639-2.csv"
 		uploadCountries(grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/templates/Countries_ISO-3166-1.csv");
 		uploadClassifications(grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/templates/Classifications.xlsx", 0, 0);
 		uploadLicences();
@@ -53,6 +54,7 @@ class SetupService {
 		log.info "Updating languages"
 		new File(languagesFile).splitEachLine("\\t") {
 			def fields = it;
+			println "Langue Details: ${it}>>>>>>>>>>>>>>>>>>>>>>."
 			def region = fields[0].replaceAll("\"","").trim()
 			if(region){
 				def lang = Language.findByThreeLetterCode(fields[1].replaceAll("\"",""))

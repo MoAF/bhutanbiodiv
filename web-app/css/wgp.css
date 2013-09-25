@@ -2194,10 +2194,11 @@ div.noOfRatings {
  * Style used to position the map of bhutan
  * */
 .span12  {
-	width:970px;
+	width:960px;
 }
 .span4 {
 	width:320px;
+	margin-left:10px;
 }
 #big_map_canvas  {
 	height: 200px; 

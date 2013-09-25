@@ -20,7 +20,7 @@ class TaxonService {
 	def sessionFactory
 	def groupHandlerService;
 	def namesLoaderService;
-	def speciesService;
+	def speciesUploadService;
 	def externalLinksService;
 	
 	static int BATCH_SIZE = 100;
@@ -31,7 +31,8 @@ class TaxonService {
 	 */
 	def loadTaxon(boolean createSpeciesStubsFlag) {
 		log.info("Loading taxon information");
-				loadFlowersOfIndia(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/FlowersByBotanicalNames.xls", 0, 0);
+				loadBBP("/home/kinley/bhutandata/fishebase_bhutan.xlsx", 1, 0);
+	/*			loadFlowersOfIndia(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/FlowersByBotanicalNames.xls", 0, 0);
 				loadFishBase(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/fishbase_30_11_2011.xls", 0, 0);
 				loadGBIF(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/GBIF taxonomy-search-13208373774487451330519969730577/taxonomy-search-1320837377448.txt");
 				loadEFlora(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/eflora_data_CN.xlsx", 0, 0);
@@ -39,7 +40,7 @@ class TaxonService {
 				loadIUCNRedList(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/IUCNRedList-India-12-01-2012.xlsx", 0, 0);
 				loadKeystone(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/Keystone_v1.xls", 0, 0);
 				cleanUpGorm();
-		
+	*/	
 		//		groupHandlerService.updateGroups();
 		//		namesLoaderService.syncNamesAndRecos(false);
 
@@ -49,6 +50,62 @@ class TaxonService {
 //				externalLinksService.updateExternalLinks();
 	}
 
+	
+	/**
+	  *Loading a test data to Bhutan Biodiversity portal 
+	  **/
+	def loadBBP (String file, int sheetNo, int headerRowNo)  {
+		NodeBuilder builder = NodeBuilder.newInstance();
+		XMLConverter converter = new XMLConverter();
+
+		List<Map> data = SpreadsheetReader.readSpreadSheet(file, sheetNo, headerRowNo);
+		def c= Classification.findByName(grailsApplication.config.speciesPortal.fields.FISHBASE_TAXONOMIC_HIERARCHY)
+		
+		int i = 0
+		for(Map row: data) {
+			println "ROW: ${row}"
+			String sName = row.get("species")
+			String cName = row.get("common name")
+			String family = row.get("family")
+			String order = row.get("order")
+			List taxonEntries = new ArrayList();
+			println "Processing ${sName} "
+			if(family)  {
+				Node taxon1 = builder.createNode("field")
+				new Node(taxon1, "subcategory", "family")
+				new Node(taxon1, "data", family)
+				taxonEntries.add(taxon1);
+			}
+			if(sName) {
+				Node taxon2 = builder.createNode("field");
+				new Node(taxon2, "subcategory", "species")
+				new Node(taxon2, "data", sName)
+				taxonEntries.add(taxon2);
+			}
+			if(order) {
+				Node taxon3 = builder.createNode("field");
+				new Node(taxon3, "subcategory", "order")
+				new Node(taxon3, "data", order)
+				taxonEntries.add(taxon3);
+			}
+			
+			List<TaxonomyRegistry> registry = saveTaxonEntries(converter, taxonEntries, c, sName);
+			def taxonConcept = converter.getTaxonConcept(registry, c);
+			if(!taxonConcept.isAttached()) {
+				taxonConcept.attach();
+			}
+			
+			//commonnames
+			Node commonNameNode = builder.createNode("field");
+			if(cName) {
+				new Node(commonNameNode, "data", cName.trim());
+				converter.createCommonNames(commonNameNode, taxonConcept);
+			}
+			i++;
+			cleanUpGorm();
+		}
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -798,21 +855,20 @@ class TaxonService {
 		
 		List<Species> s = [];
 		taxonConcepts.eachWithIndex { taxonConcept, index ->
-			def species = speciesService.createSpeciesStub(taxonConcept);
-
+			def species = speciesUploadService.createSpeciesStub(taxonConcept);
 			Species existingSpecies = Species.findByTaxonConcept(taxonConcept);
 			if(!existingSpecies) {
 				s.add(species);
 			}
 
 			if(s.size() % BATCH_SIZE == 0) {
-				notOfStubs += speciesService.saveSpecies(s);
+				notOfStubs += speciesUploadService.saveSpecies(s);
 				s.clear();
 			}
 		}
 
 		if(s) {
-			notOfStubs += speciesService.saveSpecies(s);
+			notOfStubs += speciesUploadService.saveSpecies(s);
 			s.clear();
 		}
 	}

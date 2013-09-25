@@ -8,7 +8,7 @@
 	
 }
 .combobox-container input:first-child {
-	width:56px;
+	width:165px;
 } 
 
 .combobox-container .add-on {
@@ -21,6 +21,10 @@
 }*/
 .caret {
 	vertical-align: middle;
+}
+
+ul.typeahead.typeahead-long.dropdown-menu {
+	width:205px;
 }
 </style>
 <%
@@ -43,6 +47,7 @@ $(document).ready(function() {
 		inputTextEle.unbind('blur');
 	    inputTextEle.attr('name', 'languageName');
 	    inputTextEle.attr('autocomplete', 'off');
+	    inputTextEle.attr('placeholder', 'Language');
 		inputTextEle.on('blur', $.proxy(myBlur, langCombo.data('combobox')));
 	}
 
@@ -59,7 +64,8 @@ $(document).ready(function() {
 	if(defaultLang === ""){
 		defaultLang = "${Language.getLanguage(null).name}";
 	}
-	langCombo.val(defaultLang).attr("selected",true);
+	//langCombo.val(defaultLang).attr("selected",true);
+	langCombo.val("").attr("selected",true);
 	langCombo.data('combobox').refresh();
 });
 
@@ -81,8 +87,8 @@ function updateCommonNameLanguage(){
 
 
 <select id="languageComboBox" class="combobox" style="display:none;" >
-<option></option>
-	<g:each in="${Language.filteredList()}">
-		<option value="${it}"> ${it}</option>
+	<option></option>
+	<g:each in="${Language.allLanguage()}">
+			<option value="${it}"> ${it}</option>
 	</g:each>
 </select>
