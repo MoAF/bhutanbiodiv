@@ -31,7 +31,7 @@ class TaxonService {
 	 */
 	def loadTaxon(boolean createSpeciesStubsFlag) {
 		log.info("Loading taxon information");
-				loadBBP("/home/kinley/bhutandata/fishebase_bhutan.xlsx", 1, 0);
+				loadBBP("/home/kinley/bhutandata/Unique list/test/xaa.xlsx", 0, 0);
 	/*			loadFlowersOfIndia(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/FlowersByBotanicalNames.xls", 0, 0);
 				loadFishBase(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/fishbase_30_11_2011.xls", 0, 0);
 				loadGBIF(grailsApplication.config.speciesPortal.data.rootDir+"/dictionaries/GBIF taxonomy-search-13208373774487451330519969730577/taxonomy-search-1320837377448.txt");
@@ -55,6 +55,170 @@ class TaxonService {
 	  *Loading a test data to Bhutan Biodiversity portal 
 	  **/
 	def loadBBP (String file, int sheetNo, int headerRowNo)  {
+		NodeBuilder builder = NodeBuilder.newInstance();
+		XMLConverter converter = new XMLConverter();
+		//Read from the spreadsheet
+		List<Map> data = SpreadsheetReader.readSpreadSheet(file,sheetNo,headerRowNo)
+		//Iterate through each row and gather data
+		for (Map row:data)  {
+			String sname = row.get("scientific name")
+			String synonym = row.get("synonym")
+			String kingdom = row.get("kingdom")
+			String phylum = row.get("phylum")
+			String subphylum = row.get("subphylum")
+			String klass = row.get("class")
+			String order = row.get("order")
+			String family = row.get("family")
+			String subfamily = row.get("subfamily")
+			String genus = row.get("genus")
+			String subspecies = row.get("subspecies")
+			String author = row.get("author")
+			String source = row.get("source")
+			
+			//Will be stored for species field
+			String name = sname + " " + subspecies?:"" + " " + author?:"";
+
+			List taxonEntries = new ArrayList();
+			Node taxon1
+			if(kingdom) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "kingdom")
+				new Node(taxon1, "data", kingdom)
+				taxonEntries.add(taxon1);
+			}
+
+			if(phylum) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "phylum")
+				new Node(taxon1, "data", phylum)
+				taxonEntries.add(taxon1);
+			}
+
+			if(subphylum) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "sub-phylum")
+				new Node(taxon1, "data", subphylum)
+				taxonEntries.add(taxon1);
+			}
+
+			if(klass) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "class")
+				new Node(taxon1, "data", klass)
+				taxonEntries.add(taxon1);
+			}
+
+			if(order) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "order")
+				new Node(taxon1, "data", order)
+				taxonEntries.add(taxon1);
+			}
+
+			if(family) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "family")
+				new Node(taxon1, "data", family)
+				taxonEntries.add(taxon1);
+			}
+
+			if(subfamily) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "sub-family")
+				new Node(taxon1, "data", subfamily)
+				taxonEntries.add(taxon1);
+			}
+
+			if(genus) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "genus")
+				new Node(taxon1, "data", genus)
+				taxonEntries.add(taxon1);
+			}
+			
+			if(name) {
+				taxon1 = builder.createNode("field");
+				new Node(taxon1, "subcategory", "species")
+				new Node(taxon1, "data", name)
+				taxonEntries.add(taxon1);
+			}
+
+			//Taxonomic Herierchy	
+			Classification c = null;
+
+			if( source == 'GIBF')
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.GBIF_TAXONOMIC_HIERARCHY)
+			else if(source == 'IUCN') 
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.IUCN_TAXONOMIC_HIERARCHY)
+			else if(source == 'FishBase') 
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.FISHBASE_TAXONOMIC_HIERARCHY)
+			else if(source == 'COL') 
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.CATALOGUE_OF_LIFE_TAXONOMIC_HIERARCHY)
+			else if(source == 'EBird') 
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.EBIRD_TAXONOMIC_HIERARCHY)
+			else if(source == 'FOB') 
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.FLORA_OF_BHUTAN_TAXONOMIC_HIERARCHY)
+			else
+				c = Classification.findByName(grailsApplication.config.speciesPortal.fields.AUTHOR_CONTRIBUTED_TAXONOMIC_HIERARCHY)
+		
+			List<TaxonomyRegistry> registry = saveTaxonEntries(converter, taxonEntries, c, name);
+			def taxonConcept = converter.getTaxonConcept(registry, c);
+			if(!taxonConcept.isAttached()) {
+				taxonConcept.attach();
+			}
+			
+			//Common Names 
+			String c1 = row.get("common name") 
+			String c2 = row.get("alternative common name")
+			String cname = ""
+			if(c1 && c2)
+				cname = c1 + ";" + c2
+			else if (c1)
+				cname = c1
+			else if (c2)
+				cname = c2
+			else
+				cname = ""
+			//Make the delims uniform
+			if(cname) {
+				cname = cname.replaceAll(",",";").replaceAll(" and ", ";").replaceAll("\\([0-9]*\\)","").replaceAll("\\(Sh\\)","#Tshangla (Sharchop)").
+					replaceAll("\\(Dz\\)","#Dzongkha").replaceAll("\\(T\\)","#Nyenkha (Mangdhikha)").replaceAll("\\(B\\)","#Bumthangkha").
+					replaceAll("\\(N\\)","#Nepali (Lhotshamkha)").replaceAll("\\(Eng\\)","#English").replaceAll("\\(Kh\\)","#Khengkha")
+			
+				Node commonNameNode = builder.createNode("field");
+				cname.split(';').each { part ->
+					if(part) {
+						String[] commonNames = part.split("#");
+						if(commonNames.length == 2) {
+								Node landata = new Node(commonNameNode, "data", commonNames[0]);
+								Node language = new Node(landata, "language");
+								new Node(language, "name", commonNames[1].trim());
+						} else {
+								new Node(commonNameNode, "data", commonNames[0]);
+						}
+					}
+				}
+				converter.createCommonNames(commonNameNode, taxonConcept);
+			}
+
+			//synonyms
+			if(synonym)  {
+				Node synonymsNode = builder.createNode("field");
+				synonym.tokenize('|').each { syn ->
+					new Node(synonymsNode, "data", syn.trim());
+				}
+				converter.createSynonyms(synonymsNode, taxonConcept);
+			}
+
+			cleanUpGorm();
+		}
+	}
+
+
+	/**
+	  *Loading a test data to Bhutan Biodiversity portal 
+	  **/
+	def testLoadBBP (String file, int sheetNo, int headerRowNo)  {
 		NodeBuilder builder = NodeBuilder.newInstance();
 		XMLConverter converter = new XMLConverter();
 
@@ -338,7 +502,7 @@ class TaxonService {
 
 		if(genus) {
 			taxon1 = builder.createNode("field");
-			new Node(taxon1, "subcategory", "family")
+			new Node(taxon1, "subcategory", "genus")
 			new Node(taxon1, "data", genus)
 			taxonEntries.add(taxon1);
 		}
