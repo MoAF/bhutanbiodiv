@@ -184,7 +184,7 @@ environments {
 			//app.rootDir = "/data/bbp/species"
 			//data.rootDir = "${app.rootDir}/data"
 			search.serverURL = "http://localhost:8080/solr"
-			names.parser.serverURL = "172.0.0.1"
+			names.parser.serverURL = "127.0.0.1"
 			
 			resources {
 				rootDir = "${app.rootDir}/simg"
