@@ -18,8 +18,6 @@ class SetupService {
 	private static final log = LogFactory.getLog(this);
 
 	static transactional = false
-
-
 	
 	def grailsApplication;
 	def groupHandlerService;
@@ -132,6 +130,7 @@ class SetupService {
 		log.info "Uploading languages"
 		new File(languagesFile).splitEachLine("\\t") {
 			def fields = it;
+			println "Saving ................. " + fields
 			def lang = new Language (threeLetterCode:fields[0].replaceAll("\"",""), twoLetterCode:fields[1].replaceAll("\"",""), name:fields[2].replaceAll("\"",""));
 			if(!lang.save(flush:true))
 				lang.errors.each { log.error it; }

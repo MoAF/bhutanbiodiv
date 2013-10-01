@@ -1,6 +1,7 @@
 import org.apache.log4j.Priority
 
 appName = grails.util.Metadata.current.getApplicationName()
+userHome = System.getProperty('user.home')
 
 grails.mail.default.from="notification@biodiversity.bt"
 emailConfirmation.from="notification@biodiversity.bt"
@@ -18,13 +19,38 @@ speciesPortal {
 	app.siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the      biodiversity of Bhutan."
 	app.notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com"]
 	
+	app.rootDir = "${userHome}/git/bhutanbiodiv/app-conf"
+	data.rootDir = "${app.rootDir}/data"
+	download.rootDir = "${data.rootDir}/datarep/downloads"
+
 	observations {
+		rootDir = "${app.rootDir}/observations"
+		observationDownloadDir = "${download.rootDir}/observations"
+		serverURL = "http://bhutanbiodiversity.localhost.org/${appName}/observations"
 		filePicker.key = 'ASme8oTdcTSqSi3cTFIWkz'
 	}
-}
 
+	species {
+		speciesDownloadDir = "${download.rootDir}/species"
+	}
+
+	resources {
+		rootDir = "${app.rootDir}/simg"
+		serverURL = "http://bhutanbiodiversity.localhost.org/${appName}/simg"
+	}
+
+	userGroups {
+		rootDir = "${app.rootDir}/userGroups"
+		serverURL = "http://bhutanbiodiversity.localhost.org/${appName}/userGroups"
+		//serverURL = "http://localhost/${appName}/userGroups"
+		logo {
+			MAX_IMAGE_SIZE = 51200
+		}
+	}
+}
 speciesPortal.validCrossDomainOrigins = [
-	"localhost.org",
+	"localhost",
+	"bhutanbiodiversity.localhost.org",
 	"biodiversity.bt",
 	"bhutanbiodiversity.bt"
 ]

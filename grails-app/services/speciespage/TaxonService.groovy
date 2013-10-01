@@ -204,7 +204,7 @@ class TaxonService {
 			//synonyms
 			if(synonym)  {
 				Node synonymsNode = builder.createNode("field");
-				synonym.tokenize('|').each { syn ->
+				synonym.split("[|,]").each { syn ->
 					new Node(synonymsNode, "data", syn.trim());
 				}
 				converter.createSynonyms(synonymsNode, taxonConcept);

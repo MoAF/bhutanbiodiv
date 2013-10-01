@@ -12,11 +12,12 @@ class Habitat {
 		ALL("All"),
 		FOREST("Forest"),
 		THICKET("Thicket"),
-		SAVANNA("Savanna"),
-		GRASSLAND("Grassland"),
+		//SAVANNA("Savanna"),
+		ALPINE("Alpine"),
+		//GRASSLAND("Grassland"),
 		SWAMP("Swamp"),
 		AQUATIC("Aquatic"),
-		DESERT("Desert"),
+		//DESERT("Desert"),
 		ROCKY_OUTCROPS("Rocky Outcrops"),
 		AGRICULTURE("Agriculture"),
 		URBAN("Urban"),
@@ -33,14 +34,19 @@ class Habitat {
 		}
 		
 		static def toList() {
-			return [ALL, FOREST, THICKET, SAVANNA, GRASSLAND,   \
-				 SWAMP, AQUATIC, DESERT, ROCKY_OUTCROPS, AGRICULTURE, URBAN, \
+			return [ALL, FOREST, THICKET, ALPINE,   \
+				 SWAMP, AQUATIC, ROCKY_OUTCROPS, AGRICULTURE, URBAN, \
 				  OTHERS]
+			/*return [ALL, FOREST, THICKET, SAVANNA, GRASSLAND,   \
+				 SWAMP, AQUATIC, DESERT, ROCKY_OUTCROPS, AGRICULTURE, URBAN, \
+				  OTHERS]*/
 		}
 		
-		private static def orderMap =  [(ALL):1, (FOREST):2, (THICKET):3, (SAVANNA):4, (GRASSLAND):5,   \
+		private static def orderMap =  [(ALL):1, (FOREST):2, (THICKET):3, (ALPINE):4,    \
+			(SWAMP):5, (AQUATIC):6, (ROCKY_OUTCROPS):7, (AGRICULTURE):8, (URBAN):9, (OTHERS):10]; 
+		/*private static def orderMap =  [(ALL):1, (FOREST):2, (THICKET):3, (SAVANNA):4, (GRASSLAND):5,   \
 			(SWAMP):6, (AQUATIC):7, (DESERT):9, (ROCKY_OUTCROPS):8, (AGRICULTURE):10, (URBAN):11, (OTHERS):12]; 
-		
+		*/
 		
 		public String toString() {
 			return this.value();
