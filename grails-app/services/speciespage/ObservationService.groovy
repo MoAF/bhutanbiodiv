@@ -1856,7 +1856,7 @@ class ObservationService {
 	/*
 	 * To validate topology in all domain class
 	 * 
-	 */
+	 *
 	public static validateLocation(Geometry gm, obj){
 		if(!gm){
 			return ['observation.suggest.location']
@@ -1865,7 +1865,21 @@ class ObservationService {
 		if(!indiaBoundry.covers(gm)){
 			return ['location.value.not.in.india', '6.74678', '35.51769', '68.03215', '97.40238']
 		}
-	}
+	}*/
+
+	/*
+	 * To validate topology in all domain class
+	 * 
+	 */
+	public static validateLocation(Geometry gm, obj){
+		if(!gm){
+			return ['observation.suggest.location']
+		}
+		Geometry indiaBoundry = getBoundGeometry(26.647, 88.692, 28.280, 92.170)
+		if(!indiaBoundry.covers(gm)){
+			return ['location.value.not.in.india', '26.647', '88.692', '28.280', '92.170']
+		}
+	}																				
 
     private getFormattedResult(List result){
 		def formattedResult = []
