@@ -12,15 +12,19 @@ import com.octo.captcha.component.image.color.SingleColorGenerator
 import com.octo.captcha.component.image.textpaster.NonLinearTextPaster
 import grails.plugins.springsecurity.SecurityConfigType;
 import com.octo.captcha.service.sound.DefaultManageableSoundCaptchaService
-
+import org.apache.log4j.Priority
 
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
-grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
-/*
-if(System.properties["${appName}.config.location"]) {
-    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-}*/
+
+// grails.config.locations = [ "classpath:${appName}-config.properties",
+//                             "classpath:${appName}-config.groovy",
+//                             "file:${userHome}/.grails/${appName}-config.properties",
+//                             "file:${userHome}/.grails/${appName}-config.groovy"]
+
+//if(System.properties["${appName}.config.location"]) {
+//   grails.config.locations << "file:" + System.properties["${appName}.config.location"]
+//}
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = false // enables the parsing of file extensions from URLs into the request format
@@ -72,14 +76,14 @@ grails.spring.bean.packages = []
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
 
-/*
+def log4jConsoleLogLevel = Priority.INFO
 // log4j configuration
 log4j = {
 	// Example of changing the log pattern for the default console
 	// appender:
 	//
 	appenders {
-	    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n')
+	    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
 	}
 
 	error  	'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -115,7 +119,7 @@ log4j = {
             //"org.grails.plugin.resource"	
     info    'species.auth'	
 
-} */
+}
 
 grails.gorm.default.mapping = {
 	cache true
@@ -509,6 +513,7 @@ environments {
 		}
 		
 		
+        log4jConsoleLogLevel = Priority.DEBUG
 
 	}
 	test {

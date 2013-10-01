@@ -145,9 +145,10 @@ class SpeciesUploadService {
 
       //  noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.5/Northeast Butterflies-RG4.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.5/NE_Butterflies_RG4");
 
-        //noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NortheastButterflies-RG25.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NE_Butterflies_RG25");
 
-
+        noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/indian_molluscs_asr_cr1.xls", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/molluscs_images");
+        noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/indian_molluscs_asr_cr2.xls", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/molluscs_images");
+        noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NortheastButterflies-RG25.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NE_Butterflies_RG25");
 
 		return noOfInsertions;
 	}
@@ -348,12 +349,14 @@ class SpeciesUploadService {
 
 		for(Species s in batch) {
 			try {
-                def taxonConcept = TaxonomyDefinition.get(s.taxonConcept.id);
-                if(externalLinksService.updateExternalLinks(taxonConcept)) {
-                    s.taxonConcept = taxonConcept;
+                //def taxonConcept = TaxonomyDefinition.get(s.taxonConcept.id);
+                if(externalLinksService.updateExternalLinks(s.taxonConcept)) {
+                    s.taxonConcept = TaxonomyDefinition.get(s.taxonConcept.id);
+//                    if(!s.taxonConcept.isAttached())
+//                        s.taxonConcept.attach();
                 }
 
-				externalLinksService.updateExternalLinks(taxonConcept);
+				//externalLinksService.updateExternalLinks(taxonConcept);
 			} catch(e) {
 				e.printStackTrace()
 			}

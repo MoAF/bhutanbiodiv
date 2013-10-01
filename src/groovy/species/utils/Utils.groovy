@@ -108,20 +108,17 @@ class Utils {
 	 * if more than 4 chars then return a string starting with _
 	 */
 	
-	private static getCleanFileExtension(String fileName){
+	public static getCleanFileExtension(String fileName){
 		String extension = ""
 		fileName = fileName?.trim()
 		if(!fileName || fileName == "")
 			return extension
 		
 		int beginIndex = fileName.lastIndexOf(".")
-		extension = (beginIndex > -1) ? fileName.substring(beginIndex) : ""
-		if(extension.size() > 5 || extension.size() == 1){
-			extension =  extension.replace(".", "_")
-		}
+		extension = (beginIndex > -1 && beginIndex+1 != fileName.size()) ? fileName.substring(beginIndex) : ""
+        if(extension.size() > 5) extension = "";
 		return extension
 	}
-	
 	
 	
 	static String cleanSearchQuery(String name) {
@@ -234,9 +231,9 @@ class Utils {
 		def config = org.codehaus.groovy.grails.commons.ConfigurationHolder.config
 
 		if(domain.startsWith(config.wgp.domain)) {
-			return config.speciesPortal.app.siteName2
+			return "The Westernghats Portal"
 		} else {
-			return config.speciesPortal.app.siteName
+			return "India Biodiversity Portal"
 		}
 		return "";
 	}
