@@ -34,6 +34,11 @@ speciesPortal {
 		speciesDownloadDir = "${download.rootDir}/species"
 	}
 
+	nameSearch {
+		serverURL = "http://localhost:8081/solr/names"
+		indexStore = "${app.rootDir}/data/names"
+	}
+	
 	resources {
 		rootDir = "${app.rootDir}/simg"
 		serverURL = "http://bhutanbiodiversity.localhost.org/${appName}/simg"
@@ -46,6 +51,26 @@ speciesPortal {
 		logo {
 			MAX_IMAGE_SIZE = 51200
 		}
+	}
+
+	users {
+		rootDir = "${app.rootDir}/users"
+		serverURL = "http://localhost/${appName}/users"
+	}
+	
+	checklist{
+		rootDir = "${app.rootDir}/checklist"
+		serverURL = "http://localhost/${appName}/checklist"
+		checklistDownloadDir = "${download.rootDir}/checklist"
+	}
+
+	content{
+		rootDir = "${app.rootDir}/content"
+		serverURL = "http://localhost/${appName}/content"
+	}
+
+	search {
+		serverURL = "http://localhost:8081/solr"
 	}
 }
 speciesPortal.validCrossDomainOrigins = [

@@ -17,6 +17,7 @@ import org.apache.log4j.Priority
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
+grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
 // grails.config.locations = [ "classpath:${appName}-config.properties",
 //                             "classpath:${appName}-config.groovy",
 //                             "file:${userHome}/.grails/${appName}-config.properties",
@@ -78,7 +79,7 @@ grails.exceptionresolver.params.exclude = ['password']
 
 def log4jConsoleLogLevel = Priority.INFO
 // log4j configuration
-log4j = {
+/*log4j = {
 	// Example of changing the log pattern for the default console
 	// appender:
 	//
@@ -119,7 +120,7 @@ log4j = {
             //"org.grails.plugin.resource"	
     info    'species.auth'	
 
-}
+} */
 
 grails.gorm.default.mapping = {
 	cache true
