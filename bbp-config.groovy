@@ -187,8 +187,8 @@ environments {
 			names.parser.serverURL = "172.0.0.1"
 			
 			resources {
-				rootDir = "${app.rootDir}/images"
-				serverURL = "http://biodiversity.bt/${appName}/images"
+				rootDir = "${app.rootDir}/simg"
+				serverURL = "http://biodiversity.bt/${appName}/simg"
 			}
 			nameSearch.indexStore = "${app.rootDir}/data/names"
 			observations {
