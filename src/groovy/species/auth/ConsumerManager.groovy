@@ -17,6 +17,7 @@ class ConsumerManager extends org.openid4java.consumer.ConsumerManager {
 	*/
    public boolean verifyReturnTo(String receivingUrl, AuthSuccess response) {
 	   receivingUrl = receivingUrl.replace(":8080", '');
+	   println "Reciecing URL>>>>>>>>>>>>>>>>>>>>" + receivingUrl
 	   if(receivingUrl.contains("openId%2Fcheckauth")){
 		   return true;
 		   //return retBool = super.verifyReturnTo(getUrlForAjaxCall(receivingUrl, response), response);

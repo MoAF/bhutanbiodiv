@@ -225,7 +225,7 @@ environments {
 		}
 		
         	ibp.domain='biodiversity.bt'
-        	wgp.domain='biodiversity.bt'
+        	wgp.domain='westernbiodiversity.bt'
 		
 		grails.plugins.springsecurity.successHandler.defaultTargetUrl = "/"
 		grails.plugins.springsecurity.logout.afterLogoutUrl = '/'
