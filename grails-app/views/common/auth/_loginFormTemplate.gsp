@@ -20,8 +20,7 @@
 				<label class="control-label" for="username"><g:message
 						code='spring.security.ui.login.username' /> </label>
 				<div class="controls">
-					<!--input class="input-xlarge focused" type="text" name="j_username"-->
-					<input class="input-xlarge focused" type="text" name="openid_identifier"
+					<input class="input-xlarge focused" type="text" name="j_username">
 						placeholder="Enter your email id...">
 				</div>
 			</div>

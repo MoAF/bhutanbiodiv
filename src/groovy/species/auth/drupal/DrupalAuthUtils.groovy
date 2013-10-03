@@ -34,10 +34,8 @@ class DrupalAuthUtils {
 
 		DrupalAuthToken authRequest = new DrupalAuthToken (
 			Long.parseLong(params.uid),
-		/*	params.j_username,
-			params.j_username*/
-			params.openid_identifier,
-			params.openid_identifier
+			params.j_username,
+			params.j_username
 		);
 		return authRequest;
 	}

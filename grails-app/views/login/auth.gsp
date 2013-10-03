@@ -17,8 +17,7 @@
 	<table>
 		<tr>
 			<td><label for="username"><g:message code='spring.security.ui.login.username'/></label></td>
-			<!--td><input name="j_username" id="username" size="20" /></td-->
-			<td><input name="openid_identifier" id="username" size="20" /></td>
+			<td><input name="j_username" id="username" size="20" /></td>
 		</tr>
 		<tr>
 			<td><label for="password"><g:message code='spring.security.ui.login.password'/></label></td>
