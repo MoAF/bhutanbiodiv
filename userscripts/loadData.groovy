@@ -113,7 +113,8 @@ def speciesUploadService = ctx.getBean("speciesUploadService");
 
 //speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/PHCC/uploadready/grasses_of_palni_hills.xlsx", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/PHCC/uploadready/grasses_of_palni_hills_mapping.xlsx", 0, 0, 0, 0,-1,grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/PHCC/uploadready/grasses_of_palni_hills");
 
-converter = new XMLConverter();
+        speciesUploadService.uploadNewSimpleSpreadsheet("/data/upload/mammals/MammalsspeciesPages.xlsx","/data/upload/mammals/images");
+/*converter = new XMLConverter();
 noChange  = 0;
 change = 0;
 c = []
@@ -214,7 +215,7 @@ def updateLicense() {
 //def speciesService = ctx.getBean("speciesService");
 //println speciesService.export([query:'id:[0 TO 40000]', rows:40000], [source:'Species', downloadType:'ZIP', filterUrl:'http://indiabiodiversity.localhost.org/species/list?query=id:[0 TO 40000]']);
 
-}
+//}
 
 
 def checkLicense(sField) {
@@ -318,4 +319,4 @@ def getContributorContributions(contributor) {
 		}
 	}
 }
-updateLicense();
+updateLicense();*/

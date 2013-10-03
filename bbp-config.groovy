@@ -12,7 +12,7 @@ grails.plugins.springsecurity.ui.userdeleted.emailFrom = 'notification@biodivers
 grails.plugins.springsecurity.ui.forgotPassword.emailFrom = 'notification@biodiversity.bt'
 
 speciesPortal {
-	app.siteName = "Bhutan Biodiversity Portal BETA"
+	app.siteName = "Bhutan Biodiversity Portal <i>BETA</i>"
 	app.siteName2 = "Bhutan Biodiversity Portal BETA2"
         app.logo = "images/demo.png"
 	app.favicon = "images/favicon.ico"
@@ -47,7 +47,7 @@ speciesPortal {
 	userGroups {
 		rootDir = "${app.rootDir}/userGroups"
 		serverURL = "http://bhutanbiodiversity.localhost.org/${appName}/userGroups"
-		//serverURL = "http://localhost/${appName}/userGroups"
+		serverURL = "http://localhost/${appName}/userGroups"
 		logo {
 			MAX_IMAGE_SIZE = 51200
 		}
@@ -184,7 +184,7 @@ environments {
 			app.rootDir = "/data/bbp/species"
 			data.rootDir = "${app.rootDir}/data"
 			search.serverURL = "http://localhost:8080/solr"
-			names.parser.serverURL = "127.0.0.1"
+			names.parser.serverURL = "localhost"
 			
 			resources {
 				rootDir = "${app.rootDir}/simg"
@@ -268,8 +268,9 @@ log4j = {
 		'speciespage',
 		'grails.app'
     	
-	info    'species.auth'	
-	
+	debug    'species.auth'	
+	debug	'org.openid4java'
+
 	appenders {
 		console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
 		rollingFile name: "bbplog", maxFileSize: '10MB', maxBackupIndex: 4, file: logFile, layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold:log4jAppFileLogLevel 
