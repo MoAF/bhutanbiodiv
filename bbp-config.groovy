@@ -12,14 +12,21 @@ grails.plugins.springsecurity.ui.userdeleted.emailFrom = 'notification@biodivers
 grails.plugins.springsecurity.ui.forgotPassword.emailFrom = 'notification@biodiversity.bt'
 
 speciesPortal {
-	app.siteName = "Bhutan Biodiversity Portal <i>BETA</i>"
-	app.siteName2 = "Bhutan Biodiversity Portal BETA2"
-	app.siteCode = "bbp"
-        app.logo = "images/demo.png"
-	app.favicon = "images/favicon.ico"
-	app.siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the      biodiversity of Bhutan."
-	app.notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com"]
-	
+    app{
+        siteName = "Bhutan Biodiversity Portal <i>BETA</i>"
+        siteName2 = "Bhutan Biodiversity Portal BETA2"
+        siteCode = "${appName}"
+
+        twitterUrl = "https://twitter.com/bhutanbiodiversity"
+        facebookUrl = "https://www.facebook.com/pages/Bhutan-Biodiversity-Portal"
+        feedbackFormUrl = "${grails.serverURL}/feedback_form"
+
+        logo = "images/demo.png"
+        favicon = "images/favicon.ico"
+        siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the biodiversity of Bhutan."
+        notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com"]
+    }
+
 	app.rootDir = "${userHome}/git/bhutanbiodiv/app-conf"
 	data.rootDir = "${app.rootDir}/data"
 	download.rootDir = "${data.rootDir}/datarep/downloads"
@@ -86,7 +93,7 @@ speciesPortal.validCrossDomainOrigins = [
 //log4j
 def log4jConsoleLogLevel = Priority.WARN
 def log4jAppFileLogLevel = Priority.DEBUG
-def logFile = "/home/kinley/logs/bbp-stacktrace.log".toString() 
+def logFile = "${userHome}/logs/bbp-stacktrace.log".toString() 
 environments {
 	development {
 		grails.serverURL = "http://bhutanbiodiversity.localhost.org/${appName}"
