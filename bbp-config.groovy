@@ -14,6 +14,7 @@ grails.plugins.springsecurity.ui.forgotPassword.emailFrom = 'notification@biodiv
 speciesPortal {
 	app.siteName = "Bhutan Biodiversity Portal <i>BETA</i>"
 	app.siteName2 = "Bhutan Biodiversity Portal BETA2"
+	app.siteCode = "bbp"
         app.logo = "images/demo.png"
 	app.favicon = "images/favicon.ico"
 	app.siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the      biodiversity of Bhutan."
