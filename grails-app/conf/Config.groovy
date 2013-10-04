@@ -205,7 +205,7 @@ else {
 speciesPortal {
     app.siteName = "India Biodiversity Portal"
     app.siteDescription = "Welcome to the ${app.siteName} - A repository of information designed to harness and disseminate collective intelligence on the biodiversity of the Indian subcontinent."
-    app.siteCode = 'ibp'
+    app.siteCode = "ibp"
 
     app.twitterUrl = "https://twitter.com/thewesternghats"
     app.facebookUrl = "https://www.facebook.com/pages/India-Biodiversity-Portal/130062180358038?fref=ts"

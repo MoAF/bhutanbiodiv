@@ -46,7 +46,6 @@ modules = {
 		resource url:'/css/biodiv.css'
 		resource url:"/css/${org.codehaus.groovy.grails.commons.ConfigurationHolder.config.speciesPortal.app.siteCode}.css"
 
-
 		resource url:'/bootstrap/js/bootstrap.min.js'
 		resource url:'/js/species/main.js'
 		resource url:'/js/species/util.js'
