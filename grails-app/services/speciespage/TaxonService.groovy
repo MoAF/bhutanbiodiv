@@ -44,8 +44,8 @@ class TaxonService {
 		//		groupHandlerService.updateGroups();
 		//		namesLoaderService.syncNamesAndRecos(false);
 
-				loadGBIF("/home/kinley/bhutandata/taxons/GBIF.csv");
-				//loadIUCNRedList("/home/kinley/bhutandata/taxons/iucn_bhutan.xlsx", 0, 0);
+				//loadGBIF("/data/upload/taxons/GBIF.csv");
+				loadIUCNRedList("/data/upload/taxons/iucn_bhutan.xlsx", 0, 0);
 				
 				if(createSpeciesStubsFlag) {
 					createSpeciesStubs();
