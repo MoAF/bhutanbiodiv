@@ -45,7 +45,7 @@ class TaxonService {
 		//		namesLoaderService.syncNamesAndRecos(false);
 
 				//loadGBIF("/data/upload/taxons/GBIF.csv");
-				loadIUCNRedList("/data/upload/taxons/iucn_bhutan.xlsx", 0, 0);
+				//loadIUCNRedList("/data/upload/taxons/iucn_bhutan.xlsx", 0, 0);
 				
 				if(createSpeciesStubsFlag) {
 					createSpeciesStubs();
