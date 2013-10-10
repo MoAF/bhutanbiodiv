@@ -58,7 +58,7 @@
 			</ul>
 		</div>
                 -->
-                <div class="links_box_column">
+		<div class="links_box_column">
 			<ul>
 				<li class="nav-header bold" style="color:#5E5E5E; padding-left: 0px;">Others</li>
 				<li><a href="${ '/sitemap'}">Sitemap</a>
