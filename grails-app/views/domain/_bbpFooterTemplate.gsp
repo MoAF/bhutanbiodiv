@@ -23,7 +23,7 @@
 				</li-->
 			</ul>
 		</div>
-		<div class="links_box_column">
+<!--		<div class="links_box_column">
 			<ul>
 				<li class="nav-header bold"  style="padding-left: 0px;"><a href='/theportal'>The Portal</a></li>
 				<li><a href="${ '/biodiversity_in_india'}">Biodiversity in India</a>
@@ -57,6 +57,7 @@
 
 			</ul>
 		</div>
+                -->
 		<div class="links_box_column">
 			<ul>
 				<li class="nav-header bold" style="color:#5E5E5E; padding-left: 0px;">Others</li>
@@ -74,9 +75,8 @@
 
             </div>
 <div class="powered" style="text-align:center;">
-	<p> <a href="http://thewesternghats.in" target="_blank">thewesternghats.in</a> | <a href="http://indiabiodiversity.org" target="_blank">indiabiodiversity.org</a><br />
 Best supported on Google Chrome, Firefox 3.0+, Internet Explorer 8.0+, Safari 4.0+, Opera 10+.<br />
-Powered by the open source <a href="https://github.com/strandls/biodiv" target="_blank">Biodiversity Informatics Platform.</a></p>
+Powered by the open source <a href="https://github.com/MoAF/bhutanbiodiv" target="_blank">Biodiversity Informatics Platform.</a></p>
 	</div>
 </div>
 <r:script>
