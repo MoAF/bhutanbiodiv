@@ -288,3 +288,5 @@ log4j = {
 		error 'stdout', 'bbplog'
 	}
 }
+
+grails.plugins.springsecurity.ui.register.postRegisterUrl  = "${grails.serverURL}/user/myprofile" // use defaultTargetUrl if not set
