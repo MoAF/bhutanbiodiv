@@ -19,7 +19,7 @@ speciesPortal {
 
         twitterUrl = "https://twitter.com/bhutanbiodiversity"
         facebookUrl = "https://www.facebook.com/pages/Bhutan-Biodiversity-Portal"
-        feedbackFormUrl = "${grails.serverURL}/feedback_form"
+        feedbackFormUrl = "http://biodiversity.bt/contact"
 
         logo = "images/demo.png"
         favicon = "images/favicon.ico"
@@ -188,6 +188,8 @@ environments {
 		grails.serverURL = "http://biodiversity.bt/${appName}"
 		jpegOptimProg = "/usr/sbin/jpegoptim"
 		
+        grails.plugins.springsecurity.ui.register.postRegisterUrl  = "${grails.serverURL}/user/myprofile" // use defaultTargetUrl if not set
+
 		speciesPortal {
 			app.rootDir = "/data/bbp/species"
 			data.rootDir = "${app.rootDir}/data"
@@ -289,4 +291,3 @@ log4j = {
 	}
 }
 
-grails.plugins.springsecurity.ui.register.postRegisterUrl  = "${grails.serverURL}/user/myprofile" // use defaultTargetUrl if not set
