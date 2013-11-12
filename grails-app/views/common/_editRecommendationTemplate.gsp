@@ -37,7 +37,7 @@
                 code="observation.recommendationVote.label" default="Common name" />
             </label>
             <div class="controls">
-                <div class="nameContainer textbox" style="position:relative;">
+                <div class="nameContainer textbox" style="position:relative;" >
 
                     <input type="text" name="commonName" id="commonName"
                         value="${species_cn_name}" placeholder='Suggest a common name'

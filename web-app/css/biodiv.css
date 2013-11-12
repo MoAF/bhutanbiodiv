@@ -1,3 +1,8 @@
+/**
+ * All common style rules for biodiv application
+ * Any specific rules have to go into ${grailsApplication.config.speciesPortal.app.siteCode}.css
+ */
+
 body { /*     background-color: #ffffff; */
 	/*     background-image: url('../images/header.png'); */
 	/*background-color: #ffffff;*/
@@ -556,7 +561,7 @@ ul#recoSummary {
 
 .observation_location {
 	background-color: #FFFFFF;
-	padding: 10px;
+	/*padding: 10px;*/
 	box-shadow: 1px 1px 3px #5e5e5e inset;
 }
 
@@ -626,7 +631,7 @@ ul#recoSummary {
 .map_wrapper {
 	border-radius: 5px;
 	border-top-left-radius: 0;
-	margin-bottom: 40px;
+/*	margin-bottom: 40px;*/
 }
 
 #map_view_bttn {
@@ -1347,6 +1352,10 @@ span.cke_skin_kama {
 	margin-right: 16px;
 }
 /*USER GROUP END*/
+.page-header .sci_name{
+	font-style: normal;
+}
+
 .sci_name {
 	font-style: italic;
 }
@@ -2107,8 +2116,9 @@ div.noOfRatings {
 
 .jcarousel-item .checklist_th {
     background-color:#ffffff
+    border-radius:0;
 }
-.jcarousel-item .checklist_th .figure{
+.jcarousel-item .checklist_th .figure {
     opacity: 0.5;
     filter: alpha(opacity = 50);      
 }
@@ -2190,6 +2200,20 @@ div.noOfRatings {
         background-image: url('../images/glyphicons_043_group_white.png');
 } 
 
+/**
+ * Style used to position the map of bhutan
+ * */
+.span12  {
+	width:960px;
+}
+.span4 {
+	width:320px;
+	margin-left:10px;
+}
+#big_map_canvas  {
+	height: 200px; 
+	width: 320px;
+}
 /* .selectable { */
 /*     background: url("../images/icons/plus.png") no-repeat scroll 50% 50% transparent; */
 /*     background-color: transparent; */

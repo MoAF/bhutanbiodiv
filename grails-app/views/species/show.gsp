@@ -22,9 +22,9 @@ def imagePath = '';
 if(r) {
     def gThumbnail = r.fileName.trim().replaceFirst(/\.[a-zA-Z]{3,4}$/, grailsApplication.config.speciesPortal.resources.images.gallery.suffix)?:null;
     if(r && gThumbnail) {
-            if(r.type == ResourceType.IMAGE) {
+            if(r?.type == ResourceType.IMAGE) {
                     imagePath = g.createLinkTo(base:grailsApplication.config.speciesPortal.resources.serverURL,	file: gThumbnail)
-            } else if(r.type == ResourceType.VIDEO){
+            } else if(r?.type == ResourceType.VIDEO){
                     imagePath = r.thumbnailUrl()
             }
     }

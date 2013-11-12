@@ -34,12 +34,13 @@ class Language {
 			lang = Language.findByNameIlike(languageName.trim());
 			if(!lang){
 				//inserting new language
-				lang = new Language(name:languageName.trim(), threeLetterCode:getThreeLetterCode(languageName), isDirty:true);
+				lang = Language.findByNameIlike(DEFAULT_LANGUAGE);
+				/*lang = new Language(name:languageName.trim(), threeLetterCode:getThreeLetterCode(languageName), isDirty:true);
 				if(!lang.save(flush:true)){
 					//println "Error during new language save $languageName"
 					lang = null;
-				}
-			}
+				}*/
+			}	
 		}
 		return lang;
     }
@@ -60,5 +61,10 @@ class Language {
 	
 	public static filteredList(){
 		return Language.findAllByIsDirtyOrRegionIsNotNull(true).collect{it.name;} ;
+	}
+
+	//List of all languages to be used for common name
+	public static allLanguage(){
+		return Language.getAll().collect{it.name;} ;
 	}
 }

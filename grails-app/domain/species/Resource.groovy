@@ -34,6 +34,7 @@ class Resource implements Rateable {
         }
 	}
 	
+//	ResourceType type;
 	ResourceType type;
 	String url; //TODO validate as url
 	String fileName;
@@ -118,4 +119,5 @@ class Resource implements Rateable {
 			this.url = url;
 		}
 	}
+
 }

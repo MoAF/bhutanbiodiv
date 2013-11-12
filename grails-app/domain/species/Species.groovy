@@ -1,5 +1,5 @@
 package species
-
+      
 import java.util.Date;
 
 import org.apache.commons.logging.LogFactory;
@@ -15,9 +15,8 @@ import species.participation.Follow;
 import groovy.sql.Sql;
 import grails.util.GrailsNameUtils;
 import org.grails.rateable.*
-
+ 
 class Species implements Rateable {
-
 	String title; 
 	String guid; 
 	TaxonomyDefinition taxonConcept;
@@ -38,12 +37,13 @@ class Species implements Rateable {
 	def fieldsConfig = ConfigurationHolder.config.speciesPortal.fields
 	
 	static hasMany = [fields: SpeciesField,
+		resources:Resource,
 		globalDistributionEntities:GeographicEntity, 
 		globalEndemicityEntities:GeographicEntity, 
 		indianDistributionEntities:GeographicEntity, 
 		indianEndemicityEntities:GeographicEntity, 
-		taxonomyRegistry:TaxonomyRegistry, 
-		resources:Resource];
+		taxonomyRegistry:TaxonomyRegistry 
+		];
 
 	static constraints = {
 		guid(blank: false, unique: true);
@@ -105,8 +105,17 @@ class Species implements Rateable {
 	List<Resource> getIcons() {
 		def icons = new ArrayList<Resource>();
 		resources.each {
-			if(it?.type == species.Resource.ResourceType.ICON) {
-				icons.add(it);
+			println "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+			it.properties.each  { name ->
+				println "NAME: " + name
+			}
+			println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+			println it?.getClass() 
+			println "??????????????????????????????????????????"
+			if(it?.getClass() == species.Resource) {
+				if(it?.type == species.Resource.ResourceType.ICON) {
+					icons.add(it);
+				}
 			}
 		}
 		return icons;

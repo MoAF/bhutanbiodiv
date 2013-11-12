@@ -171,6 +171,7 @@ class SpeciesController {
 	def show = {
 		//cache "content"
 		def speciesInstance = Species.get(params.long('id'))
+
 		if (!speciesInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'species.label', default: 'Species'), params.id])}"
 			redirect(action: "list")
