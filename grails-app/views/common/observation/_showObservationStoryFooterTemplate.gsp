@@ -2,7 +2,7 @@
 <%@page import="species.participation.Checklists"%>
 
     
-<div class="story-footer" style="width:100%">
+<div class="story-footer">
 
     <g:if test="${showLike && !showDetails}">
     <div class="footer-item pull-left">
@@ -39,8 +39,12 @@
                 title="${observationInstance.license.name}"/>
             </div>
         </g:if>
+        
     </g:if>
-
+    <g:if test="${!hidePost}">
+    	<uGroup:objectPost model="['objectInstance':observationInstance, 'userGroup':userGroup, canPullResource:canPullResource]" />
+    </g:if>	
+	
     <g:if test="${!showDetails}">
         <g:render template="/common/observation/noOfResources" model="['instance':observationInstance]"/>
     </g:if>

@@ -13,4 +13,19 @@
 
 .span6 #big_map_canvas {
     height: 200px; 
-}   
+}
+
+/**
+ *  * Style used to position the map of bhutan
+ *   * */
+.span12  {
+        width:960px;
+}
+.span4 {
+        width:320px;
+        margin-left:10px;
+}
+/**#big_map_canvas  {
+        height: 200px;
+        width: 320px;
+}*/

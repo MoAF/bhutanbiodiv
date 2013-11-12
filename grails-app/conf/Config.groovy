@@ -220,15 +220,15 @@ speciesPortal {
     app.logo = "logo/IBP.png"
     app.favicon = "logo/favicon.png"
    
-    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com"]
+    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com", "rahulk@strandls.com"]
 
 	species {
 		speciesDownloadDir = "${download.rootDir}/species"
 	}
 	domain = "localhost"
 	resources {
-		rootDir = "${app.rootDir}/simg"
-		serverURL = "http://indiabiodiversity.localhost.org/${appName}/simg"
+		rootDir = "${app.rootDir}/img"
+		serverURL = "http://indiabiodiversity.localhost.org/${appName}/img"
 		images {
 			defaultType = "jpg"
 			thumbnail {
@@ -339,8 +339,8 @@ speciesPortal {
 
 		COMMON_NAME = "Common Name"
 		SYNONYMS = "Synonyms"
-		INDIAN_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Indian Distribution Geographic Entity"
-		INDIAN_ENDEMICITY_GEOGRAPHIC_ENTITY = "Indian Endemicity Geographic Entity"
+		INDIAN_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Local Distribution Geographic Entity"
+		INDIAN_ENDEMICITY_GEOGRAPHIC_ENTITY = "Local Endemicity Geographic Entity"
 		GLOBAL_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Global Distribution Geographic Entity"
 		GLOBAL_ENDEMICITY_GEOGRAPHIC_ENTITY = "Global Endemicity Geographic Entity"
 		TAXONOMIC_HIERARCHY = "Taxonomy Hierarchy"
@@ -524,7 +524,29 @@ environments {
 
 
         log4jConsoleLogLevel = Priority.DEBUG
-
+	    log4j = {
+		appenders {
+		    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+        }
+        error   'org.codehaus.groovy.grails.web.pages', //  GSP
+                'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+                'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+                'org.codehaus.groovy.grails.web.mapping', // URL mapping
+                'org.codehaus.groovy.grails.commons', // core / classloading
+                'org.codehaus.groovy.grails.plugins', // plugins
+                'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+                'org.hibernate',
+                'net.sf.ehcache.hibernate',
+                'org.springframework.security',
+                'org.codehaus.groovy.grails.web.servlet',  //  controllers
+                'grails.plugin',
+                'org.springframework.security.web',
+                'grails.app.tagLib.org.grails.plugin.resource'
+		debug   'speciespage',
+                'grails.app',
+                'species'
+        info    'species.auth'
+	}
 	}
 	test {
 		grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
@@ -584,18 +606,18 @@ environments {
 
 			observations {
 				rootDir = "${app.rootDir}/observations"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/observations"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/observations"
                 filePicker.key = 'AXCVl73JWSwe7mTPb2kXdz'
 	//serverURL = "http://localhost/${appName}/observations"
 			}
 			userGroups {
 				rootDir = "${app.rootDir}/userGroups"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/userGroups"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/userGroups"
 				//serverURL = "http://localhost/${appName}/observations"
 			}
 			users {
 				rootDir = "${app.rootDir}/users"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/users"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/users"
 			}
 			search.serverURL="http://saturn.strandls.com:8080/solr"
 			grails.project.war.file = "/data/jetty-6.1.26/webapps/${appName}.war"
@@ -638,6 +660,13 @@ environments {
                     image.denied = []
                 }
 
+		}
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+			}
+			debug	'species',
+				'speciespage'
 		}
 	}
 	pambaTest {
@@ -717,7 +746,14 @@ environments {
                 }
 
 		}
-		
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+			}
+			info	'species',
+				'speciespage'
+		}
+
 	}
 
 
@@ -737,23 +773,23 @@ environments {
             nameSearch.indexStore = "${app.rootDir}/data/names"
             observations {
                 rootDir = "${app.rootDir}/observations"
-                serverURL = "http://thewesternghats.in/${appName}/observations"
+                serverURL = "http://indiabiodiversity.org/${appName}/observations"
             }
             userGroups {
                 rootDir = "${app.rootDir}/userGroups"
-                serverURL = "http://thewesternghats.in/${appName}/userGroups"
+                serverURL = "http://indiabiodiversity.org/${appName}/userGroups"
             }
             users {
                 rootDir = "${app.rootDir}/users"
-                serverURL = "http://thewesternghats.in/${appName}/users"
+                serverURL = "http://indiabiodiversity.org/${appName}/users"
             }
 
             content{
                 rootDir = "${app.rootDir}/content"
-                serverURL = "http://thewesternghats.in/${appName}/content"
+                serverURL = "http://indiabiodiversity.org/${appName}/content"
             }	
 
-            search.serverURL="http://thewesternghats.in:8080/solr"
+            search.serverURL="http://indiabiodiversity.org:8080/solr"
             grails {
                 mail {
                     host = "127.0.0.1"
@@ -795,7 +831,17 @@ environments {
             }
         }
 		
-        log4jConsoleLogLevel = Priority.INFO
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: Priority.INFO
+			}
+			info	'species',
+				'speciespage'
+			warn 	'grails.app',
+				'org.springframework.security.web'
+
+
+		}
 	}
 }
 

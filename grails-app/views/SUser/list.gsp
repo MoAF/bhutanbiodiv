@@ -12,7 +12,14 @@
 .thumbnails>li {
         margin:0 1px 5px 0px;
         padding:0px;
-    }
+}
+.list_view .observervation_story {
+    width:784px;
+}
+.observations_list{
+    top:0px;
+}
+
 </style>
 
 
