@@ -18,8 +18,8 @@
 				<li id="species"><a href="species/index">Species</a></li>
 				<li id="observations"><a href="observation/index">Observations</a></li>
 				<li id="maps"><a href="maps">Maps</a></li>
-				<li id="documents"><a href="documents/list">Documents</a></li>
-				<li id="groups"><a href="groups/list">Groups</a></li>
+				<li id="documents"><a href="document/list">Documents</a></li>
+				<li id="groups"><a href="group/list">Groups</a></li>
 				<li id="about-us"><a href="theportal">About Us</a></li>
 			</ul>
 		</div>     	
