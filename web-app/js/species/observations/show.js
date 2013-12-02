@@ -11,22 +11,9 @@ function showRecos(data, textStatus) {
     if($('#carousel_a').length > 0) {
         reloadCarousel($('#carousel_a').data('jcarousel'), 'speciesName', speciesName);
     }
-    showRecoUpdateStatus(data.msg, data.status);
+    showUpdateStatus(data.msg, data.status);
 }
 
-function showRecoUpdateStatus(msg, type) {
-    if(!msg) return;
-
-    if(type === 'info') {
-        $("#seeMoreMessage").html(msg).show().removeClass().addClass('alert alert-info');
-    } else if(type === 'success') {
-        $("#seeMoreMessage").html(msg).show().removeClass().addClass('alert alert-success');
-    } else if(type === 'error') {
-        $("#seeMoreMessage").html(msg).show().removeClass().addClass('alert alert-error');
-    } else {
-        $("#seeMoreMessage").hide();
-    }
-}
 
 function removeRecoComment(recoVoteId, commentDivId, url, commentComp){
     $.ajax({
@@ -40,7 +27,7 @@ function removeRecoComment(recoVoteId, commentDivId, url, commentComp){
             $(commentDivId).remove(); 
         }
         // $(".deleteCommentIcon").tooltip('hide');
-        showRecoUpdateStatus(data.success, 'success');
+        showUpdateStatus(data.success, 'success');
     },
 
     statusCode: {
@@ -51,7 +38,7 @@ function removeRecoComment(recoVoteId, commentDivId, url, commentComp){
     error: function(xhr, status, error) {
         // $(".deleteCommentIcon").tooltip('hide');
         var msg = $.parseJSON(xhr.responseText);
-        showRecoUpdateStatus(msg.error, 'error');
+        showUpdateStatus(msg.error, 'error');
     }
     });
 }
@@ -69,17 +56,17 @@ function addAgreeRecoVote(obvId, recoId, currentVotes, liComponent, url){
                 preLoadRecos(3, 0, false, obvId, liComponent);
                 updateFeeds();
                 setFollowButton();
-                showRecoUpdateStatus(data.msg, data.status);
+                showUpdateStatus(data.msg, data.status);
             }
         } else {
-            showRecoUpdateStatus(data.msg, data.status);
+            showUpdateStatus(data.msg, data.status);
         }
         return false;
     },
 
     error:function (xhr, ajaxOptions, thrownError){
         //successHandler is used when ajax login succedes
-        var successHandler = this.success, errorHandler = showRecoUpdateStatus;
+        var successHandler = this.success, errorHandler = showUpdateStatus;
         handleError(xhr, ajaxOptions, thrownError, successHandler, errorHandler);
     } 
     });
@@ -95,16 +82,16 @@ function removeRecoVote(obvId, recoId, url){
             preLoadRecos(3, 0, false, obvId);
             updateFeeds();
             setFollowButton();
-            showRecoUpdateStatus(data.msg, data.status);
+            showUpdateStatus(data.msg, data.status);
         } else {
-            showRecoUpdateStatus(data.msg, data.status);
+            showUpdateStatus(data.msg, data.status);
         }
         return false;
     },
 
     error:function (xhr, ajaxOptions, thrownError){
         //successHandler is used when ajax login suceedes
-        var successHandler = this.success, errorHandler = showRecoUpdateStatus;
+        var successHandler = this.success, errorHandler = showUpdateStatus;
         handleError(xhr, ajaxOptions, thrownError, successHandler, errorHandler);
     } 
     });
@@ -133,14 +120,14 @@ function preLoadRecos(max, offset, seeAllClicked) {
     } else {
         $("#seeMore").hide();
     }
-    showRecoUpdateStatus(data.msg, data.status);
+    showUpdateStatus(data.msg, data.status);
             } else {
-                showRecoUpdateStatus(data.msg, data.status);
+                showUpdateStatus(data.msg, data.status);
             }
         }, error: function(xhr, status, error) {
             handleError(xhr, status, error, undefined, function() {
                 var msg = $.parseJSON(xhr.responseText);
-                showRecoUpdateStatus(msg.msg, msg.status);
+                showUpdateStatus(msg.msg, msg.status);
             });
         }
     });
@@ -167,15 +154,51 @@ function getMonthName(monthIndex) {
 }
 
 function drawVisualization(rows) {
-    var data = new google.visualization.DataTable();
-    data.addColumn('date', 'Date');
-    data.addColumn('number', 'Observation');
+    var d = []
+//    var data = new google.visualization.DataTable();
+//    data.addColumn('date', 'Date');
+//    data.addColumn('number', 'Observation');
     if(rows) {
+        var ignoreDate = -19800000 // representing Thu Jan 01 1970 00:00:00 GMT+0530 (IST) in miliseconds
         for(var i=0; i<rows.length; i++) {
-            data.addRow([new Date(rows[i].observedOn), 1]);
+            var obvDate = new Date(rows[i].observedOn);
+            if(obvDate.getTime() != ignoreDate){
+                //data.addRow([obvDate, 1]);
+                d.push([obvDate, 1]);
+            }
         }
     }
-    if(data.getNumberOfRows() > 0) {
+    if(d.length >0) {
+        var gD = Array.apply(null, new Array(12)).map(Number.prototype.valueOf,0);
+        for(var i=0; i<d.length; i++) {
+            gD[d[i][0].getMonth()] = gD[d[i][0].getMonth()] + d[i][1]
+        }
+
+        $("#temporalDist").sparkline(gD, {
+            type: 'bar', 
+            barWidth: 24,
+            height:'108px',
+            width:'300px',
+            tooltipFormat: '{{offset:offset}} : {{value}} Observations',
+            tooltipValueLookups: {
+                'offset': {
+                    0:'Jan',
+                    1:'Feb',
+                    2:'Mar',
+                    3:'Apr',
+                    4:'May',
+                    5:'Jun',
+                    6:'Jul',
+                    7:'Aug',
+                    8:'Sep',
+                    9:'Oct',
+                    10:'Nov',
+                    11:'Dec'
+                }
+            }
+        });
+
+/*    if(data.getNumberOfRows() > 0) {
     var grouped_dt = google.visualization.data.group (
             data, [{column:0, modifier:getMonth, type:'number', label:'MonthNo'}],
             [{'column': 1, 'aggregation': google.visualization.data.sum, type: 'number', label:'#Observations'}, {'column': 0, 'aggregation': getMonthName, type: 'string', label:'Month'}]
@@ -199,8 +222,8 @@ function drawVisualization(rows) {
     }
     
     grouped_dt.sort([{column:0}]);
-
-    var view = new google.visualization.DataView(grouped_dt);
+*/
+/*    var view = new google.visualization.DataView(grouped_dt);
     view.setColumns([2,1]);
 
     var columnChart = new google.visualization.ColumnChart(
@@ -213,7 +236,7 @@ function drawVisualization(rows) {
         legend:{position: 'none'},
         chartArea:{width:'80%'}
     });
-    /*    var table = new google.visualization.Table(document.getElementById('table'));
+  */  /*    var table = new google.visualization.Table(document.getElementById('table'));
           table.draw(view, null);
 
           var grouped_table = new google.visualization.Table(document.getElementById('grouped_table'));

@@ -13,4 +13,178 @@
 
 .span6 #big_map_canvas {
     height: 200px; 
-}   
+}
+
+/**
+ *  * Style used to position the map of bhutan
+ *   * */
+.span12  {
+        width:960px;
+}
+.span4 {
+        width:320px;
+        margin-left:10px;
+}
+/**#big_map_canvas  {
+        height: 200px;
+        width: 320px;
+}*/
+
+/**
+ * Accordian Styles
+ * **/
+.accordion {
+	position:relative;
+	margin:0;
+	padding: 0px;
+	width:960px;
+	height:300px;
+	overflow: hidden;
+}
+
+.accordion ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	display: block;
+	height: 300px;
+	position: relative;
+}
+
+.accordion ul li {
+	width: 160px;
+	float: left;
+	display: block;
+	overflow: hidden;
+}
+
+.accordion ul li a {
+	text-indent: -1000px;
+	background:#fff repeat scroll 0%;
+	border-right: 2px solid #fff;
+	cursor:pointer;
+	display:block;
+	overflow: hidden;
+	height: 300px;
+}
+
+.accordion ul li#species a {
+	background: url(../images/accordion/species.png) repeat scroll 0%;
+}
+
+.accordion ul li#observations a {
+	background: url(../images/accordion/observations.png) repeat scroll 0%;
+}
+
+.accordion ul li#maps a {
+	background: url(../images/accordion/maps.png) repeat scroll 0%;
+}
+
+.accordion ul li#documents a {
+	background: url(../images/accordion/documents.png) repeat scroll 0%;
+}
+
+.accordion ul li#groups a {
+	background: url(../images/accordion/groups.png) repeat scroll 0%;scroll
+}
+
+.accordion ul li#about-us a{
+	background: url('../images/accordion/about-us.png') repeat scroll 0%;
+	border-right-style: none;
+}
+
+.clear {
+	clear: both;
+}
+
+
+/**
+ *Custom Colors for BBP
+ * */
+div.container.group-theme.navbar {
+	background-color: rgb(244, 233, 201);
+	background-image: none;
+	width:980px;
+	height:80px;
+}
+
+div.navbar.navbar-static-top.btn {
+	background-color: rgb(255, 163, 102);
+	background-image: none;
+}
+
+div.navbar-inner  {
+	background-color: rgb(255, 163, 102);
+}
+
+div#species_main_wrapper {
+	background-color: rgb(222, 239, 222);
+}
+
+a.collapsed  {
+	background-color: rgb(68, 68, 68);
+	background-image: none;
+}
+
+a.btn.btn-success {
+	background-color: rgb(68, 68, 68);
+	background-image: none;
+}
+
+html {
+	background-color: rgb(222, 239, 222);
+}
+
+.navbar .nav .active a, .navbar .nav .active a:hover, .navbar .nav .active a:focus {
+	background-color: rgb(255, 227, 209);
+}
+
+#ibp-footer  {
+	background-color: rgb(244, 233, 201);
+	background-image: none;
+}
+
+#ibp-header  {
+	background-color: rgb(244, 233, 201);
+	background-image: none;
+}
+
+#feedback_button {
+	display:none;
+}
+
+.container .outer-wrapper  {
+	background-color: rgb(244, 233, 201);
+}
+
+.contributeButton a {
+	background-color: #006B00; 
+	background-image: none;
+}
+
+h5 {
+	background-color: rgb(68, 68, 68);
+}
+
+#ibp-header-bar  {
+	height:32px;
+	line-height:15px;
+}
+
+.main_heading .species_title .sci_name  {
+	line-height:50px;
+}
+
+#ibp-header .navbar-inner  {
+	height: 32px;
+}
+
+#ibp-header-bar .navbar-inner .container  {
+	width:980px;
+}
+
+.logo  {
+	height: 80px;
+	width: 90px;
+	margin-left:0px;
+}

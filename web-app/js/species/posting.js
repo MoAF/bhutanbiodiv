@@ -2,24 +2,24 @@ var selectedObjects = new Array();
 var rejectedObjects = new Array();
 
 function updateObjSelection(id, comp){
-	$('.post-to-groups').parent().slideDown(1000);
+	//opening list of groups on any selection change
+	$('#action-tabs').children('li').addClass('active');
+	$("#action-tab-content .tab-pane").addClass('active');
 	$(comp).parent().removeClass('mouseover').addClass('mouseoverfix');
 	if($(comp).hasClass('selectedItem')){
 		$(comp).removeClass('selectedItem');
 		if($('.post-to-groups .select-all').hasClass('active')){
 			rejectedObjects.push(id);
 		}else{
-			selectedObjects.splice(array.indexOf(id), 1);	
+			selectedObjects.splice(selectedObjects.indexOf(id), 1);
 		}
-		console.log("remove item " + selectedObjects);
 	}else{
 		$(comp).addClass('selectedItem');
 		if($('.post-to-groups .select-all').hasClass('active')){
-			rejectedObjects.splice(array.indexOf(id), 1);
+			rejectedObjects.splice(rejectedObjects.indexOf(id), 1);
 		}else{
 			selectedObjects.push(id);	
 		}
-		console.log("add item " + selectedObjects);
 	}
 }
 
@@ -29,28 +29,38 @@ function updateListSelection(comp){
 		if(confirm('This will select all the resoures from list. Are you sure ?')){
 			$('.post-to-groups .select-all').addClass('active')
 			$('.post-to-groups .reset').removeClass('active')
-			//$('.observations_list .selectable').addClass('selectedItem');
-			$('.thumbnail .selectable input[type="checkbox"]').prop('checked', true);
-			//$('.snippet.tablet .figure .mouseover').removeClass('mouseover').addClass('mouseoverfix');
-			//$('.snippet.tablet .figure .mouseoverfix').show();
+			$('.mainContentList .selectable input[type="checkbox"]').prop('checked', true);
 			rejectedObjects = new Array();
-			console.log("select all");
 		}
 	}else{
 		$('.post-to-groups .select-all').removeClass('active')
 		$('.post-to-groups .reset').addClass('active')
-		//$('.observations_list .selectable').removeClass('selectedItem');
-		//$('.snippet.tablet .figure .mouseoverfix').removeClass('mouseoverfix').addClass('mouseover');
-		//$('.snippet.tablet .figure .mouseover').hide();
-		$('.thumbnail .selectable input[type="checkbox"]').prop('checked', false);
-		console.log("reset all");
+		$('.mainContentList .selectable input[type="checkbox"]').prop('checked', false);
 	}
 }
 
-function submitToGroups(submitType, objectType, url){
-	if(!$('.post-to-groups .select-all').hasClass('active') && selectedObjects.length === 0){
-		alert('Please select at least one object');
-		return;
+function submitToGroups(submitType, objectType, url, isBulkPull, id){
+	
+	function updateFeatureTab(html, userGroups){
+		$(".feature-user-groups").replaceWith(html);
+        for (var i = 0; i < userGroups.length; i++) {
+            selectTickUserGroupsSignature("" + userGroups[i]);
+        }
+        $('#featureNotes').keydown(function(){
+            if(this.value.length > 400){
+                return false;
+            }
+            $("#remainingC").html("Remaining characters : " +(400 - this.value.length));
+        });
+	} 
+	
+	if(isBulkPull){
+		if(!$('.post-to-groups .select-all').hasClass('active') && selectedObjects.length === 0){
+			alert('Please select at least one object');
+			return;
+		}	
+	}else{
+		selectedObjects = rejectedObjects = [id];
 	}
 	
 	userGroups = getSelectedUserGroups();
@@ -59,30 +69,36 @@ function submitToGroups(submitType, objectType, url){
 		return; 
 	}
 	
-	if(submitType === 'post'){
-		console.log("posting " + selectedObjects +  ' on groups ' + userGroups);
-	}else{
-		console.log("unposting " + selectedObjects +  ' on groups ' + userGroups);
-	}
-	
+	var pullType = (isBulkPull) ? 'bulk' : 'single'
 	var selectionType = $('.post-to-groups .select-all').hasClass('active') ? 'selectAll' : 'reset'
 	var objectIds = (selectionType === 'selectAll') ?  rejectedObjects : selectedObjects
-	var filterUrl = window.location.href	
+	var filterUrl = window.location.href
+	if(pullType !== 'single'){
+		$(".alertMsg").removeClass('alert alert-error').removeClass('alert alert-success').addClass('alert alert-info').html("Processing...");
+		$("html, body").animate({ scrollTop: 0 });
+	}
 	$.ajax({
  		url: url,
  		type: 'POST',
 		dataType: "json",
-		data:{'selectionType':selectionType, 'objectType':objectType, 'objectIds':objectIds.join(","), 'submitType':submitType, 'userGroups':userGroups.join(","), 'filterUrl':filterUrl},
+		data:{'pullType':pullType, 'selectionType':selectionType, 'objectType':objectType, 'objectIds':objectIds.join(","), 'submitType':submitType, 'userGroups':userGroups.join(","), 'filterUrl':filterUrl},
 		success: function(data) {
 			if(data.success){
-				$(".alertMsg").removeClass('alert alert-error').addClass('alert alert-success').html(data.msg);
+				if(pullType === 'single'){
+					$(".resource_in_groups").replaceWith(data.resourceGroupHtml);
+					updateFeatureTab(data.featureGroupHtml, userGroups);
+                    
+				}else{
+					$(".alertMsg").removeClass('alert alert-info').addClass('alert alert-success').html(data.msg);
+				}
+                $('#action-tabs a:first').tab('show');
 			}else{
-				$(".alertMsg").removeClass('alert alert-success').addClass('alert alert-error').html(data.msg);
+				$(".alertMsg").removeClass('alert alert-info').addClass('alert alert-error').html(data.msg);
 			}
-			$("html, body").animate({ scrollTop: 0 });
+			updateFeeds();
 			return false;
 		}, error: function(xhr, status, error) {
-			alert(xhr.responseText);
+			console.log(xhr.responseText);
 	   	}
 	});
 }
@@ -91,19 +107,25 @@ function submitToGroups(submitType, objectType, url){
 function updateGroupPostSelection(){
 	var comp = $('.post-to-groups .select-all')
 	if(comp && comp.hasClass('active')){
-		$('.thumbnail .selectable input[type="checkbox"]').prop('checked', true);
-		//$('.observations_list .selectable').addClass('selectedItem');
-		//$('.snippet.tablet .figure .mouseover').removeClass('mouseover').addClass('mouseoverfix');
-		//$('.snippet.tablet .figure .mouseoverfix').show();
+		$('.mainContentList .selectable input[type="checkbox"]').prop('checked', true);
 	}
 }
 
-function getSelectedUserGroups() {
-    var userGroups = []; 
-    $('.userGroups button[class~="btn-success"]').each (function() {
+function getSelectedUserGroups($context){
+    var userGroups = [], $selector; 
+    if($context == undefined) {
+        $selector = $('.userGroups button[class~="btn-success"]')
+    } else {
+        $selector = $context.find('.userGroups button[class~="btn-success"]')
+    }
+    $selector.each (function() {
         userGroups.push($(this).attr('value'));
     });
     return userGroups;	
 }
 
+function reInitializeGroupPost(){
+	var selectedObjects = new Array();
+	var rejectedObjects = new Array();
+}
 

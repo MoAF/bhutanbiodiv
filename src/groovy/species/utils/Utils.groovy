@@ -25,6 +25,7 @@ import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap;
 
 import species.auth.SUser;
 import species.NamesParser;
@@ -401,7 +402,31 @@ class Utils {
 				map[key] = URLDecoder.decode(value)
 		    }
 		}
-		return map
+		
+		//converting a.b.c = 10 to a:[b:[c:10]] 
+		def retMap = [:]
+		map.each{k, v ->
+			def arr = k.split("\\.")
+			def lookupMap = retMap
+			int count = 1
+			arr.each { ele ->
+				if(lookupMap.get(ele) == null){
+					if(count < (arr.length)){
+						lookupMap[ele] = [:]
+						lookupMap = lookupMap.get(ele)
+					}else{
+						lookupMap[ele] = v
+					}
+				}else{
+					lookupMap = lookupMap.get(ele)
+				}
+				count++
+			}
+		   
+		}
+		retMap = new GrailsParameterMap(retMap, null)
+		println "Returned url map == " + retMap
+		return retMap
 	}
 	
 }

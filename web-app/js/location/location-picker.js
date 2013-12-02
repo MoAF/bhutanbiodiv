@@ -96,22 +96,22 @@ function initControls() {
     }).addTo(map);
 
     map.on('enterFullscreen', function(){
-        if(searchMarker) {
+/*        if(searchMarker) {
             console.log("enterFullscreen : panning to ");
             console.log(searchMarker.getLatLng());
-            map.panTo(searchMarker.getLatLng());
+//            map.panTo(searchMarker.getLatLng());
         }
         else resetMap()
-    });
+*/    });
 
     map.on('exitFullscreen', function(){
-        if(searchMarker) {
+/*        if(searchMarker) {
             map.panTo(searchMarker.getLatLng());
+            console.log("exitFullscreen : panning to ")
             console.log(searchMarker.getLatLng());
-            console.log("enterFullscreen : panning to "+searchMarker)
         }
         else resetMap();
-    });
+*/    });
 
 }
 
@@ -364,7 +364,7 @@ function select_location(marker) {
                 selectedMarker.bindPopup(content).openPopup();
 
                 if (results[0]) {
-                    $('#placeName').val(results[0].formatted_address);
+                    //$('#placeName').val(results[0].formatted_address);
                     //$('#reverse_geocoded_name').html(results[0].formatted_address);
                     //$('#latitude').html(marker.getLatLng().lat.toFixed(2));
                     //$('#longitude').html(marker.getLatLng().lng.toFixed(2));

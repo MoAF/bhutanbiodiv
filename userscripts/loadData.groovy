@@ -71,8 +71,7 @@ def speciesUploadService = ctx.getBean("speciesUploadService");
 //speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/zoooutreach/1.6/aquaticplants.xls", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/zoooutreach/1.6/aquaticplants_mapping.xls", 0, 0, 0, 0, -1);
 //speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/zoooutreach/uploadready/fish_dk.xls", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/zoooutreach/uploadready/fish_mapping.xls", 0, 0, 0, 0, -1);
 
-//grailsApplication.config.speciesPortal.images.uploadDir = grailsApplication.config.speciesPortal.data.rootDir+" /datarep2/species/thomas/uploadready/images";
-//speciesUploadService.uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/thomas/uploadready/MammalsspeciesPages.xlsx");
+speciesUploadService.uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/thomas/1.6/MammalsspeciesPages.xlsx", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/thomas/1.6/images");
 
 //grailsApplication.config.speciesPortal.images.uploadDir = grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/uploadready/NE_Butterflies_RG1";
 //speciesUploadService.uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/uploadready/NortheastButterflies-RG1.xlsx");
@@ -114,8 +113,9 @@ def speciesUploadService = ctx.getBean("speciesUploadService");
 //speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/PHCC/uploadready/grasses_of_palni_hills.xlsx", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/PHCC/uploadready/grasses_of_palni_hills_mapping.xlsx", 0, 0, 0, 0,-1,grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/PHCC/uploadready/grasses_of_palni_hills");
 
 //speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/orchids/Orchids of Bhutan.xls", grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/orchids/orchids_Bhutan_mapping.xlsx", 0, 0, 0, 0,1,grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/orchids/images");
-speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/dbgurung/inprocess/plantdb.xls", grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/dbgurung/inprocess/plantdb_mapping.xlsx", 0, 0, 0, 0,1,grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/dbgurung/plantdb/cms.cnr.edu.bt/plantdb/upload");
+//speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/dbgurung/inprocess/plantdb.xls", grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/dbgurung/inprocess/plantdb_mapping.xlsx", 0, 0, 0, 0,1,grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/dbgurung/plantdb/cms.cnr.edu.bt/plantdb/upload");
 
+speciesUploadService.uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/ara/inprocess/family_Cactaceae-Carlemmaniaceae_data.xls", grailsApplication.config.speciesPortal.data.rootDir+"/bbpdata/species/ara/inprocess/family_Cactaceae-Carlemmaniaceae_mapping.xlsx", 0, 0, 0, 0,-1);
 /*
 converter = new XMLConverter();
 noChange  = 0;

@@ -75,15 +75,16 @@
 
 			</div>
                         <div class="span8 right-shadow-box" style="margin:0px;clear:both;">
-                            <obv:showObservationsList  model="['totalObservationInstanceList':totalObservationInstanceList, 'observationInstanceList':observationInstanceList, 'instanceTotal':instanceTotal, 'queryParams':queryParams, 'activeFilters':activeFilters, 'userGroup':userGroup]"  />
+                            <obv:showObservationsList/>
                         </div>
                         <div class="span4" style="position:relative;top:20px">
-                 <div class="sidebar_section" style="clear:both;overflow:hidden;display:none;">
-                 	<uGroup:objectPostToGroups model="['objectType':Observation.class.canonicalName, userGroup:params.userGroup]"/>
-                 </div>       
+                 
+                                <uGroup:objectPostToGroupsWrapper 
+				    model="[canPullResource:canPullResource, 'objectType':Observation.class.canonicalName, 'userGroup':userGroup]" />
+                        
 				<div id="observations_list_map" class="observation sidebar_section"
                                     style="clear:both;overflow:hidden;display:none;">
-                    <h5>Species Distribution</h5>
+                                    <h5>Species Distribution</h5>
 					<obv:showObservationsLocation
 						model="['observationInstanceList':totalObservationInstanceList, 'userGroup':userGroup]">
 					</obv:showObservationsLocation>
@@ -95,8 +96,9 @@
                                         <input id="bounds" name="bounds" value="${activeFilters?.bounds}" type="hidden"/>
                                         <input id="tag" name="tag" value="${params.tag}" type="hidden"/>
 				</div>
-                                <div id="obvPerGroupChart" class="sidebar_section" style="clear:both;overflow:hidden;">
-                                    <chart:showStats model="['title':'Species Groups', columns:speciesGroupCountList.columns, data:speciesGroupCountList.data, width:300, height:270, 'hideTable':true, dynamicLoading:true]"/>
+                                <div class="sidebar_section" style="clear:both;overflow:hidden;">
+                                    <h5> Species Groups </h5>
+                                    <div id="speciesGroupCountList"></div>
                                 </div>
                                 <g:render template="/observation/distinctRecoTableTemplate" model="[distinctRecoList:distinctRecoList, totalCount:totalCount]"/>
                                 
@@ -128,5 +130,10 @@ $(document).ready(function() {
         refreshList(getSelectedBounds());
     });
 
+    $('.list').on('updatedGallery', function() {
+    	loadSpeciesGroupCount();
+        //loadDistinctRecoList();
+        updateDistinctRecoTable();
+    });
 });
 </g:javascript>
