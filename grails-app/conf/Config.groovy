@@ -173,14 +173,16 @@ cache.headers.presets = [
  *  2. Looking for ${userHome}/.grails/${appName}-config.groovy
  *  3. Using system environment configuration file: " + System.getenv(ENV_NAME)
  *  4. Using user defined config: file:${userHome}/.grails/${appName}-config.properties.
+ *  5. If additional conf file present then adding it to main config.
  */
+
 def ENV_NAME = "${appName}.config.location"
 if (!grails.config.locations || !(grails.config.locations instanceof List)) {
 	grails.config.locations = []
 }
 if (System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
 	println "Using configuration file specified on command line: " + System.getProperty(ENV_NAME)
-	grails.config.locations << "file:" + System.getProperty(ENV_NAME)
+	grails.config.locations = ["file:" + System.getProperty(ENV_NAME) ]
 }
 else if (new File("${userHome}/.grails/${appName}-config.groovy").exists()) {
 	println "*** User defined config: file:${userHome}/.grails/${appName}-config.groovy. ***"
@@ -192,11 +194,16 @@ else if (System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) 
 	println("Using system environment configuration file: " + System.getenv(ENV_NAME))
 	grails.config.locations << "file:" + System.getenv(ENV_NAME)
 }
+
 else if (new File("${userHome}/.grails/${appName}-config.properties").exists()) {
 	println "*** Using user defined config: file:${userHome}/.grails/${appName}-config.properties. ***"
 	grails.config.locations = [
 		"file:${userHome}/.grails/${appName}-config.properties"
 	]
+}
+else if (new File("${userHome}/.grails/additional-config.groovy").exists()) {
+	println "*** Additional config: file:${userHome}/.grails/additional-config.groovy. ***"
+	grails.config.locations << "file:${userHome}/.grails/additional-config.groovy"
 }
 else {
 	println "*** No external configuration file defined. ***"
@@ -220,15 +227,15 @@ speciesPortal {
     app.logo = "logo/IBP.png"
     app.favicon = "logo/favicon.png"
    
-    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com"]
+    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com", "rahulk@strandls.com"]
 
 	species {
 		speciesDownloadDir = "${download.rootDir}/species"
 	}
 	domain = "localhost"
 	resources {
-		rootDir = "${app.rootDir}/simg"
-		serverURL = "http://indiabiodiversity.localhost.org/${appName}/simg"
+		rootDir = "${app.rootDir}/img"
+		serverURL = "http://indiabiodiversity.localhost.org/${appName}/img"
 		images {
 			defaultType = "jpg"
 			thumbnail {
@@ -256,7 +263,6 @@ speciesPortal {
 		serverURL = "http://indiabiodiversity.localhost.org/${appName}/observations"
 		//serverURL = "http://localhost/${appName}/observations"
 		MAX_IMAGE_SIZE = 104857600
-        filePicker.key = 'Az2MIh1LOQC2OMDowCnioz'
 	} 
 	 userGroups {
 		rootDir = "${app.rootDir}/userGroups"
@@ -339,8 +345,8 @@ speciesPortal {
 
 		COMMON_NAME = "Common Name"
 		SYNONYMS = "Synonyms"
-		INDIAN_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Indian Distribution Geographic Entity"
-		INDIAN_ENDEMICITY_GEOGRAPHIC_ENTITY = "Indian Endemicity Geographic Entity"
+		INDIAN_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Local Distribution Geographic Entity"
+		INDIAN_ENDEMICITY_GEOGRAPHIC_ENTITY = "Local Endemicity Geographic Entity"
 		GLOBAL_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Global Distribution Geographic Entity"
 		GLOBAL_ENDEMICITY_GEOGRAPHIC_ENTITY = "Global Endemicity Geographic Entity"
 		TAXONOMIC_HIERARCHY = "Taxonomy Hierarchy"
@@ -475,25 +481,11 @@ imageConverterProg = "/usr/bin/convert";
 jpegOptimProg = "/usr/bin/jpegoptim";
 
 environments {
-	development {
-        grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
+    development {
+             grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
         speciesPortal {
             search.serverURL = "http://localhost:8090/solr"
             names.parser.serverURL = "saturn.strandls.com"
-            wgp {
-                facebook {
-                    appId= "424071494335902"
-                    secret= "bb87b98979ae30936342364178c7b170"
-                }
-                supportEmail = "team(at)thewesternghats(dot)in"
-            }
-            ibp {
-                facebook {
-                    appId= "347177228674021"
-                    secret= "82d91308b5437649bfe891a027205501"
-                }
-                supportEmail = "support(at)indiabiodiversity(dot)org"
-            }
         }
         google.analytics.enabled = false
         grails.resources.debug = false
@@ -504,7 +496,6 @@ environments {
                 port = 25
             }
         }
-
         ibp.domain='indiabiodiversity.localhost.org'
         wgp.domain='thewesternghats.indiabiodiversity.localhost.org'
         //grails.resources.debug=true
@@ -524,9 +515,31 @@ environments {
 
 
         log4jConsoleLogLevel = Priority.DEBUG
-
+	    log4j = {
+		appenders {
+		    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+        }
+        error   'org.codehaus.groovy.grails.web.pages', //  GSP
+                'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+                'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+                'org.codehaus.groovy.grails.web.mapping', // URL mapping
+                'org.codehaus.groovy.grails.commons', // core / classloading
+                'org.codehaus.groovy.grails.plugins', // plugins
+                'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+                'org.hibernate',
+                'net.sf.ehcache.hibernate',
+                'org.springframework.security',
+                'org.codehaus.groovy.grails.web.servlet',  //  controllers
+                'grails.plugin',
+                'org.springframework.security.web',
+                'grails.app.tagLib.org.grails.plugin.resource'
+		debug   'speciespage',
+                'grails.app',
+                'species'
+        info    'species.auth'
 	}
-	test {
+    }	
+    test {
 		grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
 		google.analytics.enabled = false
 	}
@@ -535,20 +548,6 @@ environments {
 		speciesPortal {
 			search.serverURL = "http://localhost:8090/solr"
 			names.parser.serverURL = "127.0.0.1"
-			wgp {
-				facebook {
-					appId= "327308053982589"
-					secret= "f36074901fc24b904794692755796fd1"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "347177228674021"
-					secret= "82d91308b5437649bfe891a027205501"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
-			}
 		}
 		google.analytics.enabled = false
 
@@ -584,18 +583,17 @@ environments {
 
 			observations {
 				rootDir = "${app.rootDir}/observations"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/observations"
-                filePicker.key = 'AXCVl73JWSwe7mTPb2kXdz'
-	//serverURL = "http://localhost/${appName}/observations"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/observations"
+				//serverURL = "http://localhost/${appName}/observations"
 			}
 			userGroups {
 				rootDir = "${app.rootDir}/userGroups"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/userGroups"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/userGroups"
 				//serverURL = "http://localhost/${appName}/observations"
 			}
 			users {
 				rootDir = "${app.rootDir}/users"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/users"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/users"
 			}
 			search.serverURL="http://saturn.strandls.com:8080/solr"
 			grails.project.war.file = "/data/jetty-6.1.26/webapps/${appName}.war"
@@ -604,20 +602,6 @@ environments {
 					 host = "127.0.0.1"
 					 port = 25
 				}
-			}
-			wgp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
 			}
 		}
 		google.analytics.enabled = false
@@ -639,6 +623,13 @@ environments {
                 }
 
 		}
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+			}
+			debug	'species',
+				'speciespage'
+		}
 	}
 	pambaTest {
 		appName = "biodiv_test"
@@ -659,7 +650,7 @@ environments {
 				rootDir = "${app.rootDir}/observations"
 				serverURL = "http://indiabiodiversity.saturn.strandls.com/${appName}/observations"
 				//serverURL = "http://localhost/${appName}/observations"
-                filePicker.key = 'AXCVl73JWSwe7mTPb2kXdz'
+                
 			}
 			userGroups {
 				rootDir = "${app.rootDir}/userGroups"
@@ -683,20 +674,6 @@ environments {
 					 port = 25
 				}
 			}
-			wgp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
-			}
 		}
 		google.analytics.enabled = false
 
@@ -717,7 +694,14 @@ environments {
                 }
 
 		}
-		
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+			}
+			info	'species',
+				'speciespage'
+		}
+
 	}
 
 
@@ -737,44 +721,29 @@ environments {
             nameSearch.indexStore = "${app.rootDir}/data/names"
             observations {
                 rootDir = "${app.rootDir}/observations"
-                serverURL = "http://thewesternghats.in/${appName}/observations"
+                serverURL = "http://indiabiodiversity.org/${appName}/observations"
+				//filePicker.key = 'Az2MIh1LOQC2OMDowCnioz'
             }
             userGroups {
                 rootDir = "${app.rootDir}/userGroups"
-                serverURL = "http://thewesternghats.in/${appName}/userGroups"
+                serverURL = "http://indiabiodiversity.org/${appName}/userGroups"
             }
             users {
                 rootDir = "${app.rootDir}/users"
-                serverURL = "http://thewesternghats.in/${appName}/users"
+                serverURL = "http://indiabiodiversity.org/${appName}/users"
             }
 
             content{
                 rootDir = "${app.rootDir}/content"
-                serverURL = "http://thewesternghats.in/${appName}/content"
+                serverURL = "http://indiabiodiversity.org/${appName}/content"
             }	
 
-            search.serverURL="http://thewesternghats.in:8080/solr"
+            search.serverURL="http://indiabiodiversity.org:8080/solr"
             grails {
                 mail {
                     host = "127.0.0.1"
                     port = 25
                 }
-            }
-            wgp {
-                facebook {
-                    //					appId= "327308053982589"
-                    //					secret= "f36074901fc24b904794692755796fd1"
-                    appId= "320284831369968"
-                    secret= "900d0811194fe28503006b31792690ae"
-                }
-                supportEmail = "team(at)thewesternghats(dot)in"
-            }
-            ibp {
-                facebook {
-                    appId= "320284831369968"
-                    secret= "900d0811194fe28503006b31792690ae"
-                }
-                supportEmail = "support(at)indiabiodiversity(dot)org"
             }
         }
 
@@ -795,7 +764,17 @@ environments {
             }
         }
 		
-        log4jConsoleLogLevel = Priority.INFO
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: Priority.INFO
+			}
+			info	'species',
+				'speciespage'
+			warn 	'grails.app',
+				'org.springframework.security.web'
+
+
+		}
 	}
 }
 

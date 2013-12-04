@@ -82,7 +82,6 @@
     RewriteRule ^(.*)$ http://thewesternghats.bhutanbiodiversity.localhost.org:8080/bbp/group/the_western_ghats$1 [P]
     ProxyPassReverse / http://thewesternghats.bhutanbiodiversity.localhost.org:8080/bbp/group/the_western_ghats
 
-
 RewriteCond %{REQUEST_URI} !(^/(species|observation|activity|SUser|user|page|pages|login|logout|register|bbp|geoserver|sites|about|openId))
     RewriteRule ^(.*)$ $1?userGroup=the_western_ghats [QSA,L]
 

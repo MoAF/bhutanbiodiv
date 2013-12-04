@@ -23,7 +23,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import species.utils.Utils;
 import grails.plugins.springsecurity.Secured
 
-class SpeciesController {
+class SpeciesController extends AbstractObjectController {
 
 	def dataSource
 	def grailsApplication
@@ -32,7 +32,7 @@ class SpeciesController {
     def speciesUploadService;
 	def speciesService;
 	def observationService;
-	
+	def userGroupService
 	
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -41,9 +41,8 @@ class SpeciesController {
 	}
 
 	def list = {
-		log.debug params
-
-		def model = getSpeciesList(params);
+		def model = speciesService.getSpeciesList(params, 'list');
+		model.canPullResource = userGroupService.getResourcePullPermission(params)
 		params.controller="species"
 		params.action="list"
 		if(params.loadMore?.toBoolean()){
@@ -54,85 +53,13 @@ class SpeciesController {
 			return;
 		} else{
 			def obvListHtml =  g.render(template:"/species/showSpeciesListTemplate", model:model);
-			model.resultType = "specie"
+			model.resultType = "species"
 			def obvFilterMsgHtml = g.render(template:"/common/observation/showObservationFilterMsgTemplate", model:model);
 
 			def result = [obvListHtml:obvListHtml, obvFilterMsgHtml:obvFilterMsgHtml]
 
 			render (result as JSON)
 			return;
-		}
-	}
-
-	private def getSpeciesList(params) {
-		//cache "taxonomy_results"
-		params.startsWith = params.startsWith?:"A-Z"
-		def allGroup = SpeciesGroup.findByName(grailsApplication.config.speciesPortal.group.ALL);
-		def othersGroup = SpeciesGroup.findByName(grailsApplication.config.speciesPortal.group.OTHERS);
-		params.sGroup = params.sGroup ?: allGroup.id+""
-		params.max = Math.min(params.max ? params.int('max') : 42, 100);
-		params.offset = params.offset ? params.int('offset') : 0
-		params.sort = params.sort?:"percentOfInfo"
-		if(params.sort.equals('lastrevised')) {
-			params.sort = 'lastUpdated'
-		} else if(params.sort.equals('percentofinfo')) {
-			params.sort = 'percentOfInfo'
-        }
-		params.order = (params.sort.equals("percentOfInfo")||params.sort.equals("lastUpdated"))?"desc":params.sort.equals("title")?"asc":"asc"
-
-		log.debug params
-		def groupIds = params.sGroup.tokenize(',')?.collect {Long.parseLong(it)}
-
-		int count = 0;
-		if (params.startsWith && params.sGroup) {
-			String query, countQuery;
-
-			if(groupIds.size() == 1 && groupIds[0] == allGroup.id) {
-				if(params.startsWith == "A-Z") {
-					query = "select s from Species s order by s.${params.sort} ${params.order}";
-					countQuery = "select s.percentOfInfo, count(*) as count from Species s group by s.percentOfInfo"
-				} else {
-					query = "select s from Species s where s.title like '<i>${params.startsWith}%' order by s.${params.sort} ${params.order}";
-					countQuery = "select s.percentOfInfo, count(*) as count from Species s where s.title like '<i>${params.startsWith}%'  group by s.percentOfInfo"
-				}
-            } else if(groupIds.size() == 1 && groupIds[0] == othersGroup.id) {
-                if(params.startsWith == "A-Z") {
-                    query = "select s from Species s, TaxonomyDefinition t where s.taxonConcept = t and t.group.id  is null order by s.${params.sort} ${params.order}"
-                    countQuery = "select s.percentOfInfo, count(*) as count from Species s, TaxonomyDefinition t where s.taxonConcept = t and t.group.id  is null  group by s.percentOfInfo";
-                } else {
-                    query = "select s from Species s, TaxonomyDefinition t where title like '<i>${params.startsWith}%' and s.taxonConcept = t and t.group.id  is null order by s.${params.sort} ${params.order}"
-                    countQuery = "select s.percentOfInfo, count(*) as count from Species s, TaxonomyDefinition t where s.title like '<i>${params.startsWith}%' and s.taxonConcept = t and t.group.id  is null group by s.percentOfInfo";
-				}
-			} else {
-				if(params.startsWith == "A-Z") {
-					query = "select s from Species s, TaxonomyDefinition t where s.taxonConcept = t and t.group.id  in (:sGroup) order by s.${params.sort} ${params.order}"
-					countQuery = "select s.percentOfInfo, count(*) as count from Species s, TaxonomyDefinition t where s.taxonConcept = t and t.group.id  in (:sGroup)  group by s.percentOfInfo";
-				} else {
-					query = "select s from Species s, TaxonomyDefinition t where title like '<i>${params.startsWith}%' and s.taxonConcept = t and t.group.id  in (:sGroup) order by s.${params.sort} ${params.order}"
-					countQuery = "select s.percentOfInfo, count(*) as count from Species s, TaxonomyDefinition t where s.title like '<i>${params.startsWith}%' and s.taxonConcept = t and t.group.id  in (:sGroup)  group by s.percentOfInfo";
-				}
-			}
-
-			def speciesInstanceList, rs;
-			if(groupIds.size() == 1 && (groupIds[0] == allGroup.id || groupIds[0] == othersGroup.id)) {
-				speciesInstanceList = Species.executeQuery(query, [max:params.max, offset:params.offset]);
-				rs = Species.executeQuery(countQuery)
-			} else {
-				speciesInstanceList = Species.executeQuery(query, [sGroup:groupIds], [max:params.max, offset:params.offset]);
-				rs = Species.executeQuery(countQuery,[sGroup:groupIds]);
-			}
-			def speciesCountWithContent = 0;
-
-			for(c in rs) {
-				count += c[1];
-				if (c[0] >0)
-					speciesCountWithContent += c[1];
-			}
-			return [speciesInstanceList: speciesInstanceList, instanceTotal: count, speciesCountWithContent:speciesCountWithContent, 'userGroupWebaddress':params.webaddress]
-		} else {
-			//Not being used for now
-			params.max = Math.min(params.max ? params.int('max') : 42, 100)
-			return [speciesInstanceList: Species.list(params), instanceTotal: Species.count(),  'userGroupWebaddress':params.webaddress]
 		}
 	}
 
@@ -352,7 +279,6 @@ class SpeciesController {
 
 	@Secured(['ROLE_SPECIES_ADMIN'])
 	def update = {
-		log.debug params;
 		if(!params.name || !params.pk) {
 			render ([success:false, msg:'Either field name or field id is missing'] as JSON)
 			return;
@@ -381,7 +307,6 @@ class SpeciesController {
 
 	@Secured(['ROLE_SPECIES_ADMIN'])
 	def addResource = {
-		log.debug params;
 		if(!params.id) {
 			render ([success:false, errors:[msg:'Species id is missing']] as JSON)
 			return;
@@ -408,10 +333,10 @@ class SpeciesController {
 				return;
 			}
 
-			println resourcesXML;
+			log.debug resourcesXML;
 			if(resourcesXML) {
 				def resources = speciesService.saveResources(resourcesXML,  speciesInstance.taxonConcept.canonicalForm);
-				println resources;
+				log.debug resources;
 				resources.each { resource ->
 					speciesInstance.addToResources(resource);
 				}
@@ -480,8 +405,8 @@ class SpeciesController {
 	 *
 	 */
 	def search = {
-		log.debug params;
-		def model = speciesService.search(params)
+		def model = speciesService.getSpeciesList(params, 'search')
+		model.canPullResource = userGroupService.getResourcePullPermission(params)
 		model['isSearch'] = true;
 
 		if(params.loadMore?.toBoolean()){
@@ -511,7 +436,6 @@ class SpeciesController {
 	 *
 	 */
 	def terms = {
-		log.debug params;
 		params.field = params.field?params.field.replace('aq.',''):"autocomplete";
 		List result = speciesService.nameTerms(params)
 		render result.value as JSON;
@@ -519,7 +443,6 @@ class SpeciesController {
 
 
 	//	def getRelatedObservations = {
-	//		log.debug params
 	//
 	//		def speciesInstance = Species.get(params.long('id'))
 	//		if (speciesInstance) {
@@ -546,7 +469,6 @@ class SpeciesController {
 
 	@Secured(['ROLE_SPECIES_ADMIN'])
 	def upload = {
-        log.debug params;
         /*List contributors;
         if(!params.contributorIds) {
 			contributors = Utils.getUsersList(params.contributorIds);

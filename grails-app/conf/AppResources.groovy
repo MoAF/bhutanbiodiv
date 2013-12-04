@@ -73,6 +73,8 @@ modules = {
 		resource url:'/js/jquery.tablesorter.js'
 		resource url:'/js/bootstrap-editable.min.js'
 		resource url:'/js/species/posting.js'
+        resource url:'/js/feature.js'
+        resource url:'/js/flag.js'
 	}
 
 	auth {
@@ -124,6 +126,7 @@ modules = {
 		dependsOn 'observations, gallery, carousel, comment, activityfeed'
 
 		resource url:'/js/species/observations/show.js'
+		resource url:'/js/jquery/jquery.sparkline.min.js'
 	} 
 
 	observations_create {
@@ -136,7 +139,7 @@ modules = {
 	}
 
 	observations_list { 
-		dependsOn 'observations, list_utils, comment'
+		dependsOn 'observations, list_utils, comment, activityfeed'
 		
         resource url:'/js/species/observations/list.js'
 	}
@@ -265,7 +268,6 @@ modules = {
 
 		resource url:'/js/species/observations/list.js'
     }
-
 
 	checklist_create {
 		dependsOn 'observations_create, checklist, slickgrid, add_file'
