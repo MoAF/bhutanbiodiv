@@ -73,10 +73,8 @@ class Species implements Rateable {
 		if(!reprImage) {
 			def images = this.getImages();
 			this.reprImage = images ? images[0]:null;
-            println images
-			if(reprImage) {
-                println reprImage
-				log.debug " Saving representative image for species ===  $reprImage.fileName" ;
+            if(reprImage) {
+                log.debug " Saving representative image for species ===  $reprImage.fileName" ;
                 if(!this.save(flush:true)) {
                     this.errors.each { log.error it }
                 }
@@ -222,4 +220,26 @@ class Species implements Rateable {
     List featuredNotes() {
         return Featured.featuredNotes(this);
     }
+
+		
+//	def onAddActivity(af, flushImmidiatly=true){
+//		lastUpdated = new Date();
+//		saveConcurrently(null, flushImmidiatly);
+//	}
+//	
+//	private saveConcurrently(f = {}, flushImmidiatly=true){
+//		try{
+//			if(f) f()
+//			if(!save(flush:flushImmidiatly)){
+//				errors.allErrors.each { log.error it }
+//			}
+//		}catch(org.hibernate.StaleObjectStateException e){
+//			attach()
+//			def m = merge()
+//			if(!m.save(flush:flushImmidiatly)){
+//				m.errors.allErrors.each { log.error it }
+//			}
+//		}
+//	}
+
 }

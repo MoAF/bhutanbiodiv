@@ -1,10 +1,9 @@
 dataSource {
     pooled = true
+    
     //Added bu hibernatespatial plugin
 // //     driverClassName = "org.postgis.DriverWrapper"
     dialect = org.hibernatespatial.postgis.PostgisDialect
-    username = "postgres"
-    password = "postgres123"
 //    logSql = true
     properties {
         //TODO: following params to be enabled after testing for connection leak
