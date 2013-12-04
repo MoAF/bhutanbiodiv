@@ -12,7 +12,9 @@ body { /*     background-color: #ffffff; */
 	background-repeat: no-repeat;
 	font-size: 14px;
 	background-color: rgb(106, 201, 162, 0.15);
+	background-color: rgb(1, 101, 102, 0.15);
 	background-color: rgba(106, 201, 162, 0.15);
+	background-color: rgba(1, 101, 102, 0.15);
 	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr='#266AC9A2',endColorstr='#266AC9A2')";	/* IE8 */
 	filter: progid : DXImageTransform.Microsoft.gradient(startColorstr = '#266AC9A2', endColorstr = '#266AC9A2' );/* IE6 & 7 */
 	zoom: 1;
@@ -2516,6 +2518,11 @@ small {
 .groups-wrapper .tab-pane {
     border:1px solid #6ac9a2;
     overflow:hidden;
+/**
+ * Style used to position the map of bhutan
+ * */
+.span12  {
+	width:960px;
 }
 
 .groups-wrapper li {

@@ -16,13 +16,9 @@ import species.groups.UserGroup;
 import groovy.sql.Sql;
 import grails.util.GrailsNameUtils;
 import org.grails.rateable.*
-<<<<<<< HEAD
- 
-=======
 import species.participation.Flag;
 import species.participation.Featured;
 
->>>>>>> 78d6e18818c7b1c4ef739f1ee74826660da8c4a5
 class Species implements Rateable {
 	String title; 
 	String guid; 
@@ -52,17 +48,12 @@ class Species implements Rateable {
 		globalEndemicityEntities:GeographicEntity, 
 		indianDistributionEntities:GeographicEntity, 
 		indianEndemicityEntities:GeographicEntity, 
-<<<<<<< HEAD
-		taxonomyRegistry:TaxonomyRegistry 
-		];
-=======
 		taxonomyRegistry:TaxonomyRegistry, 
 		resources:Resource,
 		userGroups:UserGroup];
 
 
 	static belongsTo = [UserGroup]
->>>>>>> 78d6e18818c7b1c4ef739f1ee74826660da8c4a5
 
 	static constraints = {
 		guid(blank: false, unique: true);
@@ -138,22 +129,10 @@ class Species implements Rateable {
 	List<Resource> getIcons() {
 		def icons = new ArrayList<Resource>();
 		resources.each {
-<<<<<<< HEAD
-			println "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-			it.properties.each  { name ->
-				println "NAME: " + name
-			}
-			println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-			println it?.getClass() 
-			println "??????????????????????????????????????????"
 			if(it?.getClass() == species.Resource) {
 				if(it?.type == species.Resource.ResourceType.ICON) {
 					icons.add(it);
 				}
-=======
-			if(it?.type == species.Resource.ResourceType.ICON) {
-                icons.add(it);
->>>>>>> 78d6e18818c7b1c4ef739f1ee74826660da8c4a5
 			}
 		}
 		return icons;

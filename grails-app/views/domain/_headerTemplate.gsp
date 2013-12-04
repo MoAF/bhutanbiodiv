@@ -5,7 +5,7 @@
     window.appWGPDomain = '${grailsApplication.config.wgp.domain}'
 </g:javascript>
 
-<div class="container group-theme navbar" style="width:100%;margin-bottom:0px;">
+<div class="container group-theme navbar" style="margin-bottom:0px;">
 	<div>
 		<g:if test="${userGroupInstance  && userGroupInstance.id }">
 			<uGroup:showHeader model="[ 'userGroupInstance':userGroupInstance]" />
