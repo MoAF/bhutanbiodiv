@@ -3,6 +3,9 @@ import org.apache.log4j.Priority
 appName = grails.util.Metadata.current.getApplicationName()
 userHome = System.getProperty('user.home')
 
+dataSource.username = "postgres"
+dataSource.password = "postgres123"
+
 grails.mail.default.from="notification@biodiversity.bt"
 emailConfirmation.from="notification@biodiversity.bt"
 grails.plugins.springsecurity.ui.notification.emailFrom = 'notification@biodiversity.bt'
