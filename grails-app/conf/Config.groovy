@@ -16,10 +16,9 @@ import org.apache.log4j.Priority
 
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
-println "+++++++++++++++++++++++++++++++++++++++${basedir}********************"
-//grails.config.locations = ["file:/data/bbp/${appName}-config.groovy"]
-grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
-println "+++++++++++++++++++++++++++++++++++++++${grails.config.locations}********************"
+
+grails.config.locations = ["file:/data/bbp/${appName}-config.groovy"]
+//grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
 //                             "file:${userHome}/.grails/${appName}-config.groovy"]
 // grails.config.locations = [ "classpath:${appName}-config.properties",
 //                             "classpath:${appName}-config.groovy",
