@@ -162,10 +162,6 @@ html {
 	background-image: none;
 }
 
-h5 {
-	background-color: rgb(68, 68, 68);
-}
-
 #ibp-header-bar  {
 	height:32px;
 	line-height:15px;
@@ -187,4 +183,13 @@ h5 {
 	height: 80px;
 	width: 90px;
 	margin-left:0px;
+}
+
+.thumbnail .rich_species_content  {
+	margin: 1px 7px 7px 1px;
+	padding: 0.5px;
+}
+
+.observations_list  {
+	width: 954px;
 }
