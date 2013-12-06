@@ -100,27 +100,29 @@ var showOccurence = function(speciesName) {
             var layersOptions = [
             {
                     title : 'Occurrence',
-                    layers : 'ibp:occurrence',
+                    layers : 'bhutanmaps:occurrence',
                     styles : '',
                     cql_filter : "species_name='" + speciesName + "'",
                     opacity : 0.7
             },
             {
                     title : 'Observation',
-                    layers : 'ibp:observation_locations',
+                    layers : 'bhutanmaps:observation_locations',
                     styles : '',
                     cql_filter : "species_name='" + speciesName + "'",
                     opacity : 0.7
             },
             {
                     title : 'Checklist',
-                    layers : 'ibp:checklist_species_locations',
+                    layers : 'bhutanmaps:checklist_species_locations',
                     styles : '',
                     cql_filter : "species_name='" + speciesName + "'",
                     opacity : 0.7
             }
             ]
-            showMap("map1311326056727", mapOptions, layersOptions)
+	    console.log("before call");
+            showMap("map1311326056727", mapOptions, layersOptions);
+	    console.log("after call");
             $("#mapSpinner").hide();
         });
 }
