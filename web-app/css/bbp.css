@@ -106,6 +106,7 @@ div.container.group-theme.navbar {
 	height:90px;
 }
 
+/*
 div.navbar.navbar-static-top.btn {
 	background-color: rgb(255, 163, 102);
 	background-image: none;
@@ -118,6 +119,7 @@ div.navbar-inner  {
 div#species_main_wrapper {
 	background-color: rgb(222, 239, 222);
 }
+*/
 
 a.collapsed  {
 	background-color: rgb(68, 68, 68);
@@ -137,7 +139,7 @@ html {
 	background-color: rgb(255, 227, 209);
 }
 
-#ibp-footer  {
+/*#ibp-footer  {
 	background-color: rgb(244, 233, 201);
 	background-image: none;
 }
@@ -146,20 +148,24 @@ html {
 	background-color: rgb(244, 233, 201);
 	background-image: none;
 }
+*/
 
 #feedback_button {
 	display:none;
 }
 
+/*
 .container .outer-wrapper  {
 	background-color: rgb(244, 233, 201);
 }
+*/
 
 .contributeButton a {
 	background-color: #006B00; 
 	background-image: none;
 }
 
+/*
 #ibp-header-bar  {
 	height:32px;
 	line-height:15px;
@@ -175,6 +181,12 @@ html {
 
 #ibp-header-bar .navbar-inner .container  {
 	width:980px;
+}
+*/
+
+
+.navbar .nav .active a, .navbar .nav .active a:hover, .navbar .nav .active a:focus {
+	background-color: #B2CC80;
 }
 
 .logo  {
@@ -231,7 +243,7 @@ div.navbar.navbar-static-top.btn{
 	color:#fff;
 }
 .powered{
-	background:#fff;
+	/*background:#fff;*/
 	font-size:.8em;
 }
 .about-us{

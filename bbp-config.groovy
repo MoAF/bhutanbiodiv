@@ -24,7 +24,9 @@ speciesPortal {
         facebookUrl = "https://www.facebook.com/pages/Bhutan-Biodiversity-Portal"
         feedbackFormUrl = "http://biodiversity.bt/contact"
 
-        logo = "images/demo.png"
+        logo = "images/demo_logo.png"
+        govlogo = "images/gov-logo.png"
+        dzongkha = "images/accordion/dzongkha.png"
         favicon = "images/favicon.ico"
         siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the biodiversity of Bhutan."
         notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com"]

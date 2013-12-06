@@ -16,12 +16,12 @@
                             title="${grailsApplication.config.speciesPortal.app.siteName}" alt="${grailsApplication.config.speciesPortal.app.siteName}">
 			</a>
 			<a href="${createLink(url:grailsApplication.config.grails.serverURL+"/..") }" class="brand" style="margin-left: 150px; text-align: center;">
-				<img src="images/accordion/dzongkha.png" id="imagelogo"> <br />
+				<img src="${Utils.getIBPServerDomain()+'/'+grailsApplication.config.speciesPortal.app.dzongkha}" id="imagelogo"> <br />
 				<h1>${grailsApplication.config.speciesPortal.app.siteName}</h1>
 			</a>
         
 			<a class="pull-right" style="margin-right: 0px;"> <img
-                            class="logo" src="images/gov-logo.png"
+                            class="logo" src="${Utils.getIBPServerDomain()+'/'+grailsApplication.config.speciesPortal.app.govlogo}"
                             title="Royal Government of Bhutan" alt="Royal Government of Bhutan">
 			</a>
 
