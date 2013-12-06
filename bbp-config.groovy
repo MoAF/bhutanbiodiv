@@ -16,7 +16,7 @@ grails.plugins.springsecurity.ui.forgotPassword.emailFrom = 'notification@biodiv
 
 speciesPortal {
     app{
-        siteName = "Bhutan Biodiversity Portal <i><sup>alpha</sup></i>"
+        siteName = "Bhutan Biodiversity Portal"
         siteName2 = "Bhutan Biodiversity Portal ALPHA"
         siteCode = "${appName}"
 

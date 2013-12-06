@@ -4,6 +4,7 @@
 		<div class="navbar-inner"
 			style="box-shadow: none; background-color: #2d2d2d; background-image: none; padding: 0px 5px;  filter: progid :DXImageTransform.Microsoft.gradient (startColorstr = '#fafafa', endColorstr = '#fafafa' );">
 			<div class="container" >
+				<a img src="images/dzongkha.png" />
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> </a> <a
 					class="brand"

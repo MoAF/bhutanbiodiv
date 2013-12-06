@@ -102,10 +102,8 @@
  *Custom Colors for BBP
  * */
 div.container.group-theme.navbar {
-	background-color: rgb(244, 233, 201);
-	background-image: none;
-	width:980px;
-	height:80px;
+	width:960px;
+	height:90px;
 }
 
 div.navbar.navbar-static-top.btn {
@@ -180,9 +178,9 @@ html {
 }
 
 .logo  {
-	height: 80px;
-	width: 90px;
-	margin-left:0px;
+	height: 110px;
+	width: 120px;
+	margin:0px;
 }
 
 .thumbnail .rich_species_content  {
@@ -192,4 +190,62 @@ html {
 
 .observations_list  {
 	width: 954px;
+}
+
+#imagelogo {
+	height:45px;
+	width:350px;
+}
+
+.brand  {
+	width:350px;
+	margin-left: 140px;
+}
+
+.pull-right  {
+	float:right;
+}
+
+
+/***OVERWITES************/
+/* Bootstrap overrides */
+body{
+	background:#f0fccf;
+}
+div.navbar.navbar-static-top.btn{
+	background:#8ca643;
+}
+
+/* Custom CSS */
+#ibp-header{
+	background:url('../images/header-bg.jpg') no-repeat top left;
+	border-bottom:1px solid #829c38;
+}
+#ibp-header .navbar .nav>li>a{
+	color:#fff;
+}
+#ibp-footer, .gradient-bg-reverse{
+	background:#8ca643;
+}
+.links_box_column li, .links_box_column li a{
+	color:#fff;
+}
+.powered{
+	background:#fff;
+	font-size:.8em;
+}
+.about-us{
+	background:#fff;
+	padding:10px;
+	margin-bottom:10px;10pxoverflow: auto;
+}
+.about-us h2{
+	color:#db7421;
+	font-size:1.5em;
+	margin:0;
+}
+.about-us a{
+	display:block;
+	float:right;
+	color:#db7421;
 }
