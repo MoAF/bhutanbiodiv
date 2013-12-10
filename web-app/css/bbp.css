@@ -161,29 +161,26 @@ html {
 */
 
 .contributeButton a {
-	background-color: #006B00; 
+	background-color: #4B6400; 
 	background-image: none;
 }
 
-/*
+.contributeButton {
+	background-color: #5D7419; 
+}
+
 #ibp-header-bar  {
 	height:32px;
 	line-height:15px;
 }
 
-.main_heading .species_title .sci_name  {
-	line-height:50px;
+#ibp-header-bar .navbar-inner {
+	height:32px;
 }
 
-#ibp-header .navbar-inner  {
-	height: 32px;
+#ibp-header-bar .navbar-inner .container {
+	height:32px;
 }
-
-#ibp-header-bar .navbar-inner .container  {
-	width:980px;
-}
-*/
-
 
 .navbar .nav .active a, .navbar .nav .active a:hover, .navbar .nav .active a:focus {
 	background-color: #B2CC80;
