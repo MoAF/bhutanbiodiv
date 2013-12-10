@@ -780,7 +780,7 @@ function getLinkTableEntries(feature_id, layer_tablename, link_tablename) {
 
 function isAuthorisedUser() {
 
-   var url = 'http://' + getHost() + '/biodiv/SUser/isLoggedIn';
+   var url = 'http://' + getHost() + '/bbp/SUser/isLoggedIn';
     
     var isLoggedIn = false;
 
@@ -968,11 +968,11 @@ function AugmentedMap(map_div, options) {
 
 	if (d.length === 2) {
                 if(d[0] === "observation"){
-                        var url = "http://" + getHost() + "/biodiv/observation/show/" + d[1];
+                        var url = "http://" + getHost() + "/bbp/observation/show/" + d[1];
                         return "<a href='" + url + "'>Observation</a>";
                 }
                 if(d[0] === "checklist"){
-                        var url = "http://" + getHost() + "/biodiv/checklist/show/" + d[1];
+                        var url = "http://" + getHost() + "/bbp/checklist/show/" + d[1];
                         return "<a href='" + url + "'>Checklist</a>";
                 }
 
