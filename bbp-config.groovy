@@ -223,6 +223,10 @@ environments {
 				rootDir = "${app.rootDir}/content"
 				serverURL = "http://biodiversity.bt/${appName}/content"
 			}	
+			
+			maps{
+				serverURL = "http://biodiversity.bt/${appName}/maps"
+			}	
 
 			grails {
 				mail {
