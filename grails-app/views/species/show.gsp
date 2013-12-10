@@ -117,8 +117,8 @@ if(r) {
 -->
 
 <script type="text/javascript"
-		src="/sites/all/themes/wg/scripts/OpenLayers-2.10/OpenLayers.js"></script>
-<script type="text/javascript" src="/sites/all/themes/wg/scripts/am.js"></script>
+		src="${resource(dir:'js/OpenLayers-2.10/',file:'OpenLayers.js')}"></script>
+<script type="text/javascript" src="${resource(dir:'js/species/maps/',file:'am.js')}"></script>
 <g:javascript>
 
 occurrenceCount = undefined

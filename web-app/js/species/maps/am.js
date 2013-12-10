@@ -12,7 +12,7 @@ function getWorkspace() {
     if (getHost() === 'thewesternghats.indiabiodiversity.org' || getHost() === 'wgp.saturn.strandls.com') { 
     	return 'wgp';
     }
-    return 'ibp';
+    return 'bbp';
 }
 
 function getWWWBase() {
@@ -689,18 +689,18 @@ if (!Array.prototype.indexOf) {
 
 
 function getMaxExtent() {
-    var ext = "5801108.428222222,-7.081154550627198, 12138100.077777777, 4439106.786632658";
+    var ext = "9862211.13746658, 3052589.1615967974, 10331840.239250705, 3326539.470970869";
     return new OpenLayers.Bounds.fromString(ext);
 }
 
 function getMapExtent() {
-    var ext = "6567849.955888889,1574216.547942332,11354588.059333334,3763310.626620795";
-    return new OpenLayers.Bounds.fromString(ext);
+    	var ext = "9862211.13746658, 3052589.1615967974, 10331840.239250705, 3326539.470970869";
+	return new OpenLayers.Bounds.fromString(ext);
 }
 
 function getRestrictedExtent() {
-    var ext = "5801108.428222222,674216.547942332, 12138100.077777777, 4439106.786632658";
-    return new OpenLayers.Bounds.fromString(ext);
+    	var ext = "9862211.13746658, 3052589.1615967974, 10331840.239250705, 3326539.470970869";
+	return new OpenLayers.Bounds.fromString(ext);
 }
 
 
@@ -1260,8 +1260,8 @@ function AugmentedMap(map_div, options) {
     function onZoom() {
         activateNavigationControl();
 	var zoom = map.getZoom();
-  	if ( zoom < 4) 
-    		map.zoomTo(4);
+  	if ( zoom < 8) 
+    		map.zoomTo(8);
 
     }
 

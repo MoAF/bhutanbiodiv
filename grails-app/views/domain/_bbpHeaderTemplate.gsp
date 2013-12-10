@@ -35,7 +35,7 @@ if(domain.equals(grailsApplication.config.wgp.domain)) {
 
         <div id="contributeMenu" class="collapse" style="border-bottom:0px;">
                         <div class="container">
-    <a class="btn btn-success" data-toggle="popover" data-placement="right" data-content="Species pages intend to provide detailed information on every species in India." data-trigger="hover"
+    <a class="btn btn-success" data-toggle="popover" data-placement="right" data-content="Species pages intend to provide detailed information on every species in Bhutan." data-trigger="hover"
                                     href="${uGroup.createLink(
                                     controller:'species', action:'contribute', 'userGroup':userGroupInstance, 'userGroupWebaddress':params.webaddress)}" data-original-title="Contribute to Species pages" title="Contribute to Species pages"> <i class="icon-plus"></i>Contribute to Species pages</a>
 
