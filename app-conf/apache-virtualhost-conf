@@ -1,18 +1,34 @@
 <VirtualHost *:80>
     ProxyRequests Off
+<<<<<<< HEAD
     ProxyPass /geoserver http://saturn.strandls.com:8080/geoserver
     ProxyPassReverse /geoserver http://saturn.strandls.com:8080/geoserver
     ServerName bhutanbiodiversity.localhost.org
     ServerAlias www.bhutanbiodiversity.localhost.org
+=======
+    ProxyPass /geoserver http://indiabiodiversity.saturn.strandls.com/geoserver
+    ProxyPassReverse /geoserver http://indiabiodiversity.saturn.strandls.com/geoserver
+    ServerName indiabiodiversity.localhost.org
+    ServerAlias www.indiabiodiversity.localhost.org
+>>>>>>> ccfde93cfcd6aa8b5adebfee41d34cc9583fc0b9
     DirectoryIndex index.php index.html index.html index.htm index.shtml
     ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
 	
     DocumentRoot /var/www
     RewriteEngine on
 
+<<<<<<< HEAD
     RewriteCond %{REQUEST_URI} ^/bbp/(static|plugins|data|bootstrap|js|css|j_spring_security_check|j_spring_openid_security_check|images|j_spring_security_logout|.*/upload_resource|emailConfirmation|ck).*
     RewriteRule ^/bbp(.*)$ http://bhutanbiodiversity.localhost.org:8080/bbp$1 [P]
     ProxyPassReverse /bbp http://bhutanbiodiversity.localhost.org:8080/bbp
+=======
+    RewriteCond  %{REQUEST_URI} ^/(geoserver|biodiv/maps/thumbnails)
+    RewriteRule  /(.*)$ http://indiabiodiversity.saturn.strandls.com/$1 [P,L]
+
+    RewriteCond %{REQUEST_URI} ^/biodiv/(static|plugins|data|bootstrap|js|css|j_spring_security_check|j_spring_openid_security_check|images|j_spring_security_logout|.*/upload_resource|emailConfirmation|ck).*
+    RewriteRule ^/biodiv(.*)$ http://indiabiodiversity.localhost.org:8080/biodiv$1 [P]
+    ProxyPassReverse /biodiv http://indiabiodiversity.localhost.org:8080/biodiv
+>>>>>>> ccfde93cfcd6aa8b5adebfee41d34cc9583fc0b9
 
 <<<<<<< .merge_file_XaA7W1
 #   RewriteCond %{REQUEST_URI} !(^(/bbp/(observations|newsletters|group-themes|users|userGroups|images|content)|(wgp_maps|geoserver)))

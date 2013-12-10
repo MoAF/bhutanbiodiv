@@ -73,8 +73,10 @@ class Species implements Rateable {
 		if(!reprImage) {
 			def images = this.getImages();
 			this.reprImage = images ? images[0]:null;
+            
             if(reprImage) {
                 log.debug " Saving representative image for species ===  $reprImage.fileName" ;
+
                 if(!this.save(flush:true)) {
                     this.errors.each { log.error it }
                 }
