@@ -157,7 +157,7 @@ function getThemeNames(theme_type) {
     //hence, commented above code and using  hardcoded theme names below
     var by_themes = 'Biogeography///Abiotic///Demography///Species///Administrative Units///Land Use Land Cover///Conservation///Threats';
 
-    var by_geography = 'India///Uttaranchal///Nilgiri Biosphere Reserve///Papagni, Andhra Pradesh///Western Ghats///BR Hills, Karnataka///Vembanad, Kerala///Satkoshia, Orissa///North East Area///Agar, Madhya Pradesh///Mandla, Madhya Pradesh///Pench, Madhya Pradesh///Bandipur, Karnataka///Kanakapura';
+//    var by_geography = 'India///Uttaranchal///Nilgiri Biosphere Reserve///Papagni, Andhra Pradesh///Western Ghats///BR Hills, Karnataka///Vembanad, Kerala///Satkoshia, Orissa///North East Area///Agar, Madhya Pradesh///Mandla, Madhya Pradesh///Pench, Madhya Pradesh///Bandipur, Karnataka///Kanakapura';
 
 
      if (getWorkspace() === 'wgp' ){
@@ -1392,7 +1392,7 @@ function AugmentedMap(map_div, options) {
         map.setCenter(new OpenLayers.LonLat(77.22, 22.77).transform(
             new OpenLayers.Projection("EPSG:4326"),
             map.getProjectionObject()
-            ), 5);
+            ), 8);
     }
 
     this.layers = map.layers;
@@ -1541,7 +1541,7 @@ function showLinkTable(lnk_table_div, fid, layer, lnk_table, title) {
 // this should make use of browser caching and decrease load time of the page
 function getMapThumbnail(layer_tablename) {
     var html = '<div class="map_thumbnail">';
-    html = html + '<img src="'+window.params.map.serverURL+'/thumbnails/' + layer_tablename + '_thumb.gif" onerror="this.src = \''+window.params.map.serverURL+'/thumbnails/no_preview.png\'"/>'; 
+    html = html + '<img src="'+window.params.map.serverURL+'/thumbnails/' + layer_tablename + '_thumb.gif" onerror="this.src = \''+window.params.map.serverURL+'/thumbnails/no_preview.gif\'"/>'; 
     //html = html + '<img src="' + getWMS() + '?service=WMS&version=1.1.0&request=GetMap&layers=' + layer_tablename + '&styles=&bbox=' + getLayerBoundingBoxString(layer_tablename) + '&width=80&height=80&srs=EPSG:4326&format=image/gif&FORMAT_OPTIONS=antialias:none&transparent=true"/>'; 
     html = html + '</div>';
 
@@ -1867,17 +1867,17 @@ function createLayerExplorerLinks(layers) {
     }
     html = html + '</ul>';
     html = html + '</div></div></li>';
-    html = html + '<li><div class="collapsible_box"><a  class="collapsible_box_title" href="#" onClick="toggleDiv(\'layers_by_geography\', \'fade\'); hideDiv(\'layers_by_theme\', \'fade\', 1);">By geography</a>';
-    html = html + '<div id="layers_by_geography" style="display:none;">';
-    html = html + '<ul class="layer_explorer_sidebar_subitems">';
-    var geography = getThemeNames(2);
-    for (var i = 0; i < geography.length; i += 1) {
-        html = html + '<li><a id="tag_link" href="#" onClick="updateLayersListByTheme(\'' + geography[i] + '\')">' + geography[i] + '</a></li>';
+    //html = html + '<li><div class="collapsible_box"><a  class="collapsible_box_title" href="#" onClick="toggleDiv(\'layers_by_geography\', \'fade\'); hideDiv(\'layers_by_theme\', \'fade\', 1);">By geography</a>';
+    //html = html + '<div id="layers_by_geography" style="display:none;">';
+    //html = html + '<ul class="layer_explorer_sidebar_subitems">';
+    //var geography = getThemeNames(2);
+    //for (var i = 0; i < geography.length; i += 1) {
+    //    html = html + '<li><a id="tag_link" href="#" onClick="updateLayersListByTheme(\'' + geography[i] + '\')">' + geography[i] + '</a></li>';
 
-    }
+    //}
 
-    html = html + '</ul>';
-    html = html + '</div></div></li>';
+    //html = html + '</ul>';
+    //html = html + '</div></div></li>';
 
     html = html + '</ul>';
     html = html + '</div>';
@@ -1906,7 +1906,7 @@ function createAllKeywordsLinks(layers) {
     }
     html = html + '</ul>';
     html = html + '</div></li>';
-    html = html + '<li><a href="#" onClick="">By geography</a></li>';
+    //html = html + '<li><a href="#" onClick="">By geography</a></li>';
     html = html + '</div>';
 
     return html;
@@ -2497,7 +2497,7 @@ function getLayerBoundingBoxString(layer) {
         }
     }
 
-    return "68.106,6.76,97.415,37.074";
+    return "88.692,26.647,92.170,28.280";
 }
 
 function getLayerBoundingBox(layer) {

@@ -100,21 +100,21 @@ var showOccurence = function(speciesName) {
             var layersOptions = [
             {
                     title : 'Occurrence',
-                    layers : 'bhutanmaps:occurrence',
+                    layers : 'bbp:occurrence',
                     styles : '',
                     cql_filter : "species_name='" + speciesName + "'",
                     opacity : 0.7
             },
             {
                     title : 'Observation',
-                    layers : 'bhutanmaps:observation_locations',
+                    layers : 'bbp:observation_locations',
                     styles : '',
                     cql_filter : "species_name='" + speciesName + "'",
                     opacity : 0.7
             },
             {
                     title : 'Checklist',
-                    layers : 'bhutanmaps:checklist_species_locations',
+                    layers : 'bbp:checklist_species_locations',
                     styles : '',
                     cql_filter : "species_name='" + speciesName + "'",
                     opacity : 0.7

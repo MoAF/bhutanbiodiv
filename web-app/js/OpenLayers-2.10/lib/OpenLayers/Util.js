@@ -668,7 +668,7 @@ OpenLayers.Util.urlAppend = function(url, paramStr) {
  * Property: ImgPath
  * {String} Default is ''.
  */
-OpenLayers.ImgPath = '../../img/';
+OpenLayers.ImgPath = 'http://biodiversity.bt/images/img/';
 
 /** 
  * Function: getImagesLocation

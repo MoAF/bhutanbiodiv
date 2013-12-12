@@ -24,7 +24,7 @@ speciesPortal {
         facebookUrl = "https://www.facebook.com/pages/Bhutan-Biodiversity-Portal"
         feedbackFormUrl = "http://biodiversity.bt/contact"
 
-        logo = "images/demo_logo.png"
+        logo = "images/bbp-logo.png"
         govlogo = "images/gov-logo.png"
         dzongkha = "images/accordion/dzongkha.png"
         favicon = "images/favicon.ico"

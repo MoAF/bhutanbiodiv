@@ -167,7 +167,7 @@ modules = {
 	}
 
 	species_show {
-		dependsOn 'species, maps, gallery, comment, activityfeed'
+		dependsOn 'species, gallery, comment, activityfeed'
 
 		resource url:'/css/augmented-maps.css'
 		resource url:[dir:'js/jquery/jquery.jqGrid-4.1.2/css',file:'ui.jqgrid.css']
@@ -184,6 +184,8 @@ modules = {
 		resource url:'/js/wysihtml5-0.3.0_rc2.min.js'
 		resource url:'/js/bootstrap-wysihtml5-0.0.2.min.js'		
 		resource url:'/js/wysihtml5.js'
+		resource url:'/js/OpenLayers-2.10/OpenLayers.js'
+		resource url:'/js/species/maps/am.js'
 	}
 	
 	species_list {

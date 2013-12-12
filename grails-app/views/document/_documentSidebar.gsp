@@ -7,7 +7,7 @@
     	<uGroup:objectPostToGroupsWrapper 
 			model="[canPullResource:canPullResource, 'objectType':Document.class.canonicalName]" />
     </g:if>
-	<div class="sidebar_section">
+<!--	<div class="sidebar_section">
             <h5>Document Manager <sup>Beta</sup></h5>
 
                 <p class="tile" style="margin:0px; padding:5px;">
@@ -23,7 +23,7 @@
                 </p>
                 
 	</div>
-
+-->
 
 
 	<g:if
