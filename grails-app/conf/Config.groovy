@@ -18,7 +18,7 @@ import org.apache.log4j.Priority
 // config files can either be Java properties files or ConfigSlurper scripts
 
 grails.config.locations = ["file:/data/bbp/${appName}-config.groovy"]
-//grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
+grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
 //grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
 //                             "file:${userHome}/.grails/${appName}-config.groovy"]
 // grails.config.locations = [ "classpath:${appName}-config.properties",
