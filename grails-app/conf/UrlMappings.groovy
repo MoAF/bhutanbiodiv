@@ -10,7 +10,7 @@ class UrlMappings {
 		"500"(controller: "errors", action: "error500")
 		"500"(controller: "errors", action: "error403", exception: AccessDeniedException)
 		"500"(controller: "errors", action: "error403", exception: NotFoundException)
-*/		
+*/
 
 		"/login/auth" {
 			controller = 'openId'
@@ -155,5 +155,20 @@ class UrlMappings {
 		view: '/portal/theportal'
 	}
 
+	/* Custom url for Bhutan Biodiversity Portal */
+	
+	"/theportal" (view:'portal/bioinbhutan')
+	"/aboutus" (view:'portal/about')
+	"/contactus" (view:'portal/contact')
+	"/datasharing" (view:'portal/datasharing')
+	"/donors" (view:'portal/donors')
+	"/feedback" (view:'portal/feedback')
+	"/license" (view:'portal/license')
+	"/partners" (view:'portal/partners')
+	"/people" (view:'portal/people')
+	"/policy" (view:'portal/policy')
+	"/team" (view:'portal/team')
+	"/faq" (view:'portal/qna')
+	"/technology" (view:'portal/technology')
     }
 }

@@ -174,7 +174,7 @@
 					
 					<li
 						class="${(request.getHeader('referer')?.contains('/about') && params.action == 'header')?' active':''}"><a
-						href="/theportal" title="About Us">About Us </a></li>
+						href="/aboutus" title="About Us">About Us </a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> More <b class="caret"></b> </a>
 

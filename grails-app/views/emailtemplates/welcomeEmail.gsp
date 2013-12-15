@@ -108,7 +108,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 </td>
 </tr>
 <tr>
-    <td id="header" class="w640" align="center" bgcolor="#ffffff" width="640"><a href="${grailsApplication.config.grails.serverURL}/"><img src="${resource(dir:'images', file:'whatsnewbanner_3.gif',absolute:'true' )}" alt="${grailsApplication.config.speciesPortal.app.siteName}" style="border: 0px solid ; width: 639px; height: 53px;"></a></td>
+    <td id="header" class="w640" align="center" bgcolor="#ffffff" width="640"><a href="${grailsApplication.config.grails.serverURL}/"><img src="${resource(dir:'images', file:'bhutan.gif',absolute:'true' )}" alt="${grailsApplication.config.speciesPortal.app.siteName}" style="border: 0px solid ; width: 639px; height: 53px;"></a></td>
 </tr>
 <tr>
 <td class="w580" style="width: 580px; height: 10px; background-color: white;"></td>
@@ -131,9 +131,9 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 <p class="article-title" align="left"><singleline label="Title"><br>
 </singleline></p>
 <div class="article-content" align="left"><big style="font-weight: bold;"> <small>Dear</small> <small>&nbsp;${username}</small></big><span style="font-weight: bold;">,</span><br><br>
-Welcome to the India Biodiversity Portal (IBP)! You are now part of an
+Welcome to the Bhutan Biodiversity Portal (BBP)! You are now part of an
 exciting initiative designed to facilitate participation and enable
-open access for all citizens in contributing information on Indian
+open access for all citizens in contributing information on Bhutanese
 biodiversity for the benefit of science and society. The portal offers the
 following modules: </div>
 </td>
@@ -180,7 +180,7 @@ filters. </div>
 </table>
 <div class="article-content" align="left"> &nbsp;A
 collection of more than hundred web-based interactive map layers with
-spatial information on Indian biodiversity. Over 60 of these map layers
+spatial information on Bhutanese biodiversity. Over 30 of these map layers
 are downloadable. The fully-featured webGIS system allows you to
 overlay and visualize multiple layers; query and measure distances and
 areas; and zoom in and out, to look at areas of your interest. You can
@@ -209,7 +209,7 @@ embed it on your own web page. </div>
 </table>
 <div class="article-content" align="left"> A compilation of checklists of species
 belonging to a wide range of
-taxa and covering varied geographies of the Indian subcontinent. You
+taxa and covering varied geographies of Bhutan. You
 can search for a particular checklist by taxa, species name or
 location. Each checklist comes with it's own metadata, and terms of
 use, specified by the author and/or source. You can also download a
