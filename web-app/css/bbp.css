@@ -248,7 +248,8 @@ div.navbar.navbar-static-top.btn{
 	padding:10px;
 	margin-bottom:10px;10pxoverflow: auto;
 }
-.about-us h2{
+
+h2{
 	color:#db7421;
 	font-size:1.5em;
 	margin:0;
@@ -267,3 +268,49 @@ div.navbar.navbar-static-top.btn{
 	height:370px;
 	width:100%;
 }
+
+.writeup  {
+	width:700px;
+	float:left;
+}
+
+ .staticnav  {
+	width:200px;
+	float:right;
+	margin-top:20px;
+ }
+
+ .donors_logo  {
+	width:100px;
+	height:100px;
+ }
+
+ .quote {
+	height:10px;
+	width:10px;
+ }
+
+ /*Side Navigation */
+#sidenav ul  {
+	list-style-type: none;
+}
+
+#sidenav ul li  {
+	width:300px;
+	height:30px;
+}
+
+#sidenav ul li a  {
+	color: #db7421;
+	text-decoration:none;
+}
+
+#sidenav ul li a:hover  {
+	color: #B2CC80;
+}
+
+#sidenav ul li a:active  {
+	color: black;
+}
+
+

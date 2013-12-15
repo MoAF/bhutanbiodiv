@@ -15,4 +15,19 @@ def migrate(){
 	//}
 }
 
-migrate()
+//migrate()
+
+
+def exportTest(){
+        def sep = "|"
+	println 'species_id' + sep + 'canonicalForm' + sep + 'bionomialForm' + sep + 'source'
+	species.Species.list().each{ s ->
+		def tCon = s.taxonConcept
+		if(tCon.group && (tCon.group.id == 6)){
+		   def sources = s.classifications().collect { it.name }
+		   println s.id + sep + tCon.canonicalForm + sep + tCon.binomialForm + sep + sources
+		}
+	}
+}
+exportTest()
+

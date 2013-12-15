@@ -13,7 +13,7 @@
 					class="nav-header bold ${(request.getHeader('referer')?.contains('/map'))?' active':''}"><a
 					href="${ '/map'}" title="Maps">All Maps</a></li>
 				<li
-					class=" nav-header bold${(params.controller == 'checklist')?' active':''}"><a
+					class=" nav-header bold${(params.controller == 'checklist')?' active':''}" style="width:200px;"><a
 					href="${uGroup.createLink(controller:'checklist', action:'list')}" title="Checklists">All Checklists</a></li>
 				<!-- li
 					class="nav-header bold ${(params.controller == 'userGroup' && params.action== 'list')?' active':''}"><a
@@ -23,24 +23,22 @@
 				</li-->
 			</ul>
 		</div>
-<!--		<div class="links_box_column">
+		<div class="links_box_column">
 			<ul>
-				<li class="nav-header bold"  style="padding-left: 0px;"><a href='/theportal'>The Portal</a></li>
-				<li><a href="${ '/biodiversity_in_india'}">Biodiversity in India</a>
+				<li class="nav-header bold"  style="padding-left: 0px;"><a href='/aboutus'>The Portal</a></li>
+				<li style="width:200px;"><a href="${ '/theportal'}" >Biodiversity Of Bhutan</a>
 				</li>
-				<li><a href="${ '/about/whats-new'}">What's new?</a></li>
-				<li><a href="${ '/about/technology'}">Technology</a></li>
-				<li><a href="${ '/help/faqs'}">FAQ</a></li>
+				<li><a href="${ '/technology'}">Technology</a></li>
+				<li><a href="${ '/faq'}">FAQ</a></li>
 
 			</ul>
 		</div>
 		<div class="links_box_column">
 			<ul>
 				<li class="nav-header bold"  style="padding-left: 0px;"><a href='/people'>People</a></li>
-				<li><a href="${ '/people/partners'}">Partners</a></li>
-				<li><a href="${ '/people/donors'}">Donors</a></li>
-				<li><a href="${ '/people/fraternity'}">Fraternity</a></li>
-				<li><a href="${ '/people/team'}">Team</a></li>
+				<li><a href="${ '/partners'}">Partners</a></li>
+				<li><a href="${ '/donors'}">Donors</a></li>
+				<li><a href="${ '/team'}">Team</a></li>
 			</ul>
 		</div>
 
@@ -48,24 +46,19 @@
 			<ul>
 				<li class="nav-header bold"  style="padding-left: 0px;"><a href='/policy'>Policy</a>
 				</li>
-				<li><a href="${ '/policy/data_sharing'}">Data Sharing</a>
+				<li><a href="${ '/datasharing'}">Data Sharing</a>
 				</li>
-				<li><a href="${ '/licenses'}">Licenses</a>
-				</li>
-				<li><a href="${ '/terms'}">Terms & Conditions</a>
+				<li><a href="${ '/license'}">Licenses</a>
 				</li>
 
 			</ul>
 		</div>
-                -->
 		<div class="links_box_column">
 			<ul>
-				<li class="nav-header bold" style="color:#5E5E5E; padding-left: 0px;">Others</li>
-				<li><a href="${ '/sitemap'}">Sitemap</a>
+				<li class="nav-header bold" style="padding-left: 0px;">Others</li>
+				<li><a href="${ '/feedback'}">Feedback</a>
 				</li>
-				<li><a href="${ '/feedback_form'}">Feedback</a>
-				</li>
-				<li><a href="${ '/contact'}">Contact Us</a>
+				<li><a href="${ '/contactus'}">Contact Us</a>
 				</li>
 
 			</ul>
