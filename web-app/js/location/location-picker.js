@@ -572,15 +572,17 @@ $(document).ready(function() {
               return;
           }
 
-        geocoder.geocode( {'address': request.term +'+india', 'region':'in'}, function(results, status) {
+        geocoder.geocode( {'address': request.term +'+bhutan', 'region':'bt'}, function(results, status) {
             var r = [];
             $.each(results, function(index, item) {
                 if(r.length >= 5) return;
                 r.push( {
                     label:  item.formatted_address,
                     value: item.formatted_address,
-                    latitude: item.geometry.location.jb,
-                    longitude: item.geometry.location.kb,
+                    latitude: item.geometry.location.lat(),
+                    //latitude: item.geometry.location.jb,
+                    longitude: item.geometry.location.lng(),
+                    //longitude: item.geometry.location.kb,
                     category:''
                 })
             })        
