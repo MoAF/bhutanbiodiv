@@ -579,8 +579,10 @@ $(document).ready(function() {
                 r.push( {
                     label:  item.formatted_address,
                     value: item.formatted_address,
-                    latitude: item.geometry.location.jb,
-                    longitude: item.geometry.location.kb,
+                   // latitude: item.geometry.location.jb,
+                    latitude: item.geometry.location.lat,
+                   // longitude: item.geometry.location.kb,
+                    longitude: item.geometry.location.lng,
                     category:''
                 })
             })        

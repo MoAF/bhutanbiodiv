@@ -2,6 +2,7 @@
 <g:set var="mainImage" value="${speciesInstance.mainImage()}" />
 <%
 def imagePath = mainImage?mainImage.thumbnailUrl(grailsApplication.config.speciesPortal.resources.serverURL, !speciesInstance.resources ? '.png' :null): null;
+println "<<<<<<<<<<<<<<<<<<<<<<<<<<<<MAIN IMAGE: " + imagePath + " speciesInstance.resources = " + speciesInstance.resources;
 def obvId = speciesInstance.id
 %>
 

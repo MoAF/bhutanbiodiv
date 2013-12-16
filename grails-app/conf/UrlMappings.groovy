@@ -150,10 +150,6 @@ class UrlMappings {
 			controller='document'
 			action='browser'
 		}
-	//URL Mapping specific to Bhutan Biodiversity Portal
-	"/theportal" {
-		view: '/portal/theportal'
-	}
 
 	/* Custom url for Bhutan Biodiversity Portal */
 	
