@@ -27,7 +27,7 @@ function getWMS() {
 }
 
 function getWorkspaceWMS() {
-    var wms = 'http://' + getGeoserverHost() + '/geoserver/' + getWorkspace() + '/wms';
+    var wms = 'http://' + getGeoserverHost() + '/geoserver/wms';
     return wms;
 }
 
@@ -155,7 +155,7 @@ function getThemeNames(theme_type) {
 
     //currently  no way to filter the theme names by domains ibp/wgp, 
     //hence, commented above code and using  hardcoded theme names below
-    var by_themes = 'Biogeography///Abiotic///Demography///Species///Administrative Units///Land Use Land Cover///Conservation///Threats';
+    var by_themes = 'General///Biogeography///Abiotic///Demography///Species///Administrative Units///Land Use Land Cover///Conservation///Threats';
 
 //    var by_geography = 'India///Uttaranchal///Nilgiri Biosphere Reserve///Papagni, Andhra Pradesh///Western Ghats///BR Hills, Karnataka///Vembanad, Kerala///Satkoshia, Orissa///North East Area///Agar, Madhya Pradesh///Mandla, Madhya Pradesh///Pench, Madhya Pradesh///Bandipur, Karnataka///Kanakapura';
 
@@ -1220,7 +1220,7 @@ function AugmentedMap(map_div, options) {
         if (features_list_panel_enabled) {
             var oXmlParser = new DOMParser();
             var oXmlDoc = oXmlParser.parseFromString( text, "text/xml" ); 
-            var arrFeatures = oXmlDoc.getElementsByTagName("ibp:state"); 
+            var arrFeatures = oXmlDoc.getElementsByTagName("bbp:state"); 
             var featuresList = [];
 
             for (var i in arrFeatures){
