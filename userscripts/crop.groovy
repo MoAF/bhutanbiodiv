@@ -113,7 +113,21 @@ def doCrop(){
 
 //doCrop();
 
-ImageUtils.createScaledImages(new File('/tmp/142.jpg'), new File('/tmp') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Abroscopus schisticeps/Abroscopus_schisticeps.png'), new File('/data/bbp/species/simg/Abroscopus schisticeps') )
+/*
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Childrena childreni/Childrena_childreni_Gray.tif'), new File('/data/bbp/species/simg/Childrena childreni') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Papilio helenus/Papilio_helenus_Linnaeus.tif'), new File('/data/bbp/species/simg/Papilio helenus') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Junonia orithya/Junonia_orithya_Linnaeus.tif'), new File('/data/bbp/species/simg/Junonia orithya') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Kaniska canace/Kaniska_canace_Linnaeus.tif'), new File('/data/bbp/species/simg/Kaniska canace') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Delias sanaca/Delias_sanaca_Moore.tif'), new File('/data/bbp/species/simg/Delias sanaca') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Aporia agathon/Aporia_agathon_Gray.tif'), new File('/data/bbp/species/simg/Aporia agathon') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Colias fieldii/Colias_fieldii_Ménétriès.tif'), new File('/data/bbp/species/simg/Colias fieldii') )
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Heliophorus moorei/Heliophorus_moorei_Hewitson.tif'), new File('/data/bbp/species/simg/Heliophorus moorei') )
+
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Esakiozephyrus icana/Esakiozephyrus_icana_Moore.tif'), new File('/data/bbp/species/simg/Esakiozephyrus icana') )
+
+ImageUtils.createScaledImages(new File('/data/bbp/species/simg/Lycaena phlaeas/Lycaena_phlaeas_Linnaeus.tif'), new File('/data/bbp/species/simg/Lycaena phlaeas') )
+*/
 println "=========== DONE!!";
 
 /*

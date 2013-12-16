@@ -1,7 +1,7 @@
 <div id="sidenav">
 <ul>
 	<li>  <a href="/aboutus"> The Portal</a></li>
-	<li>  <a href="/theportal"> Biodiversity In Bhutan</a></li>
+	<li>  <a href="/theportal"> Biodiversity Of Bhutan</a></li>
 	<li>  <a href="/technology">  Technology </a></li>
 	<li>  <a href="/faq">  FAQ </a></li>
 	<li>  <a href="/partners">  Partners </a></li>

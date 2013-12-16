@@ -41,7 +41,9 @@ class ImageUtils {
  		if(lastIndex != -1) {
 			name = fileName.substring(0, lastIndex);
 		}
+		//def extension;
 		///////////////////////////////////////////////////
+	
 		log.debug "Creating gallery image";
 		def extension = config.gallery.suffix
 		ImageUtils.convert(imageFile, new File(dir, name+extension), config.gallery.width, config.gallery.height, 100);
