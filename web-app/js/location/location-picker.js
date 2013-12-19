@@ -26,10 +26,17 @@ function initialize(element, drawable){
     G = google.maps;
     M = L;
     M.Icon.Default.imagePath = window.params.defaultMarkerIcon;
+    //allowedBounds = new M.LatLngBounds(new M.LatLng('6.74678', '68.03215'), new M.LatLng('35.51769', '97.40238'));
+    //var viewBounds = new M.LatLngBounds(new M.LatLng('8', '59'), new M.LatLng('45', '105'));
+    //var viewBounds = new M.LatLngBounds(new M.LatLng('8', '69'), new M.LatLng('36', '98'));
+    //var nagpur_latlng = new M.LatLng('21.07', '79.27');                
+
     allowedBounds = new M.LatLngBounds(new M.LatLng('26.647', '88.692'), new M.LatLng('28.280', '92.170'));
     //var viewBounds = new M.LatLngBounds(new M.LatLng('8', '59'), new M.LatLng('45', '105'));
     var viewBounds = new M.LatLngBounds(new M.LatLng('26.421', '88.505'), new M.LatLng('28.632', '92.433'));
     var nagpur_latlng = new M.LatLng('27.445', '90.450'); 
+
+
     var ggl = new M.Google('HYBRID');
     map = new M.Map(element, {
 //        crs:L.CRS.EPSG4326,
@@ -54,7 +61,7 @@ function initialize(element, drawable){
     isMapViewLoaded=true;
     
     pointIcon = M.AwesomeMarkers.icon({
-        icon: 'ok', 
+        icon: undefined, 
         color: 'blue'
     });
     checklistIcon = M.AwesomeMarkers.icon({
@@ -62,7 +69,7 @@ function initialize(element, drawable){
         color: 'green'
     });
     geoPrivacyPointIcon = M.AwesomeMarkers.icon({
-        icon: 'ok', 
+        icon: undefined, 
         color: 'purple'
     });
     geoPrivacyChecklistIcon = M.AwesomeMarkers.icon({
@@ -89,22 +96,22 @@ function initControls() {
     }).addTo(map);
 
     map.on('enterFullscreen', function(){
-        if(searchMarker) {
+/*        if(searchMarker) {
             console.log("enterFullscreen : panning to ");
             console.log(searchMarker.getLatLng());
-            map.panTo(searchMarker.getLatLng());
+//            map.panTo(searchMarker.getLatLng());
         }
         else resetMap()
-    });
+*/    });
 
     map.on('exitFullscreen', function(){
-        if(searchMarker) {
+/*        if(searchMarker) {
             map.panTo(searchMarker.getLatLng());
+            console.log("exitFullscreen : panning to ")
             console.log(searchMarker.getLatLng());
-            console.log("enterFullscreen : panning to "+searchMarker)
         }
         else resetMap();
-    });
+*/    });
 
 }
 
@@ -357,7 +364,7 @@ function select_location(marker) {
                 selectedMarker.bindPopup(content).openPopup();
 
                 if (results[0]) {
-                    $('#placeName').val(results[0].formatted_address);
+                    //$('#placeName').val(results[0].formatted_address);
                     //$('#reverse_geocoded_name').html(results[0].formatted_address);
                     //$('#latitude').html(marker.getLatLng().lat.toFixed(2));
                     //$('#longitude').html(marker.getLatLng().lng.toFixed(2));
@@ -565,15 +572,15 @@ $(document).ready(function() {
               return;
           }
 
-        geocoder.geocode( {'address': request.term +'+india', 'region':'in'}, function(results, status) {
+        geocoder.geocode( {'address': request.term +'+bhutan', 'region':'bt'}, function(results, status) {
             var r = [];
             $.each(results, function(index, item) {
                 if(r.length >= 5) return;
                 r.push( {
                     label:  item.formatted_address,
                     value: item.formatted_address,
-                    latitude: item.geometry.location.jb,
-                    longitude: item.geometry.location.kb,
+                    latitude: item.geometry.location.lat(),
+                    longitude: item.geometry.location.lng(),
                     category:''
                 })
             })        

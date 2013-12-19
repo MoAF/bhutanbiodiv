@@ -28,6 +28,9 @@
 .grassland_gall_th:hover { background-position: 0 -515px; }
 .grassland_gall_th.active, .grassland_gall_th:active { background-position: 0 -547px; }
 
+.alpine_gall_th { width: 32px; height: 32px; background-position: 0 -483px; }
+.alpine_gall_th:hover { background-position: 0 -515px; }
+.alpine_gall_th.active, .alpine_gall_th:active { background-position: 0 -547px; }
 
 .rocky_outcrops_gall_th { width: 32px; height: 32px; background-position: -33px -194px; }
 .rocky_outcrops_gall_th:hover { background-position: -33px -226px; }

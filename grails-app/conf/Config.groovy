@@ -12,17 +12,23 @@ import com.octo.captcha.component.image.color.SingleColorGenerator
 import com.octo.captcha.component.image.textpaster.NonLinearTextPaster
 import grails.plugins.springsecurity.SecurityConfigType;
 import com.octo.captcha.service.sound.DefaultManageableSoundCaptchaService
-
+import org.apache.log4j.Priority
 
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
-grails.config.locations = [ "classpath:${appName}-config.groovy",
-                            "file:${basedir}/${appName}-config.groovy"]
+grails.config.locations = ["file:/data/bbp/${appName}-config.groovy"]
+grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
+//grails.config.locations = ["file:${basedir}/${appName}-config.groovy"]
+//                             "file:${userHome}/.grails/${appName}-config.groovy"]
+// grails.config.locations = [ "classpath:${appName}-config.properties",
+//                             "classpath:${appName}-config.groovy",
+//                             "file:${userHome}/.grails/${appName}-config.properties",
+//                             "file:${userHome}/.grails/${appName}-config.groovy"]
 
-if(System.properties["${appName}.config.location"]) {
-    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-}
+//if(System.properties["${appName}.config.location"]) {
+//   grails.config.locations << "file:" + System.properties["${appName}.config.location"]
+//}
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = false // enables the parsing of file extensions from URLs into the request format
@@ -74,13 +80,14 @@ grails.spring.bean.packages = []
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
 
+def log4jConsoleLogLevel = Priority.INFO
 // log4j configuration
-log4j = {
+/*log4j = {
 	// Example of changing the log pattern for the default console
 	// appender:
 	//
 	appenders {
-	    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n')
+	    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
 	}
 
 	error  	'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -115,8 +122,9 @@ log4j = {
 			//'com.the6hours.grails.springsecurity.facebook'
             //"org.grails.plugin.resource"	
     info    'species.auth'	
+//    debug   'org.springframework.security'
 
-}
+} */
 
 grails.gorm.default.mapping = {
 	cache true
@@ -165,14 +173,16 @@ cache.headers.presets = [
  *  2. Looking for ${userHome}/.grails/${appName}-config.groovy
  *  3. Using system environment configuration file: " + System.getenv(ENV_NAME)
  *  4. Using user defined config: file:${userHome}/.grails/${appName}-config.properties.
+ *  5. If additional conf file present then adding it to main config.
  */
+
 def ENV_NAME = "${appName}.config.location"
 if (!grails.config.locations || !(grails.config.locations instanceof List)) {
 	grails.config.locations = []
 }
 if (System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
 	println "Using configuration file specified on command line: " + System.getProperty(ENV_NAME)
-	grails.config.locations << "file:" + System.getProperty(ENV_NAME)
+	grails.config.locations = ["file:" + System.getProperty(ENV_NAME) ]
 }
 else if (new File("${userHome}/.grails/${appName}-config.groovy").exists()) {
 	println "*** User defined config: file:${userHome}/.grails/${appName}-config.groovy. ***"
@@ -184,11 +194,16 @@ else if (System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) 
 	println("Using system environment configuration file: " + System.getenv(ENV_NAME))
 	grails.config.locations << "file:" + System.getenv(ENV_NAME)
 }
+
 else if (new File("${userHome}/.grails/${appName}-config.properties").exists()) {
 	println "*** Using user defined config: file:${userHome}/.grails/${appName}-config.properties. ***"
 	grails.config.locations = [
 		"file:${userHome}/.grails/${appName}-config.properties"
 	]
+}
+else if (new File("${userHome}/.grails/additional-config.groovy").exists()) {
+	println "*** Additional config: file:${userHome}/.grails/additional-config.groovy. ***"
+	grails.config.locations << "file:${userHome}/.grails/additional-config.groovy"
 }
 else {
 	println "*** No external configuration file defined. ***"
@@ -198,7 +213,12 @@ else {
 
 speciesPortal {
     app.siteName = "India Biodiversity Portal"
-    app.siteDescription = "Welcome to the India Biodiversity Portal (IBP) - A repository of information designed to harness and disseminate collective intelligence on the biodiversity of the Indian subcontinent."
+    app.siteDescription = "Welcome to the ${app.siteName} - A repository of information designed to harness and disseminate collective intelligence on the biodiversity of the Indian subcontinent."
+    app.siteCode = "ibp"
+
+    app.twitterUrl = "https://twitter.com/thewesternghats"
+    app.facebookUrl = "https://www.facebook.com/pages/India-Biodiversity-Portal/130062180358038?fref=ts"
+    app.feedbackFormUrl = "http://indiabiodiversity.org/feedback_form"
 
 	app.rootDir = "${userHome}/git/biodiv/app-conf"
 	data.rootDir = "${app.rootDir}/data"
@@ -207,15 +227,15 @@ speciesPortal {
     app.logo = "logo/IBP.png"
     app.favicon = "logo/favicon.png"
    
-    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com"]
+    app.notifiers_bcc = ["prabha.prabhakar@gmail.com", "thomas.vee@gmail.com", "sandeept@strandls.com", "balachandert@gmail.com", "rahulk@strandls.com"]
 
 	species {
 		speciesDownloadDir = "${download.rootDir}/species"
 	}
 	domain = "localhost"
 	resources {
-		rootDir = "${app.rootDir}/images"
-		serverURL = "http://indiabiodiversity.localhost.org/${appName}/images"
+		rootDir = "${app.rootDir}/img"
+		serverURL = "http://indiabiodiversity.localhost.org/${appName}/img"
 		images {
 			defaultType = "jpg"
 			thumbnail {
@@ -243,7 +263,6 @@ speciesPortal {
 		serverURL = "http://indiabiodiversity.localhost.org/${appName}/observations"
 		//serverURL = "http://localhost/${appName}/observations"
 		MAX_IMAGE_SIZE = 104857600
-        filePicker.key = 'AXCVl73JWSwe7mTPb2kXdz'
 	} 
 	 userGroups {
 		rootDir = "${app.rootDir}/userGroups"
@@ -270,6 +289,7 @@ speciesPortal {
 
     maps {
         SRID = 4326;
+		serverURL = "http://indiabiodiversity.localhost.org/${appName}/maps"
     }
 
 	content{
@@ -326,8 +346,8 @@ speciesPortal {
 
 		COMMON_NAME = "Common Name"
 		SYNONYMS = "Synonyms"
-		INDIAN_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Indian Distribution Geographic Entity"
-		INDIAN_ENDEMICITY_GEOGRAPHIC_ENTITY = "Indian Endemicity Geographic Entity"
+		INDIAN_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Local Distribution Geographic Entity"
+		INDIAN_ENDEMICITY_GEOGRAPHIC_ENTITY = "Local Endemicity Geographic Entity"
 		GLOBAL_DISTRIBUTION_GEOGRAPHIC_ENTITY = "Global Distribution Geographic Entity"
 		GLOBAL_ENDEMICITY_GEOGRAPHIC_ENTITY = "Global Endemicity Geographic Entity"
 		TAXONOMIC_HIERARCHY = "Taxonomy Hierarchy"
@@ -462,57 +482,65 @@ imageConverterProg = "/usr/bin/convert";
 jpegOptimProg = "/usr/bin/jpegoptim";
 
 environments {
-	development {
-		grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
-		speciesPortal {
-			search.serverURL = "http://localhost:8090/solr"
-			names.parser.serverURL = "saturn.strandls.com"
-			wgp {
-				facebook {
-					appId= "424071494335902"
-					secret= "bb87b98979ae30936342364178c7b170"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "347177228674021"
-					secret= "82d91308b5437649bfe891a027205501"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
-			}
-		}
-		google.analytics.enabled = false
-		grails.resources.debug = false
-		
-		grails {
-			mail {
-			 host = "127.0.0.1"
-			 port = 25
-			}
-		}
+    development {
+             grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
+        speciesPortal {
+            search.serverURL = "http://localhost:8090/solr"
+            names.parser.serverURL = "saturn.strandls.com"
+        }
+        google.analytics.enabled = false
+        grails.resources.debug = false
 
+        grails {
+            mail {
+                host = "127.0.0.1"
+                port = 25
+            }
+        }
         ibp.domain='indiabiodiversity.localhost.org'
         wgp.domain='thewesternghats.indiabiodiversity.localhost.org'
-		//grails.resources.debug=true
-		grails.resources.mappers.hashandcache.excludes = ['**']
-		//grails.resources.flatten = false
-		grails.resources.mappers.yuijsminify.disable=true
+        //grails.resources.debug=true
+        grails.resources.mappers.hashandcache.excludes = ['**']
+        //grails.resources.flatten = false
+        grails.resources.mappers.yuijsminify.disable=true
 
-                ckeditor {
-                    upload {
-                    basedir = "/newsletters/"
-                    image.browser = true
-                    image.upload = true    
-                    image.allowed = ['jpg', 'gif', 'jpeg', 'png']
-                    image.denied = []
-                }
-		}
-		
-		
+        ckeditor {
+            upload {
+                basedir = "/newsletters/"
+                image.browser = true
+                image.upload = true    
+                image.allowed = ['jpg', 'gif', 'jpeg', 'png']
+                image.denied = []
+            }
+        }
 
+
+        log4jConsoleLogLevel = Priority.DEBUG
+	    log4j = {
+		appenders {
+		    console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+        }
+        error   'org.codehaus.groovy.grails.web.pages', //  GSP
+                'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+                'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+                'org.codehaus.groovy.grails.web.mapping', // URL mapping
+                'org.codehaus.groovy.grails.commons', // core / classloading
+                'org.codehaus.groovy.grails.plugins', // plugins
+                'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+                'org.hibernate',
+                'net.sf.ehcache.hibernate',
+                'org.springframework.security',
+                'org.codehaus.groovy.grails.web.servlet',  //  controllers
+                'grails.plugin',
+                'org.springframework.security.web',
+                'grails.app.tagLib.org.grails.plugin.resource'
+		debug   'speciespage',
+                'grails.app',
+                'species'
+        info    'species.auth'
 	}
-	test {
+    }	
+    test {
 		grails.serverURL = "http://indiabiodiversity.localhost.org/${appName}"
 		google.analytics.enabled = false
 	}
@@ -521,20 +549,6 @@ environments {
 		speciesPortal {
 			search.serverURL = "http://localhost:8090/solr"
 			names.parser.serverURL = "127.0.0.1"
-			wgp {
-				facebook {
-					appId= "327308053982589"
-					secret= "f36074901fc24b904794692755796fd1"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "347177228674021"
-					secret= "82d91308b5437649bfe891a027205501"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
-			}
 		}
 		google.analytics.enabled = false
 
@@ -570,18 +584,21 @@ environments {
 
 			observations {
 				rootDir = "${app.rootDir}/observations"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/observations"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/observations"
 				//serverURL = "http://localhost/${appName}/observations"
 			}
 			userGroups {
 				rootDir = "${app.rootDir}/userGroups"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/userGroups"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/userGroups"
 				//serverURL = "http://localhost/${appName}/observations"
 			}
 			users {
 				rootDir = "${app.rootDir}/users"
-				serverURL = "http://wgp.saturn.strandls.com/${appName}/users"
+				serverURL = "http://ibp.saturn.strandls.com/${appName}/users"
 			}
+            maps {
+		        serverURL = "http://indiabiodiversity.saturn.strandls.com/${appName}/maps"
+            }
 			search.serverURL="http://saturn.strandls.com:8080/solr"
 			grails.project.war.file = "/data/jetty-6.1.26/webapps/${appName}.war"
 			grails {
@@ -589,20 +606,6 @@ environments {
 					 host = "127.0.0.1"
 					 port = 25
 				}
-			}
-			wgp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
 			}
 		}
 		google.analytics.enabled = false
@@ -624,6 +627,13 @@ environments {
                 }
 
 		}
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+			}
+			debug	'species',
+				'speciespage'
+		}
 	}
 	pambaTest {
 		appName = "biodiv_test"
@@ -644,6 +654,7 @@ environments {
 				rootDir = "${app.rootDir}/observations"
 				serverURL = "http://indiabiodiversity.saturn.strandls.com/${appName}/observations"
 				//serverURL = "http://localhost/${appName}/observations"
+                
 			}
 			userGroups {
 				rootDir = "${app.rootDir}/userGroups"
@@ -657,7 +668,10 @@ environments {
 			content{
 				rootDir = "${app.rootDir}/content"
 				serverURL = "http://indiabiodiversity.saturn.strandls.com/${appName}/content"
-			}	
+			}
+            maps {
+		        serverURL = "http://indiabiodiversity.saturn.strandls.com/${appName}/maps"
+            }
 
 			search.serverURL="http://saturn.strandls.com:8080/solrPamba"
 			grails.project.war.file = "/data/jetty-6.1.26/webapps/${appName}.war"
@@ -666,20 +680,6 @@ environments {
 					 host = "127.0.0.1"
 					 port = 25
 				}
-			}
-			wgp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "310694198984953"
-					secret= "eedf76e46272190fbd26e578ae764a60"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
 			}
 		}
 		google.analytics.enabled = false
@@ -701,7 +701,14 @@ environments {
                 }
 
 		}
-		
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: log4jConsoleLogLevel
+			}
+			info	'species',
+				'speciespage'
+		}
+
 	}
 
 
@@ -709,76 +716,75 @@ environments {
 		grails.serverURL = "http://indiabiodiversity.org/${appName}"
 		jpegOptimProg = '/usr/local/bin/jpegoptim'
 		
-		speciesPortal {
-			app.rootDir = "/data/species"
-			data.rootDir = "${app.rootDir}/data"
-			names.parser.serverURL = "saturn.strandls.com"
-			
-			resources {
-				rootDir = "${app.rootDir}/images"
-				serverURL = "http://pamba.strandls.com/${appName}/images"
-			}
-			nameSearch.indexStore = "${app.rootDir}/data/names"
-			observations {
-				rootDir = "${app.rootDir}/observations"
-				serverURL = "http://thewesternghats.in/${appName}/observations"
-			}
-			userGroups {
-				rootDir = "${app.rootDir}/userGroups"
-				serverURL = "http://thewesternghats.in/${appName}/userGroups"
-			}
-			users {
-				rootDir = "${app.rootDir}/users"
-				serverURL = "http://thewesternghats.in/${appName}/users"
-			}
+        speciesPortal {
+            app.rootDir = "/data/species"
+            data.rootDir = "${app.rootDir}/data"
+            names.parser.serverURL = "127.0.0.1"
 
-			content{
-				rootDir = "${app.rootDir}/content"
-				serverURL = "http://thewesternghats.in/${appName}/content"
-			}	
+            resources {
+                rootDir = "${app.rootDir}/images"
+                serverURL = "http://pamba.strandls.com/${appName}/images"
+            }
+            nameSearch.indexStore = "${app.rootDir}/data/names"
+            observations {
+                rootDir = "${app.rootDir}/observations"
+                serverURL = "http://indiabiodiversity.org/${appName}/observations"
+				//filePicker.key = 'Az2MIh1LOQC2OMDowCnioz'
+            }
+            userGroups {
+                rootDir = "${app.rootDir}/userGroups"
+                serverURL = "http://indiabiodiversity.org/${appName}/userGroups"
+            }
+            users {
+                rootDir = "${app.rootDir}/users"
+                serverURL = "http://indiabiodiversity.org/${appName}/users"
+            }
 
-			search.serverURL="http://thewesternghats.in:8080/solr"
-			grails {
-				mail {
-					 host = "127.0.0.1"
-					 port = 25
-				}
-			}
-			wgp {
-				facebook {
-//					appId= "327308053982589"
-//					secret= "f36074901fc24b904794692755796fd1"
-					appId= "320284831369968"
-					secret= "900d0811194fe28503006b31792690ae"
-				}
-				supportEmail = "team(at)thewesternghats(dot)in"
-			}
-			ibp {
-				facebook {
-					appId= "320284831369968"
-					secret= "900d0811194fe28503006b31792690ae"
-				}
-				supportEmail = "support(at)indiabiodiversity(dot)org"
-			}
-		}
-		
+            content{
+                rootDir = "${app.rootDir}/content"
+                serverURL = "http://indiabiodiversity.org/${appName}/content"
+            }	
+            maps {
+		        serverURL = "http://indiabiodiversity.org/${appName}/maps"
+            }
+
+            search.serverURL="http://indiabiodiversity.org:8080/solr"
+            grails {
+                mail {
+                    host = "127.0.0.1"
+                    port = 25
+                }
+            }
+        }
+
         ibp.domain='indiabiodiversity.org'
         wgp.domain='thewesternghats.indiabiodiversity.org'   
 		
 		grails.plugins.springsecurity.successHandler.defaultTargetUrl = "/"
 		grails.plugins.springsecurity.logout.afterLogoutUrl = '/'
 
-                ckeditor {
-                    upload {
-                    baseurl = "/newsletters"
-                    basedir = "/data/species/newsletters/"
-                    image.browser = true
-                    image.upload = true    
-                    image.allowed = ['jpg', 'gif', 'jpeg', 'png']
-                    image.denied = []
-                }
-				}
+        ckeditor {
+            upload {
+                baseurl = "/newsletters"
+                basedir = "/data/species/newsletters/"
+                image.browser = true
+                image.upload = true    
+                image.allowed = ['jpg', 'gif', 'jpeg', 'png']
+                image.denied = []
+            }
+        }
 		
+		log4j = {
+			appenders {
+				console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'), threshold: Priority.INFO
+			}
+			info	'species',
+				'speciespage'
+			warn 	'grails.app',
+				'org.springframework.security.web'
+
+
+		}
 	}
 }
 
@@ -898,11 +904,11 @@ grails.plugins.springsecurity.ui.password.validationRegex='^.*$'
 grails.plugins.springsecurity.ui.register.postRegisterUrl  = "${grails.serverURL}/user/myprofile" // use defaultTargetUrl if not set
 grails.plugins.springsecurity.ui.register.defaultRoleNames = ['ROLE_USER']
 
-grails.plugins.springsecurity.ui.notification.emailFrom = 'notification@indiabiodiversity.org'
+//grails.plugins.springsecurity.ui.notification.emailFrom = 'notification@indiabiodiversity.org'
 grails.plugins.springsecurity.ui.notification.emailReplyTo = "prabha.prabhakar@gmail.com";
 
 grails.plugins.springsecurity.ui.register.emailBody = '''Hi $username,<br/><br/>You (or someone pretending to be you) created an account with this email address.<br/><br/>If you made the request, please click <a href="$url">here</a> to finish the registration and activate your account.'''
-grails.plugins.springsecurity.ui.register.emailFrom = 'notification@indiabiodiversity.org'
+//grails.plugins.springsecurity.ui.register.emailFrom = 'notification@indiabiodiversity.org'
 grails.plugins.springsecurity.ui.register.emailSubject = 'Activate your account with $domain'
 
 grails.plugins.springsecurity.ui.newuser.emailBody = '''\
@@ -918,7 +924,7 @@ Please update your <a href="$userProfileUrl">user profile</a>.<br/>
 If you do not want to receive notifications please go to your <a href="$userProfileUrl">user profile</a> and switch it off.<br/>
 <br/>
 -The portal team'''
-grails.plugins.springsecurity.ui.newuser.emailFrom = 'notification@indiabiodiversity.org'
+//grails.plugins.springsecurity.ui.newuser.emailFrom = 'notification@indiabiodiversity.org'
 grails.plugins.springsecurity.ui.newuser.emailSubject = 'Welcome to $domain'
 
 grails.plugins.springsecurity.ui.userdeleted.emailBody = '''\
@@ -927,7 +933,7 @@ Hi Admin,<br/>
 A user with email address $email is being deleted from <b>$domain</b>.<br/>
 <br/>
 -The portal team'''
-grails.plugins.springsecurity.ui.userdeleted.emailFrom = 'notification@indiabiodiversity.org'
+//grails.plugins.springsecurity.ui.userdeleted.emailFrom = 'notification@indiabiodiversity.org'
 grails.plugins.springsecurity.ui.userdeleted.emailSubject = 'User is being deleted on $domain'
 
 grails.plugins.springsecurity.ui.forgotPassword.emailBody = '''\
@@ -939,7 +945,7 @@ If you didn't make this request then ignore the email; no changes have been made
 <br/>
 If you did make the request, then click <a href="$url">here</a> to reset your password.
 '''
-grails.plugins.springsecurity.ui.forgotPassword.emailFrom = 'notification@indiabiodiversity.org'
+//grails.plugins.springsecurity.ui.forgotPassword.emailFrom = 'notification@indiabiodiversity.org'
 grails.plugins.springsecurity.ui.forgotPassword.emailSubject = "Password Reset"
 
 grails.plugins.springsecurity.ui.addObservation.emailSubject = 'Observation added'
@@ -1080,7 +1086,7 @@ $user has invited you to be founder of the group <a href="$groupUrl">$group</a> 
 If you do not want to receive notifications please go to your <a href="$userProfileUrl">user profile</a> and switch it off.<br/>
 <br/>
 -The portal team'''
-grails.plugins.springsecurity.ui.bBird.emailSubject = 'Welcome to the India Biodiversity Portal'
+grails.plugins.springsecurity.ui.bBird.emailSubject = "Welcome to the ${app.siteName}"
 grails.plugins.springsecurity.ui.bBird.emailBody = '''\
 Hi $username,<br/>
 <br/>
@@ -1101,7 +1107,7 @@ We will appreciate any feedback you may have to offer.<br/><br/>
 grails.plugins.springsecurity.ui.bBirdExistingUser.emailBody = '''\
 Hi $username,<br/>
 <br/>
-You have been added as a member of the <a href="$bBirdUrl">Mumbai BirdRace 2013</a> group on the India Biodiversity Portal. Please use your existing credentials to login. <br/>
+You have been added as a member of the <a href="$bBirdUrl">Mumbai BirdRace 2013</a> group on the ${app.siteName}. Please use your existing credentials to login. <br/>
 <br/>
 We look forward to your contribution on the portal. You can add images of Birds observed during the BirdRace on the  <a href="$obvModuleUrl">Observation module</a>.<br/> 
 The portal is a public participatory portal that thrives by participation from users like you.<br/><br/>
@@ -1110,7 +1116,7 @@ We will appreciate any feedback you may have to offer.<br/><br/>
 '''
 
 grails.plugins.springsecurity.ui.downloadRequest.emailSubject = 'Download request'
-grails.plugins.springsecurity.ui.downloadRequest.message = "Your data download request has been processed. The download link will be visible once you log in to your profile."
+grails.plugins.springsecurity.ui.downloadRequest.message = " data download request has been processed. The download link will be visible once you log in to your profile."
 grails.plugins.springsecurity.ui.downloadRequest.emailBody = '''\
 Hi $username,<br/>
 <br/>

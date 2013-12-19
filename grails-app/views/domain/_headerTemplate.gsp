@@ -5,7 +5,7 @@
     window.appWGPDomain = '${grailsApplication.config.wgp.domain}'
 </g:javascript>
 
-<div class="container group-theme navbar" style="width:100%;margin-bottom:0px;">
+<div class="container group-theme navbar" style="margin-bottom:0px;">
 	<div>
 		<g:if test="${userGroupInstance  && userGroupInstance.id }">
 			<uGroup:showHeader model="[ 'userGroupInstance':userGroupInstance]" />
@@ -15,9 +15,16 @@
                             class="logo" src="${Utils.getIBPServerDomain()+'/'+grailsApplication.config.speciesPortal.app.logo}"
                             title="${grailsApplication.config.speciesPortal.app.siteName}" alt="${grailsApplication.config.speciesPortal.app.siteName}">
 			</a>
-			<a href="${createLink(url:grailsApplication.config.grails.serverURL+"/..") }" class="brand">
-                            <h1>${grailsApplication.config.speciesPortal.app.siteName}</h1>
+			<a href="${createLink(url:grailsApplication.config.grails.serverURL+"/..") }" class="brand" style="margin-left: 150px; text-align: center;">
+				<img src="${Utils.getIBPServerDomain()+'/'+grailsApplication.config.speciesPortal.app.dzongkha}" id="imagelogo"> <br />
+				<h1>${grailsApplication.config.speciesPortal.app.siteName}</h1>
 			</a>
+        
+			<a class="pull-right" style="margin-right: 0px;"> <img
+                            class="logo" src="${Utils.getIBPServerDomain()+'/'+grailsApplication.config.speciesPortal.app.govlogo}"
+                            title="Royal Government of Bhutan" alt="Royal Government of Bhutan">
+			</a>
+
 		</g:else>
 	</div>
 </div>
@@ -167,7 +174,7 @@
 					
 					<li
 						class="${(request.getHeader('referer')?.contains('/about') && params.action == 'header')?' active':''}"><a
-						href="/theportal" title="About Us">About Us </a></li>
+						href="/aboutus" title="About Us">About Us </a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> More <b class="caret"></b> </a>
 
@@ -176,15 +183,12 @@
 								class="${((params.controller == 'user' || params.controller == 'SUser') && params.action != 'header')?' active':''}"><a
 								href="${uGroup.createLink(controller:'user', action:'list')}"
 								title="Members">Members</a></li>
-							<li
-								class="${(request.getHeader('referer')?.contains('/calendar') && params.action == 'header')?' active':''}"><a
-								href="/calendar" title="Events">Events</a></li>
-							<li
-								class="${(request.getHeader('referer')?.contains('/biodiversity_news') && params.action == 'header')?' active':''}"><a
-								href="/biodiversity_news" title="News">News</a></li>
-
-                            
-
+<%--							<li--%>
+<%--								class="${(request.getHeader('referer')?.contains('/calendar') && params.action == 'header')?' active':''}"><a--%>
+<%--								href="/calendar" title="Events">Events</a></li>--%>
+<%--							<li--%>
+<%--								class="${(request.getHeader('referer')?.contains('/biodiversity_news') && params.action == 'header')?' active':''}"><a--%>
+<%--								href="/biodiversity_news" title="News">News</a></li>--%>
 							
 							<li
 								class="${(params.controller == 'chart')?' active':''}"><a

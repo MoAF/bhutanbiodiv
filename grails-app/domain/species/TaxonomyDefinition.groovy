@@ -10,13 +10,17 @@ class TaxonomyDefinition {
 	public enum TaxonomyRank {
 		KINGDOM("Kingdom"),
 		PHYLUM("Phylum"),
+		SUB_PHYLUM("Sub-Phylum"),
 		CLASS("Class"),
+		SUB_CLASS("Sub-Class"),
 		ORDER("Order"),
+		SUB_ORDER("Sub-Order"),
 		FAMILY("Family"),
 		SUB_FAMILY("Sub-Family"),
 		GENUS("Genus"),
 		SUB_GENUS("Sub-Genus"),
-		SPECIES("Species");
+		SPECIES("Species"),
+		SUB_SPECIES("Sub-Species");
 
 		private String value;
 
@@ -28,13 +32,17 @@ class TaxonomyDefinition {
 			[
 				KINGDOM,
 				PHYLUM,
+				SUB_PHYLUM,
 				CLASS,
+				SUB_CLASS,
 				ORDER,
+				SUB_ORDER,
 				FAMILY,
 				SUB_FAMILY,
 				GENUS,
 				SUB_GENUS,
-				SPECIES
+				SPECIES,
+				SUB_SPECIES
 			]
 		}
 

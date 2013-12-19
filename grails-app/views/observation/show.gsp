@@ -7,6 +7,7 @@
 <%@page import="species.Resource.ResourceType"%>
 <%@page import="species.Resource"%>
 <%@page import="speciespage.ChartService"%>
+<%@page import="species.participation.Featured"%>
 
 <html>
 <head>
@@ -25,10 +26,8 @@ if(r) {
     }
 }
 	
-String location = "Observed at '" + (observationInstance.placeName.trim()?:observationInstance.reverseGeocodedName) +"'"
-String desc = "- "+ location +" by "+observationInstance.author.name.capitalize()+" on "+observationInstance.fromDate.format('dd/MM/yyyy');
 %>
-<g:set var="description" value="${Utils.stripHTML(observationInstance.notes?observationInstance.notes+' '+desc:desc)?:'' }" />
+<g:set var="description" value="${Utils.stripHTML(observationInstance.summary()) }" />
 
 <g:render template="/common/titleTemplate" model="['title':title, 'description':description, 'canonicalUrl':canonicalUrl, 'imagePath':imagePath, 'videoPath':videoPath]"/>
 
@@ -58,9 +57,12 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 .nameContainer .combobox-container {
 	left:198px;
 }
-
+ 
 .combobox-container .add-on {
-	right: -91px;
+	right: -205px;
+}
+.observation_story .observation_footer {
+    margin-top:50px;
 }
 
 </style>
@@ -68,11 +70,18 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 <body>
 	
 			<div class="observation  span12">
-				<obv:showSubmenuTemplate/>
-
-				<div class="page-header clearfix">
+                            <obv:showSubmenuTemplate/>
+                            
+                        <g:if test="${observationInstance}">
+                            <g:set var="featureCount" value="${observationInstance.featureCount}"/>
+                            </g:if>
+                            
+                        <div class="page-header clearfix ">
                                     <div style="width:100%;">
-                                        <div class="main_heading" style="margin-left:0px;">
+                                        <div class="main_heading" style="margin-left:0px; position:relative">
+                                            <span class="badge ${(featureCount>0) ? 'featured':''}" style="left:-50px"  title="${(featureCount>0) ? 'Featured':''}">
+                                            </span>
+
                                             <div class="pull-right">
                                                 <sUser:ifOwns model="['user':observationInstance.author]">
                                                 <a class="btn btn-primary pull-right" style="margin-right: 5px;"
@@ -111,8 +120,7 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
                                             alt="${message(code:'spinner.alt',default:'Loading...')}" />
                                         </div>
                                     </center>
-
-
+                                     
 					<div id="gallery1" style="visibility:hidden">
 
 						<g:if test="${observationInstance.resource}">
@@ -158,7 +166,7 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 							<div id="seeMoreMessage" class="message"></div>
 							<div id="seeMore" class="btn btn-mini">Show all</div>
 						</div>
-						<div class="input-append">
+						<div class="input-append" style="width:100%;">
 							<g:hasErrors bean="${recommendationInstance}">
 								<div class="errors">
 									<g:renderErrors bean="${recommendationInstance}" as="list" />
@@ -187,76 +195,60 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 							<uGroup:showUserGroupsListInModal model="['userGroupInstanceList':observationInstance.userGroups]" />
 						</div>
 						
-					</div>
+                                            </div>
+                                                                                       
+					<uGroup:objectPostToGroupsWrapper 
+					    model="['observationInstance':observationInstance, 'objectType':observationInstance.class.canonicalName]"/>
 					<div class="union-comment">
 					<feed:showAllActivityFeeds model="['rootHolder':observationInstance, feedType:'Specific', refreshType:'manual', 'feedPermission':'editable']" />
 					<comment:showAllComments model="['commentHolder':observationInstance, commentType:'super','showCommentList':false]" />
 					</div>
 				</div>
 
-              	<div class="span4">
-                    <div class="sidebar_section">
-						<obv:showLocation
-							model="['observationInstance':observationInstance]" />
-					</div>
+                                <div class="span4">
+                                        <obv:showLocation
+                                        model="['observationInstance':observationInstance]" />
 
-					<!-- obv:showRating model="['observationInstance':observationInstance]" /-->
-					<!--  static species content -->
+                                    <!-- obv:showRating model="['observationInstance':observationInstance]" /-->
+                                    <!--  static species content -->
 
-					<div class="sidebar_section">
-						<h5>Related observations</h5>
-						<div class="tile" style="clear: both">
-							<div class="title">Other observations of the same species</div>
-							<obv:showRelatedStory
-								model="['observationInstance':observationInstance, 'observationId': observationInstance.id, 'controller':'observation', 'action':'getRelatedObservation','filterProperty': 'speciesName', 'id':'a','userGroupWebaddress':userGroup?userGroup.webaddress:userGroupWebaddress]" />
-						</div>
-						<div class="tile">
-							<div class="title">Observations nearby</div>
-							<obv:showRelatedStory
-								model="['observationInstance':observationInstance, 'observationId': observationInstance.id, 'controller':'observation', 'action':'getRelatedObservation', 'filterProperty': 'nearBy', 'id':'nearBy', 'userGroupWebaddress':userGroup?userGroup.webaddress:userGroupWebaddress]" />
-						</div>
+                                    <div class="sidebar_section">
+                                        <h5>Related observations</h5>
+                                        <div class="tile" style="clear: both">
+                                            <div class="title">Other observations of the same species</div>
+                                            <obv:showRelatedStory
+                                            model="['observationInstance':observationInstance, 'observationId': observationInstance.id, 'controller':'observation', 'action':'related','filterProperty': 'speciesName', 'id':'a','userGroupInstance':userGroupInstance]" />
+                                        </div>
+                                        <div class="tile">
+                                            <div class="title">Observations nearby</div>
+                                            <obv:showRelatedStory
+                                            model="['observationInstance':observationInstance, 'observationId': observationInstance.id, 'controller':'observation', 'action':'related', 'filterProperty': 'nearBy', 'id':'nearBy', 'userGroupInstance':userGroupInstance]" />
+                                        </div>
+                                        
+                                    </div>
+                                    <%
+                                    def annotations = observationInstance.fetchChecklistAnnotation()
+                                    %>
+                                    <g:if test="${annotations?.size() > 0}">
+                                    <div class="sidebar_section">
+                                        <h5>Annotations</h5>
+                                        <div>
+                                            <obv:showAnnotation model="[annotations:annotations]" />
+                                        </div>
+                                    </div>	
+                                    </g:if>
+                                    <%--					<div class="sidebar_section">--%>
+                                        <%--						<h5>Top 5 Contributors of ${observationInstance.group.name}</h5>--%>
+                                        <%--						<chart:showStats model="['title':'Top 5 Contributors', statsType:ChartService.USER_OBSERVATION_BY_SPECIESGROUP,  speciesGroupId:observationInstance.group.id, hAxisTitle:'User', hideBarChart:true, width:300, hideTitle:true]"/>--%>
+                                        <%--					</div>--%>
+                                    <!-- obv:showTagsSummary model="['observationInstance':observationInstance]" /-->
+                                    <!-- obv:showObvStats  model="['observationInstance':observationInstance]"/-->
 
-					</div>
-					
-					<g:if test="${observationInstance.userGroups}">
-						<div class="sidebar_section">
-							<h5>Observation is in groups</h5>
-								<!-- div class="title">This observation belongs to following groups</div-->
-								<ul class="tile" style="list-style:none; padding-left: 10px;">
-									<g:each in="${observationInstance.userGroups}" var="userGroup">
-										<li class="">
-											<uGroup:showUserGroupSignature  model="[ 'userGroup':userGroup]" />
-										</li>
-									</g:each>
-								</ul>
-								<!-- obv:showRelatedStory
-									model="['observationInstance':observationInstance, 'observationId': observationInstance.id, 'controller':'userGroup', 'action':'getRelatedUserGroups', 'filterProperty': 'obvRelatedUserGroups', 'id':'relatedGroups']" /-->
-						</div>
-					</g:if>
-					<%
-						def annotations = observationInstance.fetchChecklistAnnotation()
-					%>
-					<g:if test="${annotations?.size() > 0}">
-						<div class="sidebar_section">
-							<h5>Annotations</h5>
-							<div class="tile" style="clear: both">
-								<obv:showAnnotation model="[annotations:annotations]" />
-							</div>
-						</div>	
-					</g:if>
-					
-<%--					<div class="sidebar_section">--%>
-<%--						<h5>Top 5 Contributors of ${observationInstance.group.name}</h5>--%>
-<%--						<chart:showStats model="['title':'Top 5 Contributors', statsType:ChartService.USER_OBSERVATION_BY_SPECIESGROUP,  speciesGroupId:observationInstance.group.id, hAxisTitle:'User', hideBarChart:true, width:300, hideTitle:true]"/>--%>
-<%--					</div>--%>
-					<!-- obv:showTagsSummary model="['observationInstance':observationInstance]" /-->
-					<!-- obv:showObvStats  model="['observationInstance':observationInstance]"/-->
-
-				</div>
+                                </div>
 
 
-			</div>
-	
+                            </div>
+
 	<r:script>
 	
 	Galleria.loadTheme('${resource(dir:'js/galleria/1.2.7/themes/classic/',file:'galleria.classic.min.js')}');
@@ -274,8 +266,8 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 		
 		$('#gallery1').galleria({
 			height : 400,
-            preload : 1,
-            lightbox: false,
+                        preload : 1,
+                        lightbox: false,
 			carousel : false,
 			transition : 'pulse',
 			image_pan_smoothness : 5,
@@ -361,15 +353,15 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 	            	if(data.status == 'success') {
 		             	if(data.canMakeSpeciesCall === 'false'){
 		             		$('#selectedGroupList').modal('show');
-		             	}else{
+		             	} else{
 		             		showRecos(data, null);
 		            		updateUnionComment(null, "${uGroup.createLink(controller:'comment', action:'getAllNewerComments')}");
 		            		updateFeeds();
 		            		setFollowButton();
-		            		showRecoUpdateStatus(data.msg, data.status);
+		            		showUpdateStatus(data.msg, data.status);
 		            	}
 	            	} else {
-         				showRecoUpdateStatus(data.msg, data.status);
+         				showUpdateStatus(data.msg, data.status);
          			}
          			$("#addRecommendation")[0].reset();
          			$("#canName").val("");
@@ -377,7 +369,7 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
 	            },
 	            error:function (xhr, ajaxOptions, thrownError){
 	            	//successHandler is used when ajax login succedes
-	            	var successHandler = this.success, errorHandler = showRecoUpdateStatus;
+	            	var successHandler = this.success, errorHandler = showUpdateStatus;
 	            	handleError(xhr, ajaxOptions, thrownError, successHandler, errorHandler);
 				} 
 	     	});
@@ -393,7 +385,11 @@ String desc = "- "+ location +" by "+observationInstance.author.name.capitalize(
                 });
 
                 preLoadRecos(3, 0, false);
-	});
+                //loadObjectInGroups();
+                
+                
+        });
+
 </r:script>
 <g:javascript>
 $(document).ready(function(){

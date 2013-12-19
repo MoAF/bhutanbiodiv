@@ -62,7 +62,7 @@ beans = {
         observationsSolrServer(EmbeddedSolrServer, container, "observations" );
         newsletterSolrServer(EmbeddedSolrServer, container, "newsletters" );
         projectSolrServer(EmbeddedSolrServer, container, "projects" );
-        checklistSolrServer(EmbeddedSolrServer, container, "checklists" );
+        //checklistSolrServer(EmbeddedSolrServer, container, "checklists" );
         documentSolrServer(EmbeddedSolrServer, container, "documents" );
         usersSolrServer(EmbeddedSolrServer, container, "users" );
 
@@ -103,7 +103,7 @@ beans = {
             log.debug "Initialized search server to "+config.serverURL+"/newsletters"
         }
 
-        checklistSolrServer(org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer,config.serverURL+"/checklists", config.queueSize, config.threadCount ) {
+        /*checklistSolrServer(org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer,config.serverURL+"/checklists", config.queueSize, config.threadCount ) {
             setSoTimeout(config.soTimeout);
             setConnectionTimeout(config.connectionTimeout);
             setDefaultMaxConnectionsPerHost(config.defaultMaxConnectionsPerHost);
@@ -113,7 +113,7 @@ beans = {
             setMaxRetries(config.maxRetries);
             //setParser(new XMLResponseParser()); // binary parser is used by default
             log.debug "Initialized search server to "+config.serverURL+"/checklists"
-        }
+        }*/
 
         projectSolrServer(org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer,config.serverURL +"/projects", config.queueSize, config.threadCount ) {
             setSoTimeout(config.soTimeout);
@@ -154,26 +154,30 @@ beans = {
 
     speciesSearchService(speciespage.search.SpeciesSearchService) {
         solrServer = ref('speciesSolrServer');
+		sessionFactory = ref("sessionFactory");
     }
     observationsSearchService(speciespage.search.ObservationsSearchService) {
         solrServer = ref('observationsSolrServer');
+		sessionFactory = ref("sessionFactory");
     }
-    checklistSearchService(speciespage.search.ChecklistSearchService) {
-        solrServer = ref('checklistSolrServer');
-    }
+    //checklistSearchService(speciespage.search.ChecklistSearchService) {
+    //    solrServer = ref('checklistSolrServer');
+    //}
     newsletterSearchService(speciespage.search.NewsletterSearchService) {
         solrServer = ref('newsletterSolrServer');
+		sessionFactory = ref("sessionFactory");
     }
     projectSearchService(speciespage.search.ProjectSearchService) {
         solrServer = ref('projectSolrServer');
+		sessionFactory = ref("sessionFactory");
     }
-
     documentSearchService(speciespage.search.DocumentSearchService) {
         solrServer = ref('documentSolrServer');
+		sessionFactory = ref("sessionFactory");
     }
-
-    usersSearchService(speciespage.search.SUserSearchService) {
+    SUserSearchService(speciespage.search.SUserSearchService) {
         solrServer = ref('usersSolrServer');
+		sessionFactory = ref("sessionFactory");
     }
 
     preAuthenticationChecks(DefaultPreAuthenticationChecks)

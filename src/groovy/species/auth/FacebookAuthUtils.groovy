@@ -80,9 +80,17 @@ class FacebookAuthUtils {
 
 	String getAccessToken(String applicationId, String secret, String code) {
 		try {
+			
+			log.debug ";;;;;;;;;;;;STARTING;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+			log.debug ";;;;CLIENT_ID: $applicationId client_secret=$secret&code=$code" 
 			String authUrl = "https://graph.facebook.com/oauth/access_token?client_id=$applicationId&redirect_uri=&client_secret=$secret&code=$code"
+			log.debug ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+			log.debug "Auth URL: " + authUrl
 			URL url = new URL(authUrl)
+			log.debug ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+			log.debug url
 			HttpURLConnection httpConn = (HttpURLConnection)url.openConnection()
+			log.debug ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Opened connection>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 			InputStream is;
 			if (httpConn.getResponseCode() >= 400) {
 				is = httpConn.getErrorStream();

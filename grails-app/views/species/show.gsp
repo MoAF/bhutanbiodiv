@@ -8,6 +8,8 @@
 <%@ page import="species.CommonNames"%>
 <%@ page import="species.Language"%>
 <%@page import="species.utils.Utils"%>
+<%@page import="species.participation.Featured"%>
+<%@page import="species.participation.Observation"%>
 <%@page import="species.participation.ActivityFeedService"%>
 <%@page import="org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils"%>
 
@@ -15,16 +17,16 @@
 <head>
 <g:set var="canonicalUrl" value="${uGroup.createLink([controller:'species', action:'show', id:speciesInstance.id, base:Utils.getIBPServerDomain()])}"/>
 <g:set var="title" value="${speciesInstance.taxonConcept.name}"/>
-<g:set var="description" value="${Utils.stripHTML(speciesInstance.findSummary()?:'')}" />
+<g:set var="description" value="${Utils.stripHTML(speciesInstance.notes()?:'')}" />
 <%
 def r = speciesInstance.mainImage();
 def imagePath = '';
 if(r) {
     def gThumbnail = r.fileName.trim().replaceFirst(/\.[a-zA-Z]{3,4}$/, grailsApplication.config.speciesPortal.resources.images.gallery.suffix)?:null;
     if(r && gThumbnail) {
-            if(r.type == ResourceType.IMAGE) {
+            if(r?.type == ResourceType.IMAGE) {
                     imagePath = g.createLinkTo(base:grailsApplication.config.speciesPortal.resources.serverURL,	file: gThumbnail)
-            } else if(r.type == ResourceType.VIDEO){
+            } else if(r?.type == ResourceType.VIDEO){
                     imagePath = r.thumbnailUrl()
             }
     }
@@ -37,40 +39,42 @@ if(r) {
 
 <style>
 
-.jcarousel-skin-ie7 .jcarousel-item .snippet.tablet .figure {
-	width:210px;
-	height:150px;
-}
+    .jcarousel-skin-ie7 .jcarousel-item .snippet.tablet .figure {
+    width:210px;
+    height:150px;
+    }
 
-.jcarousel-skin-ie7 .jcarousel-item  .thumbnail .figure a {
-	max-width:210px;
-	max-height:150px;
-}
+    .jcarousel-skin-ie7 .jcarousel-item  .thumbnail .figure a {
+    max-width:210px;
+    max-height:150px;
+    }
 
-.jcarousel-skin-ie7 .jcarousel-item  .thumbnail .img-polaroid {
-	max-width:210px;
-	max-height:140px;
-}
+    .jcarousel-skin-ie7 .jcarousel-item  .thumbnail .img-polaroid {
+    max-width:210px;
+    max-height:140px;
+    }
 
-.jcarousel-skin-ie7 .jcarousel-item {
-	width:210px;
-	height:250px;
-}
+    .jcarousel-skin-ie7 .jcarousel-item {
+    width:210px;
+    height:250px;
+    margin-right:3px;
+    }
 
-.jcarousel-skin-ie7 .jcarousel-item .snippet.tablet {
-	width:210px;
-	height:250px;
-}
+    .jcarousel-skin-ie7 .jcarousel-item .snippet.tablet {
+    width:210px;
+    height:250px;
+    }
 
-.jcarousel-skin-ie7 .jcarousel-clip-horizontal {
-	height:250px;
-}
-
-.jcarousel-skin-ie7 .jcarousel-item .snippet.tablet .caption {
-	height:75px;
-	padding:16px 0px;
-	background-color : #fff;
-}
+    .jcarousel-skin-ie7 .jcarousel-clip-horizontal {
+        height:250px;
+        padding:0px 1px;
+    }
+    
+    .jcarousel-skin-ie7 .jcarousel-item .snippet.tablet .caption {
+    height:75px;
+    padding:16px 0px;
+    background-color : #fff;
+    }
 
 </style>
 
@@ -110,11 +114,11 @@ if(r) {
 <ckeditor:resources />
 <script type="text/javascript" src="${resource(dir:'plugins',file:'ckeditor-3.6.0.0/js/ckeditor/_source/adapters/jquery.js')}"></script>
 <g:javascript src="ckEditorConfig.js" />
+
+<script type="text/javascript" src="/sites/all/themes/wg/scripts/OpenLayers-2.10/OpenLayers.js"></script>
+<script type="text/javascript" src="/sites/all/themes/wg/scripts/am.js"></script>
 -->
 
-<script type="text/javascript"
-		src="/sites/all/themes/wg/scripts/OpenLayers-2.10/OpenLayers.js"></script>
-<script type="text/javascript" src="/sites/all/themes/wg/scripts/am.js"></script>
 <g:javascript>
 
 occurrenceCount = undefined
@@ -348,8 +352,7 @@ $(document).ready(function(){
 	} catch(e) {
   		console.log(e)
 	}  	
-
-<%--  	//init editables --%>
+        <%--  	//init editables --%>
 <%--$('.myeditable').editable({--%>
 <%--    url: '/post' //this url will not be used for creating new user, it is only for update--%>
 <%--});--%>
@@ -423,8 +426,13 @@ $(document).ready(function(){
 </head>
 
 <body>
+<g:if test="${speciesInstance}">
+<g:set var="featureCount" value="${speciesInstance.featureCount}"/>
+</g:if>
 
 <div class="span12">
+
+
 			<s:showSubmenuTemplate model="['entityName':speciesInstance.taxonConcept.italicisedForm , 'subHeading':CommonNames.findByTaxonConceptAndLanguage(speciesInstance.taxonConcept, Language.findByThreeLetterCode('eng'))?.name, 'headingClass':'sci_name']"/>
 			
 			<g:if test="${!speciesInstance.percentOfInfo}">
@@ -514,7 +522,7 @@ $(document).ready(function(){
                                 <div style="background-color:white">
 				
 				<!-- species page icons -->
-				<div style="padding:5px 0px;">
+				<div style="padding:5px 0px;position:relative;">
 					<s:showSpeciesExternalLink model="['speciesInstance':speciesInstance]"/>
 					<div class="observation-icons">		
 						<img class="group_icon species_group_icon"  
@@ -535,15 +543,16 @@ $(document).ready(function(){
 					</g:each>
 				</div>
                                 <div class="readmore sidebar_section notes_view">
-				    ${speciesInstance.findSummary() }
+				    ${speciesInstance.notes() }
                                 </div>
                             </div>
                         </div>
+                                               
                         <div class="span12" style="margin-left:0px">
 				<%def nameRecords = fields.get(grailsApplication.config.speciesPortal.fields.NOMENCLATURE_AND_CLASSIFICATION)?.get(grailsApplication.config.speciesPortal.fields.TAXON_RECORD_NAME).collect{it.value.get('speciesFieldInstance')[0]} %>
 				<g:if test="${nameRecords}">
-				<div class="sidebar_section" style="clear:both;">
-					<a class="speciesFieldHeader"  data-toggle="collapse" href="#taxonRecordName">
+                                <div class="sidebar_section" style="clear:both;">
+                                    					<a class="speciesFieldHeader"  data-toggle="collapse" href="#taxonRecordName">
 						<h5>Taxon Record Name</h5>
 					</a>
 					
@@ -573,7 +582,8 @@ $(document).ready(function(){
 							</tr>
 						</g:each>
 						</table>
-					</div>
+                                            </div>
+                                             
 					<comment:showCommentPopup model="['commentHolder':[objectType:ActivityFeedService.SPECIES_TAXON_RECORD_NAME, id:speciesInstance.id], 'rootHolder':speciesInstance]" />
 				</div>
 				<br/>
@@ -698,7 +708,8 @@ $(document).ready(function(){
                                 <comment:showCommentPopup model="['commentHolder':[objectType:ActivityFeedService.SPECIES_MAPS, id:speciesInstance.id], 'rootHolder':speciesInstance]" />	
 
                             </div-->
-
+			        <uGroup:objectPostToGroupsWrapper 
+				    model="['objectType':speciesInstance.class.canonicalName, 'observationInstance':speciesInstance]" />
                            <div class="sidebar_section">
                                 <h5> Activity </h5>
                                     <div class="union-comment">

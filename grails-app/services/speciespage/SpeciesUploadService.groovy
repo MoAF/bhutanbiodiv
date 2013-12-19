@@ -141,14 +141,16 @@ class SpeciesUploadService {
         grailsApplication.config.speciesPortal.images.uploadDir = grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/PHCC/uploadready/grasses_of_palni_hills";
         noOfInsertions += uploadMappedSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/PHCC/uploadready/grasses_of_palni_hills.xlsx", grailsApplication.config.speciesPortal.data.rootDir+"/datarep/species/PHCC/uploadready/grasses_of_palni_hills_mapping.xlsx", 0, 0, 0, 0,-1);
 */
-        noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/thomas/1.6/MammalsspeciesPages.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/thomas/1.6/images");
+        //noOfInsertions += uploadNewSimpleSpreadsheet("/home/kinley/Music/thomas/mammals/MammalsspeciesPages.xlsx","/home/kinley/Music/thomas/mammals/images");
+        noOfInsertions += uploadNewSimpleSpreadsheet("/data/upload/mammals/MammalsspeciesPages.xlsx","/data/upload/mammals/images");
 
       //  noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.5/Northeast Butterflies-RG4.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.5/NE_Butterflies_RG4");
 
-        //noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NortheastButterflies-RG25.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NE_Butterflies_RG25");
 
-
-
+        /*noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/indian_molluscs_asr_cr1.xls", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/molluscs_images");
+        noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/indian_molluscs_asr_cr2.xls", grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/indian_molluscs/1.6/molluscs_images");
+        noOfInsertions += uploadNewSimpleSpreadsheet(grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NortheastButterflies-RG25.xlsx",grailsApplication.config.speciesPortal.data.rootDir+"/datarep2/species/chitra/ne_butterflies/1.6/NE_Butterflies_RG25");
+*/
 		return noOfInsertions;
 	}
 
@@ -348,12 +350,14 @@ class SpeciesUploadService {
 
 		for(Species s in batch) {
 			try {
-                def taxonConcept = TaxonomyDefinition.get(s.taxonConcept.id);
-                if(externalLinksService.updateExternalLinks(taxonConcept)) {
-                    s.taxonConcept = taxonConcept;
+                //def taxonConcept = TaxonomyDefinition.get(s.taxonConcept.id);
+                if(externalLinksService.updateExternalLinks(s.taxonConcept)) {
+                    s.taxonConcept = TaxonomyDefinition.get(s.taxonConcept.id);
+//                    if(!s.taxonConcept.isAttached())
+//                        s.taxonConcept.attach();
                 }
 
-				externalLinksService.updateExternalLinks(taxonConcept);
+				//externalLinksService.updateExternalLinks(taxonConcept);
 			} catch(e) {
 				e.printStackTrace()
 			}
@@ -462,7 +466,7 @@ class SpeciesUploadService {
 		int noOfMultimedia = s.resources?.size()?:0;
 		//int diffSources =
 		//TODO: int reviewedFields =
-		int richness = s.fields?.size()?:0 + s.globalDistributionEntities?.size()?:0 + s.globalEndemicityEntities?.size()?:0 + s.indianDistributionEntities?.size()?:0 + s.indianEndemicityEntities?.size()?:0;
+		int richness = (s.fields?.size()?:0) + (s.globalDistributionEntities?.size()?:0) + (s.globalEndemicityEntities?.size()?:0) + (s.indianDistributionEntities?.size()?:0) + (s.indianEndemicityEntities?.size()?:0);
 		richness += noOfMultimedia;
 		//richness += textSize;
 		return richness;

@@ -25,6 +25,7 @@ import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap;
 
 import species.auth.SUser;
 import species.NamesParser;
@@ -108,20 +109,17 @@ class Utils {
 	 * if more than 4 chars then return a string starting with _
 	 */
 	
-	private static getCleanFileExtension(String fileName){
+	public static getCleanFileExtension(String fileName){
 		String extension = ""
 		fileName = fileName?.trim()
 		if(!fileName || fileName == "")
 			return extension
 		
 		int beginIndex = fileName.lastIndexOf(".")
-		extension = (beginIndex > -1) ? fileName.substring(beginIndex) : ""
-		if(extension.size() > 5 || extension.size() == 1){
-			extension =  extension.replace(".", "_")
-		}
+		extension = (beginIndex > -1 && beginIndex+1 != fileName.size()) ? fileName.substring(beginIndex) : ""
+        if(extension.size() > 5) extension = "";
 		return extension
 	}
-	
 	
 	
 	static String cleanSearchQuery(String name) {
@@ -236,7 +234,7 @@ class Utils {
 		if(domain.startsWith(config.wgp.domain)) {
 			return "The Westernghats Portal"
 		} else {
-			return "India Biodiversity Portal"
+			return config.speciesPortal.app.siteName
 		}
 		return "";
 	}
@@ -404,7 +402,31 @@ class Utils {
 				map[key] = URLDecoder.decode(value)
 		    }
 		}
-		return map
+		
+		//converting a.b.c = 10 to a:[b:[c:10]] 
+		def retMap = [:]
+		map.each{k, v ->
+			def arr = k.split("\\.")
+			def lookupMap = retMap
+			int count = 1
+			arr.each { ele ->
+				if(lookupMap.get(ele) == null){
+					if(count < (arr.length)){
+						lookupMap[ele] = [:]
+						lookupMap = lookupMap.get(ele)
+					}else{
+						lookupMap[ele] = v
+					}
+				}else{
+					lookupMap = lookupMap.get(ele)
+				}
+				count++
+			}
+		   
+		}
+		retMap = new GrailsParameterMap(retMap, null)
+		println "Returned url map == " + retMap
+		return retMap
 	}
 	
 }
