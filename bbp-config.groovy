@@ -21,15 +21,15 @@ speciesPortal {
         siteCode = "${appName}"
 
         twitterUrl = "https://twitter.com/bhutanbiodiversity"
-        facebookUrl = "https://www.facebook.com/pages/Bhutan-Biodiversity-Portal"
-        feedbackFormUrl = "http://biodiversity.bt/contact"
+        facebookUrl = "https://www.facebook.com/bhutanbiodiversityportal"
+        feedbackFormUrl = "http://biodiversity.bt/contactus"
 
         logo = "images/bbp-logo.png"
         govlogo = "images/gov-logo.png"
         dzongkha = "images/accordion/dzongkha.png"
         favicon = "images/favicon.ico"
         siteDescription = "Welcome to the Bhutan Biodiversity Portal (BBP) - A repository of information designed to harness and disseminate collective intelligence on the biodiversity of Bhutan."
-        notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com"]
+        notifiers_bcc = ["kxt5258@gmail.com", "moafbhutan@gmail.com", "cd.drukpa@gmail.com", "sdema06@gmail.com"]
     }
 
 	app.rootDir = "${userHome}/git/bhutanbiodiv/app-conf"

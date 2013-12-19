@@ -41,7 +41,9 @@ class ImageUtils {
  		if(lastIndex != -1) {
 			name = fileName.substring(0, lastIndex);
 		}
+		//def extension;
 		///////////////////////////////////////////////////
+	
 		log.debug "Creating gallery image";
 		def extension = config.gallery.suffix
 		ImageUtils.convert(imageFile, new File(dir, name+extension), config.gallery.width, config.gallery.height, 100);
@@ -222,6 +224,13 @@ class ImageUtils {
 		log.debug "return code: ${ proc.exitValue()}"
 		log.debug "stderr: ${proc.err.text}"
 		log.debug "stdout: ${proc.in.text}" // *out* from the external program is *in* for groovy
+		
+		try {
+			file.setReadable(true,false)
+		}
+		catch(Exception e)  {
+			log.error "Couldn't set permision on " +  file + "\n" + e.printStackTrace();
+		}
 
 		return (proc.exitValue() == 0)
 	}

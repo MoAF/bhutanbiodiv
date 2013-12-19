@@ -1776,11 +1776,17 @@ function updateLayersList(tag) {
         return;
     }else  if (tag == 'new') {
         var j;
-        for (j = 0; j < layers.length; j += 1) {
-            var layer = layers[j].name;
-            document.getElementById(layer).style.display = 'none';
+	for (j = 0; j < layers.length; j += 1) {
+		var layer = layers[j].name;
+		console.log ("LAYERNAMES:::::::::::::::::::::::::" + layer);
 
-        }
+		if (layer == "bbp:observation_locations" || layer == "bbp:checklist_species_locations" )  {
+
+		}
+		else {
+			document.getElementById(layer).style.display = 'block';
+		}
+	}
 
         //var new_layers = ['wgp:lyr_210_india_checklists','wgp:lyr_212_wg_fire_2002','wgp:lyr_213_wg_fire_2003','wgp:lyr_214_wg_fire_2010','wgp:lyr_215_wg_fire_2007','wgp:lyr_216_wg_fire_2004','wgp:lyr_217_wg_fire_2008','wgp:lyr_218_wg_fire_2005','wgp:lyr_219_wg_fire_2006','wgp:lyr_220_wg_fire_2001','wgp:lyr_221_wg_fire_2000','wgp:lyr_222_wg_fire_2009'];
         //var new_layers = ['lyr_293_kerala_rf_data','lyr_294_distribution','lyr_295_location','lyr_235_wg_birdtransects','lyr_237_reconnaissance_soil','lyr_238_western_anamalai','lyr_239_belgaum_dharwar_panaji_floristictypes','lyr_240_belgaum_dharwar_panaji_physiognomy','lyr_241_belgaum_dharwar_panaji_majorforest','lyr_242_kmtr','lyr_243_mercara_mysore_physiognomy','lyr_244_mercara_mysore_floristictypes','lyr_245_mercara_mysore_majorforest','lyr_246_thiruvananthapuram_tirunelveli_floristictypes','lyr_247_thiruvananthapuram_tirunelveli_physiognomy','lyr_248_thiruvananthapuram_tirunelveli_majorforest','lyr_249_wg_simple_14class_vegetation','lyr_250_coimbatore_thrissur_majorforest','lyr_291_coimbatore_thrissur_physiognomy','lyr_252_coimbatore_thrissur_floristictypes','lyr_253_shimoga_majorforest','lyr_254_shimoga_floristictypes','lyr_255_shimoga_physiognomy','lyr_256_soilcorban77','lyr_257_soilcorban99','lyr_258_gudalur_mudumalai','lyr_259_wg_subbasin','lyr_260_wg_watershed','lyr_261_wg_river','lyr_262_wg_dam','lyr_263_wg_basin'];
@@ -2174,7 +2180,7 @@ function getLayers(map, layersOptions) {
         var layers = layersOptions[layerNum].layers;
         var styles = layersOptions[layerNum].styles || '';
         var cql_filter = layersOptions[layerNum].cql_filter;
-        var opacity = layersOptions[layerNum].opacity || 0.7;
+        var opacity = layersOptions[layerNum].opacity || 0.88888888;
 
         if (layers === '')
             continue;
@@ -2203,7 +2209,7 @@ function setElementVisible(id, visible) {
 
 function addFilteredLayer(layer, title, cql_filter) {
     var map = window.map;
-    var wmslayer = getWMSLayer_Filter(map, layer, '', title, 0.7, cql_filter);
+    var wmslayer = getWMSLayer_Filter(map, layer, '', title, 0.8, cql_filter);
     map.addLayer(wmslayer);
 
     setElementVisible(layer + '_a_add', false);
@@ -2251,7 +2257,7 @@ function removeFromLayersCookie(layer){
 
 function addLayer(layer, title) {
     var map = window.map;
-    var wmslayer =  getWMSLayer(map, layer, '', title, 0.7);
+    var wmslayer =  getWMSLayer(map, layer, '', title, 0.8);
     map.addLayer(wmslayer);
     
     setElementVisible(layer + '_a_add', false);

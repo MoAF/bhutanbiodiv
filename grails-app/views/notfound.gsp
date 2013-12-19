@@ -5,6 +5,7 @@
 <g:javascript src="species/util.js" />
 <meta name="layout" content="main" />
 <r:require modules="core" />
+<link type="image/x-icon" href="http://biodiversity.bt/images/favicon.ico" rel="shortcut icon"></link>
 </head>
 
 <body>
