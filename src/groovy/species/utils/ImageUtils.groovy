@@ -224,6 +224,13 @@ class ImageUtils {
 		log.debug "return code: ${ proc.exitValue()}"
 		log.debug "stderr: ${proc.err.text}"
 		log.debug "stdout: ${proc.in.text}" // *out* from the external program is *in* for groovy
+		
+		try {
+			file.setReadable(true,false)
+		}
+		catch(Exception e)  {
+			log.error "Couldn't set permision on " +  file + "\n" + e.printStackTrace();
+		}
 
 		return (proc.exitValue() == 0)
 	}

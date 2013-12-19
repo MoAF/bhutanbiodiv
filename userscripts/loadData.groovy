@@ -225,8 +225,18 @@ println "started "
 //speciesUploadService.uploadNewSimpleSpreadsheet("/home/strand/sandeep/speciesData/SimpleSpeciesTemplatebbpButterlies.xlsx",  "/home/strand/sandeep/speciesData/images");
 //println "done =========================================="
 
-grailsApplication.config.speciesPortal.images.uploadDir = "/home/strand/sandeep/speciesData2/images";
-speciesUploadService.uploadNewSimpleSpreadsheet("/home/strand/sandeep/speciesData2/Sherub_bird_images.xlsx",  "/home/strand/sandeep/speciesData2/images");
+//grailsApplication.config.speciesPortal.images.uploadDir = "/home/strand/sandeep/speciesData2/images";
+//speciesUploadService.uploadNewSimpleSpreadsheet("/home/strand/sandeep/speciesData2/Sherub_bird_images.xlsx",  "/home/strand/sandeep/speciesData2/images");
+//println "done =========================================="
+
+/*
+grailsApplication.config.speciesPortal.images.uploadDir = "/home/strand/sandeep/speciesData1/images";
+speciesUploadService.uploadMappedSpreadsheet("/home/strand/sandeep/speciesData1/Fungi of Bhutan_edited.xlsx", "/home/strand/sandeep/speciesData1/fungi_mapping.xls", 0, 0, 0, 0, 1,  "/home/strand/sandeep/speciesData1/images");
+println "done =========================================="
+*/
+
+grailsApplication.config.speciesPortal.images.uploadDir = "/home/strand/sandeep/speciesData3/images";
+speciesUploadService.uploadMappedSpreadsheet("/home/strand/sandeep/speciesData3/SppDataMultipleImages.xlsx", "/home/strand/sandeep/speciesData3/SppageData_mapping_1.xlsx", 0, 0, 0, 0, 1,  "/home/strand/sandeep/speciesData3/images");
 println "done =========================================="
 
 

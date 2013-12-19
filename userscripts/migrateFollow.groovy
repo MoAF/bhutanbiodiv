@@ -2,6 +2,7 @@ import species.participation.Follow
 import species.participation.ActivityFeed
 import species.formatReader.SpreadsheetReader;
 import species.*
+import species.groups.SpeciesGroup
 
 def migrate(){
 	def activityFeedService = ctx.getBean("activityFeedService");
@@ -34,6 +35,30 @@ def exportTest(){
 //exportTest()
 
 
+
+
+
+
+def correctSpeGroup(){
+	Species.withTransaction(){  
+			SpreadsheetReader.readSpreadSheet("/home/strand/sandeep/Others.xlsx").get(0).each{ m ->
+					def id = m.get("id")
+							def speciesInstance = species.Species.get(id.toLong())
+								
+										println "id   "  + id
+												if (speciesInstance) {
+															def tCon = speciesInstance.taxonConcept
+																		tCon.group = SpeciesGroup.findByName(m.get("sgroup").trim())
+																					println "=========== " + tCon.group
+																								tCon.save(flush: true)
+																											println "after save"
+																													}
+																															}
+																																}
+																																}
+
+correctSpeGroup()
+
 def deleteSpecies(){
 	def ids = []
 		SpreadsheetReader.readSpreadSheet("/tmp/birdstodelete.xlsx").get(0).each{ m ->
@@ -58,7 +83,6 @@ def deleteSpecies(){
 																																}
 																																}
 
-																																deleteSpecies()
 
 
 

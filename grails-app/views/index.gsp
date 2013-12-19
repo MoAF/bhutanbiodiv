@@ -4,6 +4,7 @@
         <meta name="layout" content="main" />
         <title>${grailsApplication.config.speciesPortal.app.siteName}</title>
         <r:require modules="core" />
+	<link type="image/x-icon" href="http://biodiversity.bt/images/favicon.ico" rel="shortcut icon"></link>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		$('.accordion ul').kwicks({max:400, duration: 300, easing: 'easeOutQuad'});
@@ -35,7 +36,7 @@
 				<li id="maps"><a href="map">Maps</a></li>
 				<li id="documents"><a href="document/list">Documents</a></li>
 				<li id="groups"><a href="group/list">Groups</a></li>
-				<li id="about-us"><a href="theportal">About Us</a></li>
+				<li id="about-us"><a href="aboutus">About Us</a></li>
 			</ul>
 		</div>     	
     </body>

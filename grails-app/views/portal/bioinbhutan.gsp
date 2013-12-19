@@ -4,6 +4,7 @@
 <meta name="layout" content="main" />
 <title>Biodiversity Of Bhutan</title>
 <r:require modules="core" />
+<link type="image/x-icon" href="http://biodiversity.bt/images/favicon.ico" rel="shortcut icon"></link>
 </head>
 
 <body>
