@@ -140,7 +140,6 @@ class Species implements Rateable {
 	List<Resource> getIcons() {
 		def icons = new ArrayList<Resource>();
 		resources.each {
-			println it?.getClass() 
 			if(it?.getClass() == species.Resource) {
 				if(it?.type == species.Resource.ResourceType.ICON) {
 					icons.add(it);

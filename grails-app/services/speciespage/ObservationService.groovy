@@ -1853,19 +1853,6 @@ class ObservationService extends AbstractObjectService {
 		return results
 	}
 	
-	/*
-	 * To validate topology in all domain class
-	 * 
-	 *
-	public static validateLocation(Geometry gm, obj){
-		if(!gm){
-			return ['observation.suggest.location']
-		}
-		Geometry indiaBoundry = getBoundGeometry(6.74678, 68.03215, 35.51769, 97.40238)
-		if(!indiaBoundry.covers(gm)){
-			return ['location.value.not.in.india', '6.74678', '35.51769', '68.03215', '97.40238']
-		}
-	}*/
 
 	/*
 	 * To validate topology in all domain class
@@ -1880,7 +1867,6 @@ class ObservationService extends AbstractObjectService {
 			return ['location.value.not.in.india', '26.647', '88.692', '28.280', '92.170']
 		}
 	}																				
-
     /**
      */
     private getFormattedResult(List result){

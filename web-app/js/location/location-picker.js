@@ -36,7 +36,6 @@ function initialize(element, drawable){
     var viewBounds = new M.LatLngBounds(new M.LatLng('26.421', '88.505'), new M.LatLng('28.632', '92.433'));
     var nagpur_latlng = new M.LatLng('27.445', '90.450'); 
 
-
     var ggl = new M.Google('HYBRID');
     map = new M.Map(element, {
 //        crs:L.CRS.EPSG4326,

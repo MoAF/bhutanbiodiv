@@ -30,13 +30,8 @@
     ProxyPassReverse /biodiv http://indiabiodiversity.localhost.org:8080/biodiv
 >>>>>>> ccfde93cfcd6aa8b5adebfee41d34cc9583fc0b9
 
-<<<<<<< .merge_file_XaA7W1
 #   RewriteCond %{REQUEST_URI} !(^(/bbp/(observations|newsletters|group-themes|users|userGroups|images|content)|(wgp_maps|geoserver)))
     RewriteRule (^(/bbp/(observations|newsletters|group-themes|users|userGroups|images|content|simg|group_icons)|(wgp_maps|geoserver))) - [L]
-=======
-#   RewriteCond %{REQUEST_URI} !(^(/biodiv/(observations|newsletters|group-themes|users|userGroups|img|content)|(wgp_maps|geoserver)))
-    RewriteRule (^(/biodiv/(observations|newsletters|group-themes|users|userGroups|img|content|group_icons)|(wgp_maps|geoserver))) - [L]
->>>>>>> .merge_file_bdBC70
     
     RewriteCond %{REQUEST_URI} ^/content
     RewriteRule /(.*)$    http://localhost/bbp/$1 [P,L]
@@ -91,7 +86,6 @@
     RewriteRule ^/bbp/group/the_western_ghats(.*)$ $1 [R=301]
     ProxyPassReverse / http://localhost:8080/bbp/group/the_western_ghats
 
-<<<<<<< .merge_file_XaA7W1
     RewriteRule (^(/bbp/(logo$|observations|newsletters|group-themes|users|userGroups|images|content))) - [L]
 	
     RewriteCond %{REQUEST_URI} ^/bbp
@@ -103,7 +97,6 @@
     RewriteCond %{REQUEST_URI} ^/(species|observation|activity|activityFeed|SUser|user|page|pages|login|logout|register|about|requestMembership|joinUs|leaveUs|inviteMembers|show|newsletter|edit|update|delete|founders|user|experts|terms|upload_resource|group|emailConfirmation|settings|search|checklist|comment|openId|ck|chart|UFile|project|rateable|rating|document|direction|data|bbpAdmin|recommendation).*
     RewriteRule ^(.*)$ http://thewesternghats.bhutanbiodiversity.localhost.org:8080/bbp/group/the_western_ghats$1 [P]
     ProxyPassReverse / http://thewesternghats.bhutanbiodiversity.localhost.org:8080/bbp/group/the_western_ghats
-=======
     RewriteRule (^(/biodiv/(logo$|observations|newsletters|group-themes|users|userGroups|img|images|content))) - [L]
 	
     RewriteCond %{REQUEST_URI} ^/biodiv
@@ -115,8 +108,6 @@
     RewriteCond %{REQUEST_URI} ^/(species|observation|activity|activityFeed|SUser|user|page|pages|login|logout|register|about|requestMembership|joinUs|leaveUs|inviteMembers|show|newsletter|edit|update|delete|founders|user|moderators|terms|upload_resource|group|emailConfirmation|settings|search|checklist|comment|openId|ck|chart|UFile|project|rateable|rating|document|direction|data|biodivAdmin|recommendation|action).*
     RewriteRule ^(.*)$ http://thewesternghats.indiabiodiversity.localhost.org:8080/biodiv/group/the_western_ghats$1 [P]
     ProxyPassReverse / http://thewesternghats.indiabiodiversity.localhost.org:8080/biodiv/group/the_western_ghats
->>>>>>> .merge_file_bdBC70
-
 
 RewriteCond %{REQUEST_URI} !(^/(species|observation|activity|SUser|user|page|pages|login|logout|register|bbp|geoserver|sites|about|openId))
     RewriteRule ^(.*)$ $1?userGroup=the_western_ghats [QSA,L]

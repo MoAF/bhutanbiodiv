@@ -2441,6 +2441,27 @@ div.noOfRatings {
 	margin-bottom: 0px;
 }
 
+/* .selectable { */
+/*     background: url("../images/icons/plus.png") no-repeat scroll 50% 50% transparent; */
+/*     background-color: transparent; */
+/*     color: #FFFFFF; */
+/*     opacity: 0.5; */
+/* } */
+/* /* .selectable:hover { */ */
+/* /*     background: url("../images/icons/check.png") no-repeat scroll 50% 50% transparent; */ */
+/* /* } */ */
+/* .selectedItem { */
+/*     background: url("../images/icons/check.png") no-repeat scroll 50% 50% transparent; */
+/*     background-color: transparent; */
+/*     color: #FFFFFF; */
+/*     opacity: 0.5; */
+/* } */
+/* .selectedItem:hover { */
+/*     background: url("../images/icons/x.png") no-repeat scroll 50% 50% transparent; */
+/*     background-color: transparent; */
+/*     color: #FFFFFF; */
+/*     opacity: 0.5; */
+/* } */
 .poor_species_content {
     background-color: wheat;
 }
@@ -2497,6 +2518,11 @@ small {
 .groups-wrapper .tab-pane {
     border:1px solid #6ac9a2;
     overflow:hidden;
+/**
+ * Style used to position the map of bhutan
+ * */
+.span12  {
+	width:960px;
 }
 
 .groups-wrapper li {
